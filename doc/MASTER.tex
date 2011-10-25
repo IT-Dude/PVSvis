@@ -1,0 +1,28 @@
+\documentclass[12pt,oneside,a4paper]{scrartcl}
+
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,includeheadfoot]{geometry}
+\usepackage[ngerman]{babel}
+\usepackage[latin1]{inputenc}
+
+\usepackage{textcomp}
+\usepackage{color}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\usepackage{url} %ersetzen durch hyperref?
+
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+\sloppy
+
+\clubpenalty10000
+\widowpenalty10000
+\renewcommand\footnoterule{}
+
+%Abstände zwischen Aufzählungspunkten veringern
+\let\origitemize\itemize
+\def\itemize{\origitemize\itemsep0pt}
+
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
