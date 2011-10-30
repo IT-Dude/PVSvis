@@ -30,7 +30,7 @@
 	\subsection{CanvasXpress}
 		\url{www.canvasxpress.org}
 		\begin{itemize}
-			\item Grafiken werden im HTML5 Canvas-Tag erstellt
+			\item Grafiken werden im HTML5 Canvas-Element erstellt
 			\item Balken-, Linien-, Kerzen-, Scatter-, Kuchendiagramme, Heatmaps \dots
 			\item große Anzahl verschiedener Diagrammtypen
 			\item viele Konfigurationsmöglichkeiten
@@ -47,7 +47,7 @@
 	\subsection{Cube}
 		\url{www.square.github.com/cube/}
 		\begin{itemize}
-			\item nutzt D3, Node und MongoDB
+			\item nutzt unter anderem D3, Node.js und MongoDB
 			\item besitzt eine serverseitige Komponente (Collector)
 			\item speziell zur Analyse von Zeitreihen entworfen
 			\item Anforderung von Daten über das WebSocket-Protokoll
@@ -58,8 +58,10 @@
 			\item Metriken werden zwischengespeichert
 			\item Visualisierung der Anfragen clientseitig
 			\item ``Emitters'' senden Daten an Cubes ``Collectors''
-			\item Erstellung eigener Visualisierungen möglich		
-			\item Dokumentation sehr spärlich, fast nicht vorhanden	
+			\item einige wenige Grundvisualisierungen vorhanden
+			\item Erstellung eigener Visualisierungen möglich (wahrscheinlich mit D3)
+			\item Dokumentation sehr spärlich, fast nicht vorhanden
+			\item Apache License
 		\end{itemize}
 
 	\subsection{D3}
@@ -67,9 +69,25 @@
 	
 	\subsection{Dygraphs}
 		\url{www.dygraphs.com}
+		\begin{itemize}
+			\item auv Visualisierung von Zeitreihen zugeschnitten
+			\item interaktive, zoombare Diagramme
+			\item Visualisierung im Canvas-Element
+			\item Unterstützung von CSV-Dateien
+			\item Darstellung automatisiert (Farbwahl, Auflösung der Skalen \dots)
+			\item kompatibel zur Google Visialization API (Datenformat)
+			\item auf Liniendiagramme beschränkt
+			\item hoher Abstraktionsgrad
+			\item einige Konfigurationsmöglichkeiten
+			\item sehr kleine Dokumentation
+			\item MIT-Lizenz
+		\end{itemize}
 	
 	\subsection{Elycharts}
 		\url{www.elycharts.com}
+		\begin{itemize}
+			\item 
+		\end{itemize}
 
 	\subsection{Google Chart Tools}
 		\url{www.code.google.com/intl/de-DE/apis/chart/}
