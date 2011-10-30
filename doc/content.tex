@@ -47,8 +47,19 @@
 	\subsection{Cube}
 		\url{www.square.github.com/cube/}
 		\begin{itemize}
-			\item baut unter anderem auf D3 auf
+			\item nutzt D3, Node und MongoDB
+			\item besitzt eine serverseitige Komponente (Collector)
 			\item speziell zur Analyse von Zeitreihen entworfen
+			\item Anforderung von Daten über das WebSocket-Protokoll
+			\item Zusammenstellen von Diagrammansichten über eine interaktive Oberfläche
+			\item eigene kleine Sprache für Anfragen, Filter
+			\item Cube empfängt Events, fertigt Metriken anhand von Anfragen über diese
+			Events an
+			\item Metriken werden zwischengespeichert
+			\item Visualisierung der Anfragen clientseitig
+			\item ``Emitters'' senden Daten an Cubes ``Collectors''
+			\item Erstellung eigener Visualisierungen möglich		
+			\item Dokumentation sehr spärlich, fast nicht vorhanden	
 		\end{itemize}
 
 	\subsection{D3}
