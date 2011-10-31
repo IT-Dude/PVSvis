@@ -208,10 +208,22 @@
 	anzeigen, was besonders bei langen Zeitreihen von Vorteil ist. Der Nachteil der
 	Bibliothek liegt darin, dass es nur diese eine Visualisierungsform gibt; für
 	das Erstellen weiterer Diagramme müssen andere Frameworks herhalten.
-	\begin{itemize}
-		\item Protovis rendert ganze Szene neu, D3 nur wikrlich veränderte Elemente
-		\item Lernkurve, Komplexizität, Zugänglichkeit
-	\end{itemize}
+	Für das Projekt stehen somit D3 und Protovis in der engeren Auswahl. Beide
+	Bibliotheken verfolgen einen Low-Level-Ansatz, bei dem Daten direkt an deren
+	grafische Repräsentation gebunden wird. Protovis wird nicht mehr aktiv
+	weiterentwickelt; D3 greift jedoch die Konzepte von Protovis auf, erweitert
+	diese und bringt viele Verbesserungen ein. So kann D3 ohne Umweg ein Dokument
+	über das DOM ändern, skaliert besser und legt eine gesteigerte Performance an
+	den Tag; dabei ist D3 allerdings nicht als Protovis 2 zu verstehen.
+	Die für das Projekt verwendete Bibliothek wird D3 sein. Es ist eine aktuelle
+	Technologie und ermöglicht auf einer eigenen Ebene die Erstellung interaktiver
+	and attraktiver Visualisierungen, welche speziell auf die Anforderungen des
+	Projeks zurechtgeschnitten werden können. Das Fehlen konkreter vorgefertigter
+	Diagramme ist hierbei nicht als Nachteil zu sehen, sondern deutet auf die große
+	Flexibilität der Bibliothek hin. Die Lernkurve von D3 ist gegenüber den anderen
+	Frameworks sehr viel steiler, es wird aber eine gute Zugänglichkeit zur
+	grundlegenden Technik geboten, was die Entwicklung und die Qualität des
+	Projekts sicherlich gut beeinflusst.
 
 \section{Implementierung}
 	\begin{itemize}
