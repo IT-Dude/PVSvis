@@ -73,9 +73,13 @@
 			\item direkter Zugriff auf alle Elemente
 			\item doppelte Leistung von Protovis
 			\item Erstellung eigener komplexer, interaktiver Diagramme
+			\item interne Grafikrepräsentation erfolgt direkt über das DOM, eine interne
+			Verwaltung eines Szenengraphen
 			\item ``Medium-Level-Bibliothek'': Low-Level-Kernel, High-Level-Hilfsmodule
 			\item Orientierung and Webstandards HTML, SVG, CSS
+			\item eingebauter Parser vür CSV-Dateien
 			\item viele Beispiele, gute Dokumentation
+			\item \todo{LIZENZ HERAUSFINDEN}
 		\end{itemize}
 	
 	\subsection{Dygraphs}
@@ -150,6 +154,7 @@
 			\item High-Level-Bibliothek
 			\item wenig allgemeine Informationen
 			\item sehr aktive Entwicklung auf GitHub
+			\item Lizenz ???
 		\end{itemize}
 	
 	\subsection{Protovis}
@@ -183,7 +188,10 @@
 		\end{itemize}
 
 \section{Entscheidung für eine Bibliothek}
-\todo{Entscheidung vernünftig begründen!}
+	\begin{itemize}
+		\item Protovis rendert ganze Szene neu, D3 nur wikrlich veränderte Elemente
+		\item Lernkurve, Komplexizität, Zugänglichkeit
+	\end{itemize}
 
 \section{Implementierung}
 	\begin{itemize}
