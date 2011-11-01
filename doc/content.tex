@@ -1,0 +1,265 @@
+\section{Allgemeines}
+	\begin{itemize}
+		\item Praktikumsleiter Steffen Dienst (\url{dienst@informatik.uni-leipzig.de})
+		\item Git: \url{www.github.com/IT-Dude/PVSvis}
+		\item Projektseite: \url{it-dude.github.com/PVSvis/}
+	\end{itemize}
+
+\section{Aufgabe}
+	\begin{itemize}
+		\item Visualisierung einer großen Menge durch Solaranlagen
+		erzeugte Wechselrichterdaten
+		\item Evaluierung mehrerer Javascript-Bibliotheken zur Visualisierung
+		\item interaktive Darstellung im Browser
+		\item Must-haves der Anwendung:
+			\begin{itemize}
+  				\item Anzeige verschiedener Diagrammtypen (Linien-, Scatter-,
+  				Balkendiagramme \dots)
+  				\item Verlinkungen zwischen unterschiedlichen Diagrammen
+  				\item Darstellung mehrerer Achsen innerhalb eines Diagramms
+  				\item Tooltips an Messpunkten \dots
+  				\item Hilfslinien, Lineale \dots
+  				\item Markierung von Werten
+  				\item Ein-/Ausblenden von Messwerten und -reihen
+			\end{itemize}
+	\end{itemize}
+
+\section{Überblick über mehrere Bibliotheken}
+	\subsection{CanvasXpress}
+		\url{www.canvasxpress.org}
+		\begin{itemize}
+			\item Grafiken werden im HTML5 Canvas-Element erstellt
+			\item Balken-, Linien-, Kerzen-, Scatter-, Kuchendiagramme, Heatmaps \dots
+			\item große Anzahl verschiedener Diagrammtypen
+			\item viele Konfigurationsmöglichkeiten
+			\item Unterstützung von JSON
+			\item verschiedene Diagramme benötigen bestimmte Struktur der Daten (als
+			JSON)
+			\item Erstellung eines Diagramms aus Daten, Konfiguration und Events
+			\item absolute High-Level-Bibliothek
+			\item Zeichnen einfacher Formem möglich
+			\item Dokumentation ist der hohen Abstraktion angemessen
+			\item GNU LGPL
+		\end{itemize}
+	
+	\subsection{Cube}
+		\url{www.square.github.com/cube/}
+		\begin{itemize}
+			\item nutzt unter anderem D3, Node.js und MongoDB
+			\item besitzt eine serverseitige Komponente (Collector)
+			\item speziell zur Analyse von Zeitreihen entworfen
+			\item Anforderung von Daten über das WebSocket-Protokoll
+			\item Zusammenstellen von Diagrammansichten über eine interaktive Oberfläche
+			\item eigene kleine Sprache für Anfragen, Filter
+			\item Cube empfängt Events, fertigt Metriken anhand von Anfragen über diese
+			Events an
+			\item Metriken werden zwischengespeichert
+			\item Visualisierung der Anfragen clientseitig
+			\item ``Emitters'' senden Daten an Cubes ``Collectors''
+			\item einige wenige Grundvisualisierungen vorhanden
+			\item Erstellung eigener Visualisierungen möglich (wahrscheinlich mit D3)
+			\item Dokumentation sehr spärlich, fast nicht vorhanden
+			\item Apache License
+		\end{itemize}
+
+	\subsection{D3}
+		\url{www.mbostock.github.com/d3}
+		\begin{itemize}
+			\item gleiches Entwicklerteam wie Protovis
+			\item basiert auf Konzepten und Erfahrungen von und mit Protovis
+			\item Binden von Daten an Elemente des Dokuments, ``Data-Driven Documents'' =
+			D3
+			\item Nutzung des Document Object Model, Schnittstelle zum Inhalt eines
+			Dokuments
+			\item direkter Zugriff auf alle Elemente
+			\item doppelte Leistung von Protovis
+			\item Erstellung eigener komplexer, interaktiver Diagramme
+			\item interne Grafikrepräsentation erfolgt direkt über das DOM, eine interne
+			Verwaltung eines Szenengraphen
+			\item ``Medium-Level-Bibliothek'': Low-Level-Kernel, High-Level-Hilfsmodule
+			\item Orientierung and Webstandards HTML, SVG, CSS
+			\item eingebauter Parser vür CSV-Dateien
+			\item viele Beispiele, gute Dokumentation
+			\item \todo{LIZENZ HERAUSFINDEN}
+		\end{itemize}
+	
+	\subsection{Dygraphs}
+		\url{www.dygraphs.com}
+		\begin{itemize}
+			\item auv Visualisierung von Zeitreihen zugeschnitten
+			\item interaktive, zoombare Diagramme
+			\item Visualisierung im Canvas-Element
+			\item Unterstützung von CSV-Dateien
+			\item Darstellung automatisiert (Farbwahl, Auflösung der Skalen \dots)
+			\item kompatibel zur Google Visialization API (Datenformat)
+			\item auf eine Liniendiagramm-Art beschränkt
+			\item hoher Abstraktionsgrad
+			\item einige Konfigurationsmöglichkeiten
+			\item sehr kleine Dokumentation
+			\item MIT-Lizenz
+		\end{itemize}
+	
+	\subsection{Elycharts}
+		\url{www.elycharts.com}
+		\begin{itemize}
+			\item nutzt jQuery und Raphaël
+			\item mehrere Diagrammtypen
+			\item mehrere Datensätze und Achsen innerhalb eines Diagramms
+			\item viele optische Konfigurationsmöglichkeiten
+			\item Interaktion mit Diagrammen
+			\item Diagramme werden als SVG dargestellt
+			\item optionale Templates für Diagramme
+			\item High-Level-Bibliothek
+			\item MIT-Lizenz
+		\end{itemize}
+
+	\subsection{Google Chart Tools}
+		\url{www.code.google.com/intl/de-DE/apis/chart/}
+		\begin{itemize}
+			\item Grafikdarstellung als SVG
+			\item viele vordefinierte Diagrammtypen
+			\item sehr viele Konfigurationsmöglichkeiten
+			\item interaktive Diagramme, Events
+			\item High-Level-Bibliothek, sehr sehr viele Funktionen
+			\item eigene Sprache für Anfragen, ähnlich SQL
+			\item Unterstützung von JSON, CSV, TSV (tab-seperated values) und HTML als
+			Datenformate
+			\item weitreichende Dokumentation
+			\item Google-eigene Lizenz
+		\end{itemize}
+
+	\subsection{Highcharts}
+		\url{www.highcharts.com/products/highcharts}
+		\begin{itemize}
+			\item Grafiken als SVG
+			\item viele Diagrammtypen, vereinbar innerhalb eines Diagramms
+			\item interaktive Diagramme
+			\item Unterstützung mehrerer Skalen und Achsen
+			\item zoombare Diagramme
+			\item Master-Detail-Chart ähnlich Dycharts
+			\item Datenformate: JSON, CSV, XML
+			\item hoher Abstraktionsgrad; Zugriff auf niedere, einfache
+			Zeichenfunktionen
+			\item ausreichende Dokumentation
+			\item kommerzielle Lizenz, Creative Commons Lizenz für nichtkommerzielle
+			Projekt
+		\end{itemize}
+	
+	\subsection{InfoVis}
+		\url{www.thejit.org}
+		\begin{itemize}
+			\item viele, komplexere Diagrammtypen (TreeMap, SpaceTree, RGraph)
+			\item erhöhter Grad an Animation und Interaktion, abhängig vom Diagrammtyp
+			\item gute Dokumentation
+			\item JSON nutzbar
+			\item High-Level-Bibliothek
+			\item wenig allgemeine Informationen
+			\item sehr aktive Entwicklung auf GitHub
+			\item Lizenz ???
+		\end{itemize}
+	
+	\subsection{Protovis}
+		\url{www.mbostock.github.com/protovis}
+		\begin{itemize}
+			\item wird seit Juni 2011 nicht mehr weiterentwickelt
+			\item Inspiration zu D3, von den gleichen Entwicklern
+			\item nutzt SVG
+			\item Binden von Daten and einfache grafische Elemente, direkte grafische
+			Repräsentation eines Datensatzes
+			\item Breitstellung von Grundelementen, Erweiterung und Vererbung dieser
+			Elemente
+			\item einige grundlegende Diagrammtypen
+			\item Erstellung eigener, komplexer Visualisierungen
+			\item Erstellung der Visualisierung anhand der Daten
+			\item viel Interaktion
+			\item hohe Komplexität von Visualisierungen und Animationen
+			\item sehr viele Möglichkeiten der Konfiguration
+			\item Medium-Level-Bibliothek
+			\item sehr gute Dokumentation, viele Beispiele, learning by example
+			\item BSD Lizenz
+		\end{itemize}
+	
+	\subsection{Andere Bibliotheken}
+		\texttt{Diese Bibliotheken sind sehr primitiv gehalten beziehungsweise
+		beschränken sich auf Low-Level-Grafikerstellung.}
+		\begin{itemize}
+			\item Flot (\url{www.code.google.com/p/flot})
+			\item Raphaël (\url{www.raphaeljs.com})
+			\item Processing.js (\url{www.processingjs.org})
+		\end{itemize}
+
+\section{Entscheidung für eine Bibliothek}
+	Grundsätzlich zerfallen die ausgewählten Bibliotheken in zwei Kategorien. Auf
+	der einen Seite sind zusammen D3 und Protovis zu betrachten, auf der anderen
+	Seite CanvasXpress, Cube, Dygraphs, Elycharts, Google Chart Tools, Highcharts
+	und InfoVis. Letztere haben als gemeinsame Eigenschaft, dass sie im Grunde
+	vorgefertigte Visualisierungen bereitstellen, mit denen sich in relativ kurzer
+	Zeit und mit wenig Aufwand gegebene Daten darstellen lassen. Diese
+	Visualisierungen sind meist interaktiv und komplett konfigurierbar. Der
+	Konfigurierbarkeit sind jedoch gewisse Grenzen gesetzt, wodurch eigene
+	Visualisierungen erstellt werden müssen, was aber ein tiefgründiges
+	Wissen über ein Framework oder sogar Eingriffe in solches erfordert.
+	Hervorzuheben sind Cube und Dygraphs, da sie auf die Darstellung von Zeitreihen
+	spezialisiert sind und somit einen Teil der Projektanforderungen erfüllen. Cube
+	kann effektiv mit der serverseitigen Komponente Daten erfassen und Anfragen
+	beantworten; die graphischen Möglichkeiten des Client sind limitiert, können
+	aber anscheinend auf der Basis von D3 erweitert werden. Abschreckend ist hier
+	besonders die nicht vorhandene Dokumentation. Die von Dygraphs angebotene
+	interaktive Darstellung kann eine Datenreihe in verschiedenen Auflösungen
+	anzeigen, was besonders bei langen Zeitreihen von Vorteil ist. Der Nachteil der
+	Bibliothek liegt darin, dass es nur diese eine Visualisierungsform gibt; für
+	das Erstellen weiterer Diagramme müssen andere Frameworks herhalten.
+	Für das Projekt stehen somit D3 und Protovis in der engeren Auswahl. Beide
+	Bibliotheken verfolgen einen Low-Level-Ansatz, bei dem Daten direkt an deren
+	grafische Repräsentation gebunden wird. Protovis wird nicht mehr aktiv
+	weiterentwickelt; D3 greift jedoch die Konzepte von Protovis auf, erweitert
+	diese und bringt viele Verbesserungen ein. So kann D3 ohne Umweg ein Dokument
+	über das DOM ändern, skaliert besser und legt eine gesteigerte Performance an
+	den Tag; dabei ist D3 allerdings nicht als Protovis 2 zu verstehen.
+	Die für das Projekt verwendete Bibliothek wird D3 sein. Es ist eine aktuelle
+	Technologie und ermöglicht auf einer eigenen Ebene die Erstellung interaktiver
+	and attraktiver Visualisierungen, welche speziell auf die Anforderungen des
+	Projeks zurechtgeschnitten werden können. Das Fehlen konkreter vorgefertigter
+	Diagramme ist hierbei nicht als Nachteil zu sehen, sondern deutet auf die große
+	Flexibilität der Bibliothek hin. Die Lernkurve von D3 ist gegenüber den anderen
+	Frameworks sehr viel steiler, es wird aber eine gute Zugänglichkeit zur
+	grundlegenden Technik geboten, was die Entwicklung und die Qualität des
+	Projekts sicherlich gut beeinflusst.
+
+\section{Implementierung}
+	\begin{itemize}
+		\item interessantes Konzep bei Dycharts
+	\end{itemize}
+
+\section{Treffen}
+	\subsection{20.10.2011}
+		\begin{itemize}
+			\item Besprechung der Aufgabenstellung
+			\item Festlegung der Must-haves
+		\end{itemize}
+
+\section{Ideen}
+	\begin{itemize}
+		\item dunkler Hintergrund, helle Visualisierung \textrightarrow mehr Energie
+		\item Sonne nachahmen ???
+	\end{itemize}
+
+\section{Notizen}
+	\begin{itemize}
+		\item Visualisierung großer Zeiträume, geeignete Methoden?
+		\item \url{bl.ocks.org}
+		\item \url{jsfiddle.net}
+		\item Github Pages
+		\item Processing
+		\item
+		\url{www.sixrevisions.com/javascript/20-fresh-javascript-data-visualization-libraries}
+		\item
+		\url{www.splashnology.com/article/15-awesome-free-javascript-charts/325/}
+		\item
+		\url{www.flowingdata.com/2011/03/09/data-driven-documents-for-visualization-in-the-browser}
+		\item
+		\url{www.flowingdata.com/2010/01/07/11-ways-to-visualize-changes-over-time-a-guide}
+		\item \url{www.dekstop.de/weblog/2011/09/lastfm_heatmap_calendars}
+		\item Heatmap Kalender
+		\item \url{www.datavis.dekstop.de/last.fm_heatmap_calendars}
+	\end{itemize}
