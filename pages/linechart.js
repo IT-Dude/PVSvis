@@ -22,8 +22,8 @@ function setUp(){
 		.data(data)
 		.enter().append("svg:circle")
 			.attr("class", "little")
-			.attr("cx", function(d) {return 3 * d;})
-			.attr("cy", 100)
+			.attr("cx", function(d){return 3 * d;})
+			.attr("cy", function(){return Math.random() * 200;})
 			.attr("r", 20);
 }
 // colors: 103, 0, 31; 178, 24, 43; 214, 96, 77; 244, 165, 130; 253, 219, 199; 224, 224, 224; 186, 186, 186; 135, 135, 135; 77, 77, 77; 26, 26, 26; 
