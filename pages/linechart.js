@@ -1,4 +1,8 @@
-var data = [0, 0, 0, 0, 30, 50, 60, 60, 30, 80, 90, 90, 40, 100, 70, 70, 100, 80, 70, 50, 50, 20, 0, 0, 20, 50, 60, 70, 100, 80]
+var dataSize = 10;
+var data = [];
+for(var i = 0; i < dataSize; i++){
+	data.push(Math.random() * 100);
+}
 
 const chartWidth = 800;
 const chartHeight= 600;
