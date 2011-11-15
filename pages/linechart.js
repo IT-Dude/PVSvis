@@ -35,6 +35,7 @@ function setUp(){
 					.y(function(d, i){return y(d) * -1});
 
 	var group = svg.append("svg:g")
+					.attr("class", "graph")
 					.attr("transform", "translate(0, 500)"); //TODO replace 500 by chartHeigt
 	
 	group.append("svg:path").attr("d", graph(data));
