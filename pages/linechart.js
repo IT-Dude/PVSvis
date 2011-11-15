@@ -4,7 +4,7 @@ const chartHeight= 600;
 const chartWidth = 800;
 const placeholder = 100;
 
-const dataSize = 10;
+const dataSize = 100;
 var data = [];
 for(var i = 0; i < dataSize; i++){
 	data.push(Math.random() * 100);
@@ -59,4 +59,14 @@ function setUp(){
 		.attr("y1", -1 * y(0))
 		.attr("x2", x(0))
 		.attr("y2", -1 * y(chartHeight)); //TODO use the data maximum
+	
+	// add axis ticks
+	group.selectAll("ticksX")
+		.data(x.ticks(10))
+		.enter().append("svg:line")
+			.attr("class", "tick")
+			.attr("x1", function(d) { return x(d); })
+			.attr("y1", -1 * y(0))
+			.attr("x2", function(d) { return x(d); })
+			.attr("y2", -1 * y(-1));
 }
