@@ -4,7 +4,7 @@ const chartHeight= 600;
 const chartWidth = 800;
 const placeholder = 100;
 
-const dataSize = 100;
+const dataSize = 200;
 const tickDistance = 10;
 
 var data = [];
