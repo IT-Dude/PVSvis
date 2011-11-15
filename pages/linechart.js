@@ -1,11 +1,19 @@
-var dataSize = 10;
+const chartHeight= 600;
+const chartWidth = 800;
+const placeholder = 50;
+
+const dataSize = 10;
 var data = [];
 for(var i = 0; i < dataSize; i++){
 	data.push(Math.random() * 100);
 }
 
-const chartWidth = 800;
-const chartHeight= 600;
+y = d3.scale.linear()
+		.domain([0, d3.max(data)])
+		.range([0 + placeholder, chartHeight - placeholder]);
+x = d3.scale.linear()
+		.domain([0, data.length])
+		.range([0 + placeholder, chartWidth - placeholder]);
 
 function setUp(){
 	d3.select("body")
@@ -30,4 +38,5 @@ function setUp(){
 			.attr("cy", function(){return Math.random() * 200;})
 			.attr("r", 20);
 }
+
 // colors: 103, 0, 31; 178, 24, 43; 214, 96, 77; 244, 165, 130; 253, 219, 199; 224, 224, 224; 186, 186, 186; 135, 135, 135; 77, 77, 77; 26, 26, 26; 
