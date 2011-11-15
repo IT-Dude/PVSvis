@@ -61,7 +61,7 @@ function setUp(){
 		.attr("y2", -1 * y(chartHeight)); //TODO use the data maximum
 	
 	// add axis ticks
-	group.selectAll("ticksX")
+	group.selectAll("ticksX") //TODO shorten the axis
 		.data(x.ticks(10))
 		.enter().append("svg:line")
 			.attr("class", "tick")
@@ -78,4 +78,14 @@ function setUp(){
 			.attr("x1", x(-1))
 			.attr("y2", function(d){return y(d) * -1;})
 			.attr("x2", x(0));
+	
+	// add axis labels
+	group.selectAll("labelX")
+		.data(x.ticks(10))
+		.enter().append("svg:text")
+			.attr("class", "text")
+			.text(String)
+			.attr("text-anchor", "right")
+			.attr("x", function(d) { return x(d) })
+			.attr("y", 0)
 }
