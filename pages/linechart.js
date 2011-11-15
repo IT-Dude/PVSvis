@@ -100,5 +100,7 @@ function setUp(){
 					.x(function(d, i){return x(i)})
 					.y(function(d, i){return y(d) * -1});
 	
+	//graph.interpolate("basis"); // step-before
+	
 	group.append("svg:path").attr("d", graph(data));
 }
