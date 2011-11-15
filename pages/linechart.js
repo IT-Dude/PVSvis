@@ -30,13 +30,14 @@ function setUp(){
 		.attr("width", svg.attr("width"))
 		.attr("height", svg.attr("height"));
 	
-	svg.selectAll("circle")
-		.data(data)
-		.enter().append("svg:circle")
-			.attr("class", "little")
-			.attr("cx", function(d){return 3 * d;})
-			.attr("cy", function(){return Math.random() * 200;})
-			.attr("r", 20);
+	var graph = d3.svg.line()
+					.x(function(d, i){return x(i)})
+					.y(function(d, i){return y(d) * -1});
+
+	var group = svg.append("svg:g")
+					.attr("transform", "translate(0, 500)"); //TODO replace 500 by chartHeigt
+	
+	group.append("svg:path").attr("d", graph(data));
 }
 
 // colors: 103, 0, 31; 178, 24, 43; 214, 96, 77; 244, 165, 130; 253, 219, 199; 224, 224, 224; 186, 186, 186; 135, 135, 135; 77, 77, 77; 26, 26, 26; 
