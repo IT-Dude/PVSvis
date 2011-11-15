@@ -5,6 +5,8 @@ const chartWidth = 800;
 const placeholder = 100;
 
 const dataSize = 100;
+const tickDistance = 10;
+
 var data = [];
 for(var i = 0; i < dataSize; i++){
 	data.push(Math.random() * 100);
@@ -49,29 +51,29 @@ function setUp(){
 	group.append("svg:line")
 		.attr("class", "axis")
 		.attr("x1", x(0))
-		.attr("y1", -1 * y(0))
+		.attr("y1", y(0) * -1)
 		.attr("x2", x(chartWidth))
-		.attr("y2", -1 * y(0));
+		.attr("y2", y(0) * -1);
 	
 	group.append("svg:line")
 		.attr("class", "axis")
 		.attr("x1", x(0))
-		.attr("y1", -1 * y(0))
+		.attr("y1", y(0) * -1)
 		.attr("x2", x(0))
-		.attr("y2", -1 * y(chartHeight)); //TODO use the data maximum
+		.attr("y2", y(chartHeight) * -1); //TODO use the data maximum
 	
 	// add axis ticks
 	group.selectAll("ticksX") //TODO shorten the axis
-		.data(x.ticks(10))
+		.data(x.ticks(tickDistance))
 		.enter().append("svg:line")
 			.attr("class", "tick")
 			.attr("x1", function(d){return x(d);})
-			.attr("y1", -1 * y(0))
+			.attr("y1", y(0) * -1)
 			.attr("x2", function(d){return x(d);})
-			.attr("y2", -1 * y(-1));
+			.attr("y2", y(-1) * -1);
 	
 	group.selectAll("ticksX")
-		.data(y.ticks(10))
+		.data(y.ticks(tickDistance))
 		.enter().append("svg:line")
 			.attr("class", "tick")
 			.attr("y1", function(d){return y(d) * -1;})
@@ -81,7 +83,7 @@ function setUp(){
 	
 	// add axis labels
 	group.selectAll("labelX")
-		.data(x.ticks(10))
+		.data(x.ticks(tickDistance))
 		.enter().append("svg:text")
 			.attr("class", "text")
 			.text(String)
@@ -90,7 +92,7 @@ function setUp(){
 			.attr("y", 0);
 	
 	group.selectAll("labelY")
-		.data(y.ticks(10))
+		.data(y.ticks(tickDistance))
 		.enter().append("svg:text")
 			.attr("class", "text")
 			.text(String)
