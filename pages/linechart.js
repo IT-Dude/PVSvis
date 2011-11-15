@@ -1,3 +1,5 @@
+// colors: 103, 0, 31; 178, 24, 43; 214, 96, 77; 244, 165, 130; 253, 219, 199; 224, 224, 224; 186, 186, 186; 135, 135, 135; 77, 77, 77; 26, 26, 26; 
+
 const chartHeight= 600;
 const chartWidth = 800;
 const placeholder = 100;
@@ -43,7 +45,11 @@ function setUp(){
 	
 	group.append("svg:path").attr("d", graph(data));
 	
-	
+	// add the axes
+	group.append("svg:line")
+		.attr("class", "axis")
+		.attr("x1", x(0))
+		.attr("y1", -1 * y(0))
+		.attr("x2", x(chartWidth))
+		.attr("y2", -1 * y(0));
 }
-
-// colors: 103, 0, 31; 178, 24, 43; 214, 96, 77; 244, 165, 130; 253, 219, 199; 224, 224, 224; 186, 186, 186; 135, 135, 135; 77, 77, 77; 26, 26, 26; 
