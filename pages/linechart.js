@@ -76,10 +76,10 @@ function setUp(){
 		.data(y.ticks(tickDistance))
 		.enter().append("svg:line")
 			.attr("class", "tick")
-			.attr("y1", function(d){return y(d) * -1;})
 			.attr("x1", x(-1))
-			.attr("y2", function(d){return y(d) * -1;})
-			.attr("x2", x(0));
+			.attr("y1", function(d){return y(d) * -1;})
+			.attr("x2", x(chartWidth))
+			.attr("y2", function(d){return y(d) * -1;});
 	
 	// add axis labels
 	group.selectAll("labelX")
