@@ -36,16 +36,11 @@ function setUp(){
 		.attr("width", svg.attr("width"))
 		.attr("height", svg.attr("height"));
 	
-	// add a graph
-	var graph = d3.svg.line()
-					.x(function(d, i){return x(i)})
-					.y(function(d, i){return y(d) * -1});
 
+	// add a gropu to make translations easier
 	var group = svg.append("svg:g")
 					.attr("class", "graph")
 					.attr("transform", "translate(0, 500)"); //TODO replace 500 by chartHeigt
-	
-	group.append("svg:path").attr("d", graph(data));
 	
 	// add the axes
 	group.append("svg:line")
@@ -99,4 +94,11 @@ function setUp(){
 			.attr("text-anchor", "right")
 			.attr("x", 0)
 			.attr("y", function(d){return y(d) * -1;});
+
+	// add a graph
+	var graph = d3.svg.line()
+					.x(function(d, i){return x(i)})
+					.y(function(d, i){return y(d) * -1});
+	
+	group.append("svg:path").attr("d", graph(data));
 }
