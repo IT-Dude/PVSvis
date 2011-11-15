@@ -70,7 +70,7 @@ function setUp(){
 			.attr("x2", function(d){return x(d);})
 			.attr("y2", -1 * y(-1));
 	
-	group.selectAll(".yTicks")
+	group.selectAll("ticksX")
 		.data(y.ticks(10))
 		.enter().append("svg:line")
 			.attr("class", "tick")
@@ -86,6 +86,15 @@ function setUp(){
 			.attr("class", "text")
 			.text(String)
 			.attr("text-anchor", "right")
-			.attr("x", function(d) { return x(d) })
-			.attr("y", 0)
+			.attr("x", function(d){return x(d)})
+			.attr("y", 0);
+	
+	group.selectAll("labelY")
+		.data(y.ticks(10))
+		.enter().append("svg:text")
+			.attr("class", "text")
+			.text(String)
+			.attr("text-anchor", "right")
+			.attr("x", 0)
+			.attr("y", function(d){return y(d) * -1;});
 }
