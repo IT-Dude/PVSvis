@@ -1,6 +1,6 @@
 const chartHeight= 600;
 const chartWidth = 800;
-const placeholder = 50;
+const placeholder = 100;
 
 const dataSize = 10;
 var data = [];

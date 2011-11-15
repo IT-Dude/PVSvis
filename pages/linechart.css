@@ -1,11 +1,5 @@
-circle.little {
-	fill: #aaa;
-	stroke: #666;
-	stroke-width: 1.5px;
-}
-
 .graph {
 	fill: none;
-	stroke: #fff;
+	stroke: #FFFFFF;
 	stroke-width: 2px;
 }
