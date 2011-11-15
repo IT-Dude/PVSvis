@@ -65,8 +65,17 @@ function setUp(){
 		.data(x.ticks(10))
 		.enter().append("svg:line")
 			.attr("class", "tick")
-			.attr("x1", function(d) { return x(d); })
+			.attr("x1", function(d){return x(d);})
 			.attr("y1", -1 * y(0))
-			.attr("x2", function(d) { return x(d); })
+			.attr("x2", function(d){return x(d);})
 			.attr("y2", -1 * y(-1));
+	
+	group.selectAll(".yTicks")
+		.data(y.ticks(10))
+		.enter().append("svg:line")
+			.attr("class", "tick")
+			.attr("y1", function(d){return y(d) * -1;})
+			.attr("x1", x(-1))
+			.attr("y2", function(d){return y(d) * -1;})
+			.attr("x2", x(0));
 }
