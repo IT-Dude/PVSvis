@@ -52,4 +52,11 @@ function setUp(){
 		.attr("y1", -1 * y(0))
 		.attr("x2", x(chartWidth))
 		.attr("y2", -1 * y(0));
+	
+	group.append("svg:line")
+		.attr("class", "axis")
+		.attr("x1", x(0))
+		.attr("y1", -1 * y(0))
+		.attr("x2", x(0))
+		.attr("y2", -1 * y(chartHeight)); //TODO use the data maximum
 }
