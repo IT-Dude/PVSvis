@@ -70,9 +70,9 @@ function setUp(){
 			.attr("x1", function(d){return x(d);})
 			.attr("y1", y(0) * -1)
 			.attr("x2", function(d){return x(d);})
-			.attr("y2", y(-1) * -1);
+			.attr("y2", y(chartHeight) * -1);
 	
-	group.selectAll("ticksX")
+	group.selectAll("ticksY")
 		.data(y.ticks(tickDistance))
 		.enter().append("svg:line")
 			.attr("class", "tick")
