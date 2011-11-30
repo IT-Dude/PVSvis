@@ -17,7 +17,7 @@ x = d3.scale.linear()
 		.domain([0, data.length])
 		.range([0 + placeholder, chartWidth - placeholder]);
 
-function setUp(){
+function setUpChart(){
 	// set up some basics
 	d3.select("body")
 		.style("background-color", d3.rgb(50, 50, 50));
