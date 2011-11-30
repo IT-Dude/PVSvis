@@ -4,17 +4,27 @@
 <head>
 	<title>Line chart</title>
 	<link type="text/css" rel="stylesheet" href="linechart.css">
+	<link type="text/css" rel="stylesheet" href="overview.css">
+	<link type="text/css" rel="stylesheet" href="chart.css">
+	
 	<script type="text/javascript" src="../js/d3.js"></script>
-	<script type="text/javascript" src="linechart.js"></script>
+	<script type="text/javascript" src="overview.js"></script>
+	<script type="text/javascript" src="chart.js"></script>
 	
 </head>
 
 <body onload="setUp();">
 	<div class="textHeader">
 		This is a line chart!
-	</div>
+	</div><br />
 
-	<div class="chart" id="chart"></div>
+	<div class="overview left" id="overview">
+		Overview
+	</div>
+	
+	<div class="chart right" id="chart">
+		Chart
+	</div>
 </body>
 
 </html>

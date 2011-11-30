@@ -1,23 +1,18 @@
+*{
+	color: rgb(255, 255, 255);
+}
+
 .textHeader {
-	color: #FFFFFF;
+	color: rgb(255, 255, 255);;
 	font-size: 20px;
 }
 
-.text {
-	color: #FFFFFF;
-	font-size: 12px;
+.left{
+	float: left;
+	width: 600px;
 }
 
-.graph {
-	fill: none;
-	stroke: #FFFFFF;
-	stroke-width: 2px;
-}
-
-.axis {
-	stroke: #000000;
-}
-
-.tick {
-	stroke: #000000;
+.right{
+	float: left;
+	width: 300px;
 }

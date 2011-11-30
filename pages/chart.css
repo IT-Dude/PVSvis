@@ -1,0 +1,18 @@
+.text {
+	color: rgb(255, 255, 255);
+	font-size: 12px;
+}
+
+.graph {
+	fill: none;
+	stroke: rgb(255, 255, 255);
+	stroke-width: 2px;
+}
+
+.axis {
+	stroke: rgb(0, 0, 0);
+}
+
+.tick {
+	stroke: rgb(0, 0, 0);
+}
