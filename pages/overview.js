@@ -2,13 +2,13 @@ const months = 5;
 const days = 15;
 const randomRange = 0.1;
 
-var dataSet = new Array(months);
+var dataSet = [];
 generateSampleData();
 
 function generateSampleData(){
 	for(var i = 0; i < months; i++){
 		var randomPivot = Math.random();
-		var monthDataSet = new Array(days);
+		var monthDataSet = [];
 		
 		for(var j = 0; j < days; j++){
 			var min = randomPivot - randomRange;
@@ -20,7 +20,7 @@ function generateSampleData(){
 			monthDataSet.push(value);			
 		}
 		
-		dataSet[i] = monthDataSet;
+		dataSet.push(monthDataSet);
 	}
 	
 	console.log(dataSet);
