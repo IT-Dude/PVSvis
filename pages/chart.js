@@ -80,7 +80,7 @@ function setUpChart(){
 		.enter().append("svg:text")
 			.attr("class", "text")
 			.text(String)
-			.attr("text-anchor", "right")
+			.attr("text-anchor", "start")
 			.attr("x", function(d){return x(d)})
 			.attr("y", 0);
 	
@@ -89,7 +89,7 @@ function setUpChart(){
 		.enter().append("svg:text")
 			.attr("class", "text")
 			.text(String)
-			.attr("text-anchor", "right")
+			.attr("text-anchor", "start")
 			.attr("x", 0)
 			.attr("y", function(d){return y(d) * -1;});
 
