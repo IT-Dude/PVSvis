@@ -1,3 +1,5 @@
+var vis = (function(){
+
 const days = 30;
 const hours = 24;
 const randomRange = 0.1;
@@ -29,20 +31,6 @@ function generateSampleData(){
 function setUpOverview(){
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -150,3 +138,9 @@ function setUpChart(){
 	
 	group.append("svg:path").attr("d", graph(data));
 }
+
+return{
+	setUpChart: setUpChart
+}
+
+})();
