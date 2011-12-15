@@ -1,18 +1,18 @@
-.tickText {
+*{
 	color: rgb(255, 255, 255);
-	font-size: 12px;
 }
 
-.graph {
-	fill: none;
-	stroke: rgb(255, 255, 255);
-	stroke-width: 2px;
+.textHeader {
+	color: rgb(255, 255, 255);;
+	font-size: 20px;
 }
 
-.axis {
-	stroke: rgb(0, 0, 0);
+.left{
+	float: left;
+	width: 600px;
 }
 
-.tick {
-	stroke: rgb(0, 0, 0);
+.right{
+	float: left;
+	width: 300px;
 }
