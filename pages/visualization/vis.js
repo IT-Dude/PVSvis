@@ -172,9 +172,12 @@ var vis = (function(){
  * 
  * 
  */	
+	function setUp(){
+		chart.setUpChart();
+	}
 
 	// public stuff of the "vis" namespace
 	return{
-		setUpChart: chart.setUpChart
+		setUp: setUp
 	}
 })();
