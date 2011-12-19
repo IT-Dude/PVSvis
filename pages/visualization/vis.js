@@ -27,26 +27,25 @@ var vis = (function(){
  */	
 	var chart = (function(){		
 		function setUpChart(){
-			const PLACEHOLDER = 100;
-			const CHART_WIDTH = VISUALIZATION_WIDTH - PLACEHOLDER;
-			const CHART_HEIGHT = VISUALIZATION_HEIGHT - PLACEHOLDER;
+			const PLACEHOLDER = 50;
+			const GRAPH_WIDTH = VISUALIZATION_WIDTH / 2 - PLACEHOLDER;
+			const GRAPH_HEIGHT = VISUALIZATION_HEIGHT - PLACEHOLDER;
 			
-			const dataSize = 200;
-			const tickDistance = 10;
+			const DATA_SIZE = 100;
 			
 			var data = [];
-			for(var i = 0; i < dataSize; i++){
+			for(var i = 0; i < DATA_SIZE; i++){
 				data.push(Math.random() * 100);
 			}
 			
 			y = d3.scale.linear()
 					.domain([0, d3.max(data)])
-					.range([0 + PLACEHOLDER, CHART_HEIGHT]);
+					.range([0, GRAPH_HEIGHT]);
 			x = d3.scale.linear()
 					.domain([0, data.length])
-					.range([0 + PLACEHOLDER, CHART_WIDTH]);
+					.range([0, GRAPH_WIDTH]);
 					
-			// set up some basics
+			// add a root element
 			var chartRoot = visualizationRoot
 								.append("svg:g")
 								.attr("transform", "translate(" + (VISUALIZATION_WIDTH / 2) + ", 0)");
@@ -57,21 +56,19 @@ var vis = (function(){
 				.attr("width", VISUALIZATION_WIDTH / 2)
 				.attr("height", VISUALIZATION_HEIGHT);
 			
-			graphRoot = chartRoot.append("svg:g");
+			// add a root element for the visualization itself
+			graphRoot = chartRoot.append("svg:g")
+								.attr("transform", "translate(" + PLACEHOLDER + ", " + (-PLACEHOLDER) + ")");
 			
-		
-			// add a gropu to make translations easier
+			// add a group for the graph itself, change the coordinate system origin to the lower left corner
 			var graphGroup = graphRoot.append("svg:g")
 							.attr("class", "graph")
-							.attr("transform", "translate(0, 500)"); //TODO replace 500 by chartHeigt
+							.attr("transform", "translate( 0, " + GRAPH_HEIGHT +  ") scale(1, -1)");
 		
-			// add a graph
+			// add the graph
 			var graph = d3.svg.line()
 							.x(function(d, i){return x(i)})
-							.y(function(d, i){return y(d) * -1});
-			
-			//graph.interpolate("basis"); // step-before
-			
+							.y(function(d, i){return y(d)});			
 			graphGroup.append("svg:path").attr("d", graph(data));
 		}
 		
