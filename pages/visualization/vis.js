@@ -8,35 +8,7 @@ var vis = (function(){
  * 
  */
 
-	var overview = (function(){
-		const days = 30;
-		const hours = 24;
-		const randomRange = 0.1;
-		
-		var dataSet = [];
-		generateSampleData();
-		
-		function generateSampleData(){
-			for(var i = 0; i < days; i++){
-				var randomPivot = Math.random();
-				var daysDataSet = [];
-				
-				for(var j = 0; j < hours; j++){
-					var min = randomPivot - randomRange;
-					var max = randomPivot + randomRange;
-					
-					var value = min + (Math.random() * (max - min));
-					value *= 100;
-					
-					daysDataSet.push(value);			
-				}
-				
-				dataSet.push(daysDataSet);
-			}
-			
-			console.log(dataSet);
-		}
-		
+	var overview = (function(){		
 		function setUpOverview(){
 			
 		}
@@ -75,10 +47,7 @@ var vis = (function(){
 		
 		function setUpChart(){
 			// set up some basics
-			d3.select("body")
-				.style("background-color", d3.rgb(50, 50, 50));
-		
-			var svg = d3.select("#visualization")
+			var svg = visualizationRoot
 				.append("svg:svg")
 					.attr("class", "chart")
 					.attr("width", chartWidth)
@@ -172,7 +141,50 @@ var vis = (function(){
  * 
  * 
  */	
+	const days = 30;
+	const hours = 24;
+	const randomRange = 0.1;
+	
+	var dataSet = [];
+	generateSampleData();
+	
+	var visualizationRoot;
+	
+	function generateSampleData(){
+		for(var i = 0; i < days; i++){
+			var randomPivot = Math.random();
+			var daysDataSet = [];
+			
+			for(var j = 0; j < hours; j++){
+				var min = randomPivot - randomRange;
+				var max = randomPivot + randomRange;
+				
+				var value = min + (Math.random() * (max - min));
+				value *= 100;
+				
+				daysDataSet.push(value);			
+			}
+			
+			dataSet.push(daysDataSet);
+		}
+		
+		console.log(dataSet);
+	}
+	
+	function setUpVisualization(){
+		d3.select("body")
+			.style("background-color", d3.rgb(50, 50, 50));
+	
+		visualizationRoot = d3.select("#visualization")
+								.append("svg:svg")
+									.attr("class", "chart")
+									.attr("width", 600)
+									.attr("height", 800);
+		
+	}
+	
 	function setUp(){
+		setUpVisualization();
 		chart.setUpChart();
 	}
 
