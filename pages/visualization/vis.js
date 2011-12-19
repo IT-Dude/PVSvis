@@ -98,13 +98,23 @@ var vis = (function(){
 			graphGroup.append("svg:path").attr("d", graph(data));
 			
 			// add an overlay
-			var overlay = graphGroup.append("svg:rect")
+			var overlayGroup = graphGroup.append("svg:g");
+			
+			var overlay = overlayGroup.append("svg:rect")
 				.attr("width", GRAPH_WIDTH)
 				.attr("height", GRAPH_HEIGHT)
 				.attr("fill", d3.rgb(0, 255, 0))
 				.attr("fill-opacity", 0.2)
-				.on("mouseover", function(){
-					
+				.on("click", function(){
+					overlayGroup.selectAll(".ruler").remove();
+					var position = d3.svg.mouse(this);
+					overlayGroup.append("svg:line")
+									.attr("class", "ruler")
+									.attr("stroke", d3.rgb(0, 0, 255))
+									.attr("x1", position[0])
+									.attr("y1", 0)
+									.attr("x2", position[0])
+									.attr("y2", 300);
 				});
 		}
 		
