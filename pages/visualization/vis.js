@@ -10,6 +10,8 @@ var vis = (function(){
 
 	var overview = (function(){		
 		function setUpOverview(){
+			const MONTH_RECT_PADDING = 5;
+			const MONTH_RECT_HEIGHT = 20;
 			// add a root element
 			var overviewRoot = visualizationRoot.append("svg:g");
 			
@@ -18,6 +20,20 @@ var vis = (function(){
 				.attr("fill", d3.rgb(200, 200, 200))
 				.attr("width", VISUALIZATION_WIDTH / 2)
 				.attr("height", VISUALIZATION_HEIGHT);
+			
+			overviewRoot.selectAll("monthRects")
+				.data(dataSet)
+				.enter().append("svg:rect")
+					.attr("class", "monthRect")
+					.attr("width", (VISUALIZATION_WIDTH / 2) - (2* MONTH_RECT_PADDING))
+					.attr("height", MONTH_RECT_HEIGHT)
+					.attr("x", MONTH_RECT_PADDING)
+					.attr("y", function(d, i){
+						return i * (MONTH_RECT_HEIGHT + MONTH_RECT_PADDING) + MONTH_RECT_PADDING;
+					})
+					.on("mouseover", function(d, i){
+						chart.setUpChart(dataSet[i]);
+					});
 		}
 		
 		// public stuff of the "overview" namespace
@@ -34,17 +50,19 @@ var vis = (function(){
  * 
  */	
 	var chart = (function(){		
-		function setUpChart(){
+		function setUpChart(inputData){
 			const PLACEHOLDER = 50;
 			const GRAPH_WIDTH = VISUALIZATION_WIDTH / 2 - PLACEHOLDER;
 			const GRAPH_HEIGHT = VISUALIZATION_HEIGHT - PLACEHOLDER;
 			
 			const DATA_SIZE = 100;
 			
-			var data = [];
-			for(var i = 0; i < DATA_SIZE; i++){
-				data.push(Math.random() * 100);
-			}
+			// var data = [];
+			// for(var i = 0; i < DATA_SIZE; i++){
+			// 	data.push(Math.random() * 100);
+			// }
+			
+			var data = inputData;
 			
 			y = d3.scale.linear()
 					.domain([0, d3.max(data)])
@@ -93,7 +111,7 @@ var vis = (function(){
  * 
  * 
  */	
-	const DAYS = 30;
+	const DAYS = 10;
 	const HOURS = 24;
 	const RANDOM_RANGE = 0.1;
 	
@@ -140,7 +158,6 @@ var vis = (function(){
 	function setUp(){
 		setUpVisualization();
 		overview.setUpOverview();
-		chart.setUpChart();
 	}
 
 	// public stuff of the "vis" namespace
