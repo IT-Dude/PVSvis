@@ -26,9 +26,11 @@ var vis = (function(){
  * 
  */	
 	var chart = (function(){
-		const chartHeight= 600;
+		
+		
+		const chartHeight = 600;
 		const chartWidth = 800;
-		const placeholder = 100;
+		const PLACEHOLDER = 100;
 		
 		const dataSize = 200;
 		const tickDistance = 10;
@@ -40,21 +42,22 @@ var vis = (function(){
 		
 		y = d3.scale.linear()
 				.domain([0, d3.max(data)])
-				.range([0 + placeholder, chartHeight - placeholder]);
+				.range([0 + PLACEHOLDER, chartHeight - PLACEHOLDER]);
 		x = d3.scale.linear()
 				.domain([0, data.length])
-				.range([0 + placeholder, chartWidth - placeholder]);
+				.range([0 + PLACEHOLDER, chartWidth - PLACEHOLDER]);
 		
 		function setUpChart(){
 			// set up some basics
 			var chartRoot = visualizationRoot
-				.append("svg:g");
+								.append("svg:g")
+								.attr("transform", "translate(" + (VISUALIZATION_WIDTH / 2) + ", 0)");
 			
 			// add a background
 			chartRoot.append("svg:rect")
 				.attr("fill", d3.rgb(100, 100, 100))
-				.attr("width", chartWidth)
-				.attr("height", chartHeight);
+				.attr("width", VISUALIZATION_WIDTH / 2)
+				.attr("height", VISUALIZATION_HEIGHT);
 			
 		
 			// add a gropu to make translations easier
@@ -136,6 +139,7 @@ var vis = (function(){
 
 	// public stuff of the "vis" namespace
 	return{
-		setUp: setUp
+		setUp: setUp,
+		VISUALIZATION_HEIGHT : VISUALIZATION_HEIGHT
 	}
 })();
