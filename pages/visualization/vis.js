@@ -57,9 +57,11 @@ var vis = (function(){
 				.attr("width", VISUALIZATION_WIDTH / 2)
 				.attr("height", VISUALIZATION_HEIGHT);
 			
+			graphRoot = chartRoot.append("svg:g");
+			
 		
 			// add a gropu to make translations easier
-			var group = chartRoot.append("svg:g")
+			var graphGroup = graphRoot.append("svg:g")
 							.attr("class", "graph")
 							.attr("transform", "translate(0, 500)"); //TODO replace 500 by chartHeigt
 		
@@ -70,7 +72,7 @@ var vis = (function(){
 			
 			//graph.interpolate("basis"); // step-before
 			
-			group.append("svg:path").attr("d", graph(data));
+			graphGroup.append("svg:path").attr("d", graph(data));
 		}
 		
 		// public stuff of the "chart" namespace
@@ -117,7 +119,7 @@ var vis = (function(){
 	}
 	
 	const VISUALIZATION_WIDTH = 1000;
-	const VISUALIZATION_HEIGHT = 800;
+	const VISUALIZATION_HEIGHT = 500;
 	
 	function setUpVisualization(){
 		d3.select("body")
