@@ -96,6 +96,16 @@ var vis = (function(){
 							.x(function(d, i){return x(i)})
 							.y(function(d, i){return y(d)});			
 			graphGroup.append("svg:path").attr("d", graph(data));
+			
+			// add an overlay
+			var overlay = graphGroup.append("svg:rect")
+				.attr("width", GRAPH_WIDTH)
+				.attr("height", GRAPH_HEIGHT)
+				.attr("fill", d3.rgb(0, 255, 0))
+				.attr("fill-opacity", 0.2)
+				.on("mouseover", function(){
+					
+				});
 		}
 		
 		// public stuff of the "chart" namespace
