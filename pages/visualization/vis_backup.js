@@ -47,20 +47,76 @@ var vis = (function(){
 		
 		function setUpChart(){
 			// set up some basics
-			var chartRoot = visualizationRoot
-				.append("svg:g");
+			var svg = visualizationRoot
+				.append("svg:svg")
+					.attr("class", "chart")
+					.attr("width", chartWidth)
+					.attr("height", chartHeight);
 			
 			// add a background
-			chartRoot.append("svg:rect")
+			svg.append("svg:rect")
 				.attr("fill", d3.rgb(100, 100, 100))
-				.attr("width", chartWidth)
-				.attr("height", chartHeight);
+				.attr("width", svg.attr("width"))
+				.attr("height", svg.attr("height"));
 			
 		
 			// add a gropu to make translations easier
-			var group = chartRoot.append("svg:g")
+			var group = svg.append("svg:g")
 							.attr("class", "graph")
 							.attr("transform", "translate(0, 500)"); //TODO replace 500 by chartHeigt
+			
+			// add the axes
+			group.append("svg:line")
+				.attr("class", "axis")
+				.attr("x1", x(0))
+				.attr("y1", y(0) * -1)
+				.attr("x2", x(chartWidth))
+				.attr("y2", y(0) * -1);
+			
+			group.append("svg:line")
+				.attr("class", "axis")
+				.attr("x1", x(0))
+				.attr("y1", y(0) * -1)
+				.attr("x2", x(0))
+				.attr("y2", y(chartHeight) * -1); //TODO use the data maximum
+			
+			// add axis ticks
+			group.selectAll("ticksX") //TODO shorten the axis
+				.data(x.ticks(tickDistance))
+				.enter().append("svg:line")
+					.attr("class", "tick")
+					.attr("x1", function(d){return x(d);})
+					.attr("y1", y(0) * -1)
+					.attr("x2", function(d){return x(d);})
+					.attr("y2", y(chartHeight) * -1);
+			
+			group.selectAll("ticksY")
+				.data(y.ticks(tickDistance))
+				.enter().append("svg:line")
+					.attr("class", "tick")
+					.attr("x1", x(-1))
+					.attr("y1", function(d){return y(d) * -1;})
+					.attr("x2", x(chartWidth))
+					.attr("y2", function(d){return y(d) * -1;});
+			
+			// add axis labels
+			group.selectAll("labelX")
+				.data(x.ticks(tickDistance))
+				.enter().append("svg:text")
+					.attr("class", "tickText")
+					.text(String)
+					.attr("text-anchor", "start")
+					.attr("x", function(d){return x(d)})
+					.attr("y", 0);
+			
+			group.selectAll("labelY")
+				.data(y.ticks(tickDistance))
+				.enter().append("svg:text")
+					.attr("class", "tickText")
+					.text(String)
+					.attr("text-anchor", "start")
+					.attr("x", 0)
+					.attr("y", function(d){return y(d) * -1;});
 		
 			// add a graph
 			var graph = d3.svg.line()
