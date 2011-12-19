@@ -10,11 +10,19 @@ var vis = (function(){
 
 	var overview = (function(){		
 		function setUpOverview(){
+			// add a root element
+			var overviewRoot = visualizationRoot.append("svg:g");
 			
+			// add a background
+			overviewRoot.append("svg:rect")
+				.attr("fill", d3.rgb(200, 200, 200))
+				.attr("width", VISUALIZATION_WIDTH / 2)
+				.attr("height", VISUALIZATION_HEIGHT);
 		}
 		
 		// public stuff of the "overview" namespace
 		return{
+			setUpOverview: setUpOverview
 		}
 	})();
 
@@ -131,6 +139,7 @@ var vis = (function(){
 	
 	function setUp(){
 		setUpVisualization();
+		overview.setUpOverview();
 		chart.setUpChart();
 	}
 
