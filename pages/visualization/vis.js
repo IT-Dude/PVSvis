@@ -114,7 +114,7 @@ var vis = (function(){
 									.attr("x1", position[0])
 									.attr("y1", 0)
 									.attr("x2", position[0])
-									.attr("y2", 300);
+									.attr("y2", 200);
 				});
 		}
 		
