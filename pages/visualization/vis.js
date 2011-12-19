@@ -25,29 +25,27 @@ var vis = (function(){
  * 
  * 
  */	
-	var chart = (function(){
-		
-		
-		const chartHeight = 600;
-		const chartWidth = 800;
-		const PLACEHOLDER = 100;
-		
-		const dataSize = 200;
-		const tickDistance = 10;
-		
-		var data = [];
-		for(var i = 0; i < dataSize; i++){
-			data.push(Math.random() * 100);
-		}
-		
-		y = d3.scale.linear()
-				.domain([0, d3.max(data)])
-				.range([0 + PLACEHOLDER, chartHeight - PLACEHOLDER]);
-		x = d3.scale.linear()
-				.domain([0, data.length])
-				.range([0 + PLACEHOLDER, chartWidth - PLACEHOLDER]);
-		
+	var chart = (function(){		
 		function setUpChart(){
+			const PLACEHOLDER = 100;
+			const CHART_WIDTH = VISUALIZATION_WIDTH - PLACEHOLDER;
+			const CHART_HEIGHT = VISUALIZATION_HEIGHT - PLACEHOLDER;
+			
+			const dataSize = 200;
+			const tickDistance = 10;
+			
+			var data = [];
+			for(var i = 0; i < dataSize; i++){
+				data.push(Math.random() * 100);
+			}
+			
+			y = d3.scale.linear()
+					.domain([0, d3.max(data)])
+					.range([0 + PLACEHOLDER, CHART_HEIGHT]);
+			x = d3.scale.linear()
+					.domain([0, data.length])
+					.range([0 + PLACEHOLDER, CHART_WIDTH]);
+					
 			// set up some basics
 			var chartRoot = visualizationRoot
 								.append("svg:g")
