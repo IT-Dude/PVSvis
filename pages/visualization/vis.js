@@ -85,9 +85,9 @@ var vis = (function(){
  * 
  * 
  */	
-	const days = 30;
-	const hours = 24;
-	const randomRange = 0.1;
+	const DAYS = 30;
+	const HOURS = 24;
+	const RANDOM_RANGE = 0.1;
 	
 	var dataSet = [];
 	generateSampleData();
@@ -95,13 +95,13 @@ var vis = (function(){
 	var visualizationRoot;
 	
 	function generateSampleData(){
-		for(var i = 0; i < days; i++){
+		for(var i = 0; i < DAYS; i++){
 			var randomPivot = Math.random();
 			var daysDataSet = [];
 			
-			for(var j = 0; j < hours; j++){
-				var min = randomPivot - randomRange;
-				var max = randomPivot + randomRange;
+			for(var j = 0; j < HOURS; j++){
+				var min = randomPivot - RANDOM_RANGE;
+				var max = randomPivot + RANDOM_RANGE;
 				
 				var value = min + (Math.random() * (max - min));
 				value *= 100;
@@ -115,6 +115,9 @@ var vis = (function(){
 		console.log(dataSet);
 	}
 	
+	const VISUALIZATION_WIDTH = 1000;
+	const VISUALIZATION_HEIGHT = 800;
+	
 	function setUpVisualization(){
 		d3.select("body")
 			.style("background-color", d3.rgb(50, 50, 50));
@@ -122,9 +125,8 @@ var vis = (function(){
 		visualizationRoot = d3.select("#visualization")
 								.append("svg:svg")
 									.attr("class", "chart")
-									.attr("width", 600)
-									.attr("height", 800);
-		
+									.attr("width", VISUALIZATION_WIDTH)
+									.attr("height", VISUALIZATION_HEIGHT);
 	}
 	
 	function setUp(){
