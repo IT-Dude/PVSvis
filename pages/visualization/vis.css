@@ -24,3 +24,16 @@
 .tick {
 	stroke: rgb(0, 0, 0);
 }
+
+
+
+
+
+
+.selectionBackground{
+	fill: rgb(0, 0, 255);
+}
+
+.diagramBackground{
+	fill: rgb(0, 0, 255);
+}

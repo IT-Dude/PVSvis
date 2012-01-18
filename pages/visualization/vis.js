@@ -1,15 +1,17 @@
 var vis = (function(){
-	function Object_1(){
-		this.text = "I am Object_1";
-		this.print = function(x){
-			alert(x);
-		};
+	
+	
+	function visualize(){
+		var visualization = new Visualization();
+		var selection = new Selection();
+		var diagram = new Diagram();
 	}
 	
 /*
  * Visualization object
  */
 	function Visualization(){
+
 		
 	}
 	
@@ -17,14 +19,32 @@ var vis = (function(){
  * Selection object
  */	
 	function Selection(){
+		const SELECTION_HEIGHT = 300;
+		const SELECTION_WIDTH = 400;
 		
+		this.root = d3.select("#selection").append("svg:svg")
+						.attr("height", SELECTION_HEIGHT)
+						.attr("width", SELECTION_WIDTH)
+							.append("svg:rect")
+							.attr("class", "selectionBackground")
+							.attr("height", SELECTION_HEIGHT)
+							.attr("width", SELECTION_WIDTH);
 	}
 
 /*
  * Diagram object
  */
 	function Diagram(){
+		const DIAGRAM_HEIGHT = 300;
+		const DIAGRAM_WIDTH = 400;
 		
+		this.root = d3.select("#diagram").append("svg:svg")
+						.attr("height", DIAGRAM_HEIGHT)
+						.attr("width", DIAGRAM_WIDTH)
+							.append("svg:rect")
+							.attr("class", "diagramBackground")
+							.attr("height", DIAGRAM_HEIGHT)
+							.attr("width", DIAGRAM_WIDTH);
 	}
 
 
@@ -197,7 +217,7 @@ var vis = (function(){
 		d3.select("body")
 			.style("background-color", d3.rgb(50, 50, 50));
 	
-		visualizationRoot = d3.select("#selection")
+		visualizationRoot = d3.select("#OLD")
 								.append("svg:svg")
 									.attr("class", "chart")
 									.attr("width", VISUALIZATION_WIDTH)
@@ -207,6 +227,7 @@ var vis = (function(){
 	function setUp(){
 		setUpVisualization();
 		overview.setUpOverview();
+		visualize();
 	}
 
 	// public stuff of the "vis" namespace
