@@ -168,7 +168,7 @@ var vis = (function(){
 		d3.select("body")
 			.style("background-color", d3.rgb(50, 50, 50));
 	
-		visualizationRoot = d3.select("#visualization")
+		visualizationRoot = d3.select("#selection")
 								.append("svg:svg")
 									.attr("class", "chart")
 									.attr("width", VISUALIZATION_WIDTH)

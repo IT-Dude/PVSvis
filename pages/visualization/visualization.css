@@ -7,12 +7,10 @@
 	font-size: 20px;
 }
 
-.left{
+.selection{
 	float: left;
-	width: 600px;
 }
 
-.right{
-	float: left;
-	width: 300px;
+.diagram{
+	float: left;	
 }
