@@ -1,4 +1,33 @@
 var vis = (function(){
+	function Object_1(){
+		this.text = "I am Object_1";
+		this.print = function(x){
+			alert(x);
+		};
+	}
+	
+/*
+ * Visualization object
+ */
+	function Visualization(){
+		
+	}
+	
+/*
+ * Selection object
+ */	
+	function Selection(){
+		
+	}
+
+/*
+ * Diagram object
+ */
+	function Diagram(){
+		
+	}
+
+
 
 /*
  * 
