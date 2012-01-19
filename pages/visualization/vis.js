@@ -4,24 +4,24 @@ var vis = (function(){
 	function visualize(){
 		var visualization = new Visualization();
 		var diagram = new Diagram();
-		var selection = new Selection(diagram);
+		var selection = new Selection(visualization.data ,diagram);
 	}
 	
 /*
  * Visualization object
  */
 	function Visualization(){
-
-		
+		this.data = 10;
 	}
 	
 /*
  * Selection object
  */	
-	function Selection(diagram){
+	function Selection(data, diagram){
 		const SELECTION_HEIGHT = 300;
 		const SELECTION_WIDTH = 400;
 		
+		this.data = data;
 		this.diagram = diagram;
 		this.root = d3.select("#selection").append("svg:svg")
 						.attr("height", SELECTION_HEIGHT)
@@ -30,7 +30,7 @@ var vis = (function(){
 							.attr("class", "selectionBackground")
 							.attr("height", SELECTION_HEIGHT)
 							.attr("width", SELECTION_WIDTH)
-							.on("click", function(){this.diagram.render();}.bind(this));		
+							.on("click", function(data){this.diagram.render(data);}.bind(this, this.data));		
 		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS);
 	}
 
@@ -49,10 +49,16 @@ var vis = (function(){
 							.attr("height", DIAGRAM_HEIGHT)
 							.attr("width", DIAGRAM_WIDTH);
 		
-		this.render = function(){
-			alert("I am rendering!");
+		this.render = function(data){
+			alert("I am rendering: " + data);
 		}	
 	}
+
+
+
+
+
+
 
 
 
