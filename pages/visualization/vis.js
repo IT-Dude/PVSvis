@@ -24,7 +24,7 @@ var vis = (function(){
 		
 		var obj = new SomeObject();
 		
-		this.diagram = diagram;		
+		this.diagram = diagram;
 		this.root = d3.select("#selection").append("svg:svg")
 						.attr("height", SELECTION_HEIGHT)
 						.attr("width", SELECTION_WIDTH)
@@ -32,10 +32,13 @@ var vis = (function(){
 							.attr("class", "selectionBackground")
 							.attr("height", SELECTION_HEIGHT)
 							.attr("width", SELECTION_WIDTH)
-							.on("click", function(){this.print_();});
+// WTF WTF WTF WTF WTF WTF WTF WTF WTF WTF 
+							.on("click", function(){this.diagram.print_();});
+														//.bind(this)
+// WTF WTF WTF WTF WTF WTF WTF WTF WTF WTF 
 							
 		this.print_ = function(){
-			alert("bar");
+			alert("I am the Selection!");
 		}
 		
 		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS);
@@ -61,6 +64,10 @@ var vis = (function(){
 							.attr("class", "diagramBackground")
 							.attr("height", DIAGRAM_HEIGHT)
 							.attr("width", DIAGRAM_WIDTH);
+		
+		this.print_ = function(){
+			alert("I am the Diagram!");
+		}	
 	}
 
 
@@ -227,7 +234,7 @@ var vis = (function(){
 	}
 	
 	const VISUALIZATION_WIDTH = 1000;
-	const VISUALIZATION_HEIGHT = 500;
+	const VISUALIZATION_HEIGHT = 50;
 	
 	function setUpVisualization(){
 		d3.select("body")
