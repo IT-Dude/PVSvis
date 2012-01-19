@@ -22,8 +22,6 @@ var vis = (function(){
 		const SELECTION_HEIGHT = 300;
 		const SELECTION_WIDTH = 400;
 		
-		var obj = new SomeObject();
-		
 		this.diagram = diagram;
 		this.root = d3.select("#selection").append("svg:svg")
 						.attr("height", SELECTION_HEIGHT)
@@ -32,22 +30,8 @@ var vis = (function(){
 							.attr("class", "selectionBackground")
 							.attr("height", SELECTION_HEIGHT)
 							.attr("width", SELECTION_WIDTH)
-// WTF WTF WTF WTF WTF WTF WTF WTF WTF WTF 
-							.on("click", function(){this.diagram.print_();});
-														//.bind(this)
-// WTF WTF WTF WTF WTF WTF WTF WTF WTF WTF 
-							
-		this.print_ = function(){
-			alert("I am the Selection!");
-		}
-		
+							.on("click", function(){this.diagram.render();}.bind(this));		
 		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS);
-	}
-	
-	function SomeObject(){
-		this.print_ = function(){
-			alert("I am SomeObject!");
-		}		
 	}
 
 /*
@@ -65,8 +49,8 @@ var vis = (function(){
 							.attr("height", DIAGRAM_HEIGHT)
 							.attr("width", DIAGRAM_WIDTH);
 		
-		this.print_ = function(){
-			alert("I am the Diagram!");
+		this.render = function(){
+			alert("I am rendering!");
 		}	
 	}
 
