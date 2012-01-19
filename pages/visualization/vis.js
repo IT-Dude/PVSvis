@@ -3,8 +3,8 @@ var vis = (function(){
 	
 	function visualize(){
 		var visualization = new Visualization();
-		var selection = new Selection();
 		var diagram = new Diagram();
+		var selection = new Selection(diagram);
 	}
 	
 /*
@@ -18,17 +18,33 @@ var vis = (function(){
 /*
  * Selection object
  */	
-	function Selection(){
+	function Selection(diagram){
 		const SELECTION_HEIGHT = 300;
 		const SELECTION_WIDTH = 400;
 		
+		var obj = new SomeObject();
+		
+		this.diagram = diagram;		
 		this.root = d3.select("#selection").append("svg:svg")
 						.attr("height", SELECTION_HEIGHT)
 						.attr("width", SELECTION_WIDTH)
 							.append("svg:rect")
 							.attr("class", "selectionBackground")
 							.attr("height", SELECTION_HEIGHT)
-							.attr("width", SELECTION_WIDTH);
+							.attr("width", SELECTION_WIDTH)
+							.on("click", function(){this.print_();});
+							
+		this.print_ = function(){
+			alert("bar");
+		}
+		
+		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS);
+	}
+	
+	function SomeObject(){
+		this.print_ = function(){
+			alert("I am SomeObject!");
+		}		
 	}
 
 /*
