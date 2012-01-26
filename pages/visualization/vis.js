@@ -18,18 +18,31 @@ var vis = (function(){
 		const VALUE_MAX = 10;
 		const VALUE_RANGE = 2;
 		
-		this.data = [];
-		setUpData();		
+		this.data = setUpData();
+		console.log(this.data);
 		
 		function setUpData() {
+			data = [];
 			for(var i = 0; i < MONTHS; i++){
 				var month = [];
 				for(var j = 0; j < DAYS_; j++){
 					var day = [];
-					for(var k = 0; k < MEASUREMENTS; k++){
+					var pivot = Math.random();
+					pivot = pivot * VALUE_MAX;
+					
+					if(pivot > (VALUE_MAX - VALUE_RANGE)){
+						pivot = VALUE_MAX - VALUE_RANGE;
 					}
+					
+					for(var k = 0; k < MEASUREMENTS; k++){
+						day.push(pivot + Math.random() * VALUE_RANGE)
+					}
+					
+					month.push(day)
 				}
+				data.push(month);
 			}
+			return data;
 		}
 	}
 	
@@ -240,7 +253,7 @@ var vis = (function(){
 			dataSet.push(daysDataSet);
 		}
 		
-		console.log(dataSet);
+		//console.log(dataSet);
 	}
 	
 	const VISUALIZATION_WIDTH = 1000;
