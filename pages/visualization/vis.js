@@ -19,9 +19,9 @@ var vis = (function(){
 		const VALUE_RANGE = 2;
 		
 		this.data = [];
+		setUpData();		
 		
-		
-		this.setUpData = function() {
+		function setUpData() {
 			for(var i = 0; i < MONTHS; i++){
 				var month = [];
 				for(var j = 0; j < DAYS_; j++){
@@ -31,8 +31,6 @@ var vis = (function(){
 				}
 			}
 		}
-		
-		this.setUpData();
 	}
 	
 /*
