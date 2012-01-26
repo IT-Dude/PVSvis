@@ -11,6 +11,8 @@ var vis = (function(){
  * Visualization object
  */
 	function Visualization(){
+		var self = this;
+		
 		const MONTHS = 1;
 		const DAYS_ = 10; // TODO: rename this to DAYS
 		const MEASUREMENTS = 20;
@@ -50,6 +52,8 @@ var vis = (function(){
  * Selection object
  */	
 	function Selection(data, diagram){
+		var self = this;
+		
 		const SELECTION_HEIGHT = 300;
 		const SELECTION_WIDTH = 400;
 		
@@ -70,6 +74,8 @@ var vis = (function(){
  * Diagram object
  */
 	function Diagram(){
+		var self = this;
+		
 		const DIAGRAM_HEIGHT = 300;
 		const DIAGRAM_WIDTH = 400;
 		
