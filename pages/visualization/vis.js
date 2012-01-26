@@ -11,7 +11,28 @@ var vis = (function(){
  * Visualization object
  */
 	function Visualization(){
-		this.data = 10;
+		const MONTHS = 1;
+		const DAYS_ = 10; // TODO: rename this to DAYS
+		const MEASUREMENTS = 20;
+		
+		const VALUE_MAX = 10;
+		const VALUE_RANGE = 2;
+		
+		this.data = [];
+		
+		
+		this.setUpData = function() {
+			for(var i = 0; i < MONTHS; i++){
+				var month = [];
+				for(var j = 0; j < DAYS_; j++){
+					var day = [];
+					for(var k = 0; k < MEASUREMENTS; k++){
+					}
+				}
+			}
+		}
+		
+		this.setUpData();
 	}
 	
 /*
@@ -29,8 +50,8 @@ var vis = (function(){
 							.append("svg:rect")
 							.attr("class", "selectionBackground")
 							.attr("height", SELECTION_HEIGHT)
-							.attr("width", SELECTION_WIDTH)
-							.on("click", function(data){this.diagram.render(data);}.bind(this, this.data));		
+							.attr("width", SELECTION_WIDTH);
+							//.on("click", function(data){this.diagram.render(data);}.bind(this, this.data));		
 		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS);
 	}
 
@@ -49,9 +70,10 @@ var vis = (function(){
 							.attr("height", DIAGRAM_HEIGHT)
 							.attr("width", DIAGRAM_WIDTH);
 		
-		this.render = function(data){
-			alert("I am rendering: " + data);
-		}	
+		
+		//this.render = function(data){
+		//	alert("I am rendering: " + data);
+		//}	
 	}
 
 
