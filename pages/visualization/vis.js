@@ -82,10 +82,10 @@ var vis = (function(){
 		
 		const DIAGRAM_HEIGHT = 300;
 		const DIAGRAM_WIDTH = 400;
-		const DIAGRAM_PADDING_N = 20;
-		const DIAGRAM_PADDING_S = 20;
-		const DIAGRAM_PADDING_W = 20;
-		const DIAGRAM_PADDING_E = 20;
+		const PADDING_TOP = 20;
+		const PADDING_BOTTOM = 20;
+		const PADDING_LEFT = 20;
+		const PADDING_RIGHT = 20;
 		
 		setUpDiagram();
 		
@@ -100,24 +100,23 @@ var vis = (function(){
 						.attr("width", DIAGRAM_WIDTH);
 			
 			chartRoot = this.root.append("svg:g")
-			chartRoot.attr("transform", "translate("+ DIAGRAM_PADDING_W +", " + (DIAGRAM_HEIGHT - DIAGRAM_PADDING_S) +  ") scale(1, -1)");
+			chartRoot.attr("transform", "translate("+ PADDING_LEFT +", " + (DIAGRAM_HEIGHT - PADDING_BOTTOM) +  ") scale(1, -1)");
 			
 			chartRoot.append("svg:rect")
 					.attr("fill-opacity", 0.0)
 					.attr("stroke", d3.rgb(0, 0, 200))
-					.attr("width", DIAGRAM_WIDTH - DIAGRAM_PADDING_W - DIAGRAM_PADDING_E)
-					.attr("height", DIAGRAM_HEIGHT - DIAGRAM_PADDING_N - DIAGRAM_PADDING_S);
+					.attr("width", DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT)
+					.attr("height", DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM);
 		}
 		
 		x = d3.scale.linear()
 				.domain([0, MEASUREMENTS])
-				.range([0, DIAGRAM_WIDTH - DIAGRAM_PADDING_W]); // TODO investigate this!!! why no other paddings?
+				.range([0, DIAGRAM_WIDTH - PADDING_RIGHT]); // TODO investigate this!!! why no other paddings?
 		y = d3.scale.linear()
 				.domain([0, VALUE_MAX])
-				.range([0, DIAGRAM_HEIGHT - DIAGRAM_PADDING_N - DIAGRAM_PADDING_S]); // TODO investigate this!!! why other padding?
+				.range([0, DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM]); // TODO investigate this!!! why other padding?
 		
 		this.render = function(data){
-			alert("rendering");
 			chartRoot.selectAll(".dataGraph").remove();
 			
 			for(var i = 0; i < data.length; i++){
