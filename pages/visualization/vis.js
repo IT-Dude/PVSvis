@@ -22,7 +22,7 @@ var vis = (function(){
 		const VALUE_RANGE = 2;
 		
 		this.data = setUpData();
-		console.log(this.data);
+		//console.log(this.data);
 		
 		function setUpData() {
 			data = [];
@@ -70,7 +70,7 @@ var vis = (function(){
 							//.on("click", function(data){this.diagram.render(data);}.bind(this, this.data));		
 		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS);
 		
-		diagram.render(this.data);
+		diagram.render(this.data[0]);
 	}
 
 /*
@@ -111,7 +111,7 @@ var vis = (function(){
 		
 		x = d3.scale.linear()
 				.domain([0, MEASUREMENTS])
-				.range([0, DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT]); // TODO investigate this!!! why no other paddings?
+				.range([0, DIAGRAM_WIDTH - PADDING_LEFT]); // TODO investigate this!!! why no other paddings?
 		y = d3.scale.linear()
 				.domain([0, VALUE_MAX])
 				.range([0, DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM]); // TODO investigate this!!! why other padding?
@@ -120,7 +120,8 @@ var vis = (function(){
 			chartRoot.selectAll(".dataGraph").remove();
 			
 			for(var i = 0; i < data.length; i++){
-				chartRoot.selectAll(".dataGraph").data(data[i]).enter()
+				//console.log(data[i]);
+				chartRoot.selectAll(".dataGraph").data(data).enter()
 					.append("svg:path")
 					.attr("class", "dataGraph")
 					.attr("d", d3.svg.line()
