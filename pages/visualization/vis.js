@@ -126,10 +126,11 @@ var vis = (function(){
 			chartRoot.selectAll(".dataGraph").remove();
 			
 			for(var i = 0; i < data.length; i++){ // TODO eliminate this loop?
-				chartRoot.selectAll(".dataGraph").data(data).enter()
+				chartRoot.selectAll(".dataGraph").data(data).map(function(d){return d.data;}).enter()
+					
 					.append("svg:path")
 					.attr("class", "dataGraph")
-					.style("stroke", function(d){return stroke(i);})
+					.style("stroke", function(d, i){return stroke(i);})
 					.attr("d", d3.svg.line()
 						.x(function(d, i){return x(i)})
 						.y(function(d, i){return y(d)})
@@ -141,7 +142,7 @@ var vis = (function(){
 						}
 					)
 					.on("mouseout", function(){
-							d3.select(this).attr("class", "dataGraph");
+							d3.select(this).style("stroke", function(d, i){return stroke(i);});
 						}
 					);
 					*/
