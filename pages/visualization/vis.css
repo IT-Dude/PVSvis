@@ -40,8 +40,8 @@
 
 .dataGraph{
     fill: none;
-    stroke: rgb(255, 0, 0);
-    stroke-width: 2px;
+ 
+    stroke-width: 4px;
 }
 
 .dataGraphHighlight{

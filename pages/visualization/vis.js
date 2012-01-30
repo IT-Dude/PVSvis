@@ -15,7 +15,7 @@ var vis = (function(){
 		var self = this;
 		
 		const MONTHS = 1;
-		const DAYS_ = 10; // TODO: rename this to DAYS
+		const DAYS = 10;
 		
 		
 		
@@ -28,7 +28,7 @@ var vis = (function(){
 			data = [];
 			for(var i = 0; i < MONTHS; i++){
 				var month = [];
-				for(var j = 0; j < DAYS_; j++){
+				for(var j = 0; j < DAYS; j++){
 					var day = [];
 					var pivot = Math.random();
 					pivot = pivot * VALUE_MAX;
@@ -109,26 +109,33 @@ var vis = (function(){
 					.attr("height", DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM);
 		}
 		
-		x = d3.scale.linear()
+		var x = d3.scale.linear()
 				.domain([0, MEASUREMENTS - 1]) // TODO investigate this!!! why -1???
 				.range([0, DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT]);
-		y = d3.scale.linear()
+		var y = d3.scale.linear()
 				.domain([0, VALUE_MAX])
 				.range([0, DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM]);
+		
+		var color = d3.scale.linear()
+			.domain([0, 5])
+			.range(["red", "green"]);
+			
+		stroke = d3.scale.category20();
 		
 		this.render = function(data){
 			chartRoot.selectAll(".dataGraph").remove();
 			
-			for(var i = 0; i < data.length; i++){
-				//console.log(data[i]);
+			for(var i = 0; i < data.length; i++){ // TODO eliminate this loop?
 				chartRoot.selectAll(".dataGraph").data(data).enter()
 					.append("svg:path")
 					.attr("class", "dataGraph")
+					.style("stroke", function(d){return stroke(i);})
 					.attr("d", d3.svg.line()
 						.x(function(d, i){return x(i)})
 						.y(function(d, i){return y(d)})
 						.interpolate("basis")
 					)
+					/*
 					.on("mouseover", function(){
 							d3.select(this).attr("class", "dataGraph dataGraphHighlight");
 						}
@@ -137,6 +144,7 @@ var vis = (function(){
 							d3.select(this).attr("class", "dataGraph");
 						}
 					);
+					*/
 			}
 		}	
 	}
