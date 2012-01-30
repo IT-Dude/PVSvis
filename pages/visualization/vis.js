@@ -78,19 +78,37 @@ var vis = (function(){
 		
 		const DIAGRAM_HEIGHT = 300;
 		const DIAGRAM_WIDTH = 400;
+		const DIAGRAM_PADDING_N = 20;
+		const DIAGRAM_PADDING_S = 20;
+		const DIAGRAM_PADDING_W = 20;
+		const DIAGRAM_PADDING_E = 20;
 		
-		this.root = d3.select("#diagram").append("svg:svg")
-						.attr("height", DIAGRAM_HEIGHT)
-						.attr("width", DIAGRAM_WIDTH)
-							.append("svg:rect")
-							.attr("class", "diagramBackground")
+		setUpDiagram();
+		
+		function setUpDiagram(){
+			this.root = d3.select("#diagram").append("svg:svg")
 							.attr("height", DIAGRAM_HEIGHT)
 							.attr("width", DIAGRAM_WIDTH);
+					
+			this.root.append("svg:rect")
+						.attr("class", "diagramBackground")
+						.attr("height", DIAGRAM_HEIGHT)
+						.attr("width", DIAGRAM_WIDTH);
+			
+			var chartRoot = this.root.append("svg:g")
+			chartRoot.attr("transform", "translate("+ DIAGRAM_PADDING_W +", " + (DIAGRAM_HEIGHT - DIAGRAM_PADDING_S) +  ") scale(1, -1)");
+			
+			chartRoot.append("svg:rect")
+					.attr("fill", d3.rgb(0, 0, 100))
+					.attr("width", 100)
+					.attr("height", 100);
+		}
 		
-		
-		//this.render = function(data){
-		//	alert("I am rendering: " + data);
-		//}	
+		this.render = function(data){
+			for(var i = 0; i < data.length; i++){
+				
+			}
+		}	
 	}
 
 
