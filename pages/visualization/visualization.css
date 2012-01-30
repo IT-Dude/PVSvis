@@ -2,15 +2,11 @@
 	color: rgb(255, 255, 255);
 }
 
+body{
+    background-color: rgb(20, 20, 20);
+}
+
 .textHeader {
 	color: rgb(255, 255, 255);;
 	font-size: 20px;
-}
-
-.selection{
-
-}
-
-.diagram{
-
 }
