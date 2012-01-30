@@ -82,10 +82,10 @@ var vis = (function(){
 		
 		const DIAGRAM_HEIGHT = 600;
 		const DIAGRAM_WIDTH = 1000;
-		const PADDING_TOP = 50;
-		const PADDING_BOTTOM = 100;
-		const PADDING_LEFT = 100;
-		const PADDING_RIGHT = 20;
+		const PADDING_TOP = 10;
+		const PADDING_BOTTOM = 80;
+		const PADDING_LEFT = 80;
+		const PADDING_RIGHT = 100;
 		
 		setUpDiagram();
 		
@@ -110,11 +110,11 @@ var vis = (function(){
 		}
 		
 		x = d3.scale.linear()
-				.domain([0, MEASUREMENTS])
-				.range([0, DIAGRAM_WIDTH - PADDING_LEFT]); // TODO investigate this!!! why no other paddings?
+				.domain([0, MEASUREMENTS - 1]) // TODO investigate this!!! why -1???
+				.range([0, DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT]);
 		y = d3.scale.linear()
 				.domain([0, VALUE_MAX])
-				.range([0, DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM]); // TODO investigate this!!! why other padding?
+				.range([0, DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM]);
 		
 		this.render = function(data){
 			chartRoot.selectAll(".dataGraph").remove();
