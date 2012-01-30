@@ -80,8 +80,8 @@ var vis = (function(){
 		var self = this;
 		var chartRoot;
 		
-		const DIAGRAM_HEIGHT = 300;
-		const DIAGRAM_WIDTH = 400;
+		const DIAGRAM_HEIGHT = 600;
+		const DIAGRAM_WIDTH = 1000;
 		const PADDING_TOP = 20;
 		const PADDING_BOTTOM = 20;
 		const PADDING_LEFT = 20;
@@ -128,6 +128,14 @@ var vis = (function(){
 						.y(function(d, i){return y(d)})
 						.interpolate("basis")
 					)
+					.on("mouseover", function(){
+							d3.select(this).attr("class", "dataGraph dataGraphHighlight");
+						}
+					)
+					.on("mouseout", function(){
+							d3.select(this).attr("class", "dataGraph");
+						}
+					);
 			}
 		}	
 	}
