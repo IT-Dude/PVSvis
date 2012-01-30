@@ -1,5 +1,6 @@
 var vis = (function(){
-	
+	const MEASUREMENTS = 20;
+	const VALUE_MAX = 10;
 	
 	function visualize(){
 		var visualization = new Visualization();
@@ -15,9 +16,9 @@ var vis = (function(){
 		
 		const MONTHS = 1;
 		const DAYS_ = 10; // TODO: rename this to DAYS
-		const MEASUREMENTS = 20;
 		
-		const VALUE_MAX = 10;
+		
+		
 		const VALUE_RANGE = 2;
 		
 		this.data = setUpData();
@@ -68,6 +69,8 @@ var vis = (function(){
 							.attr("width", SELECTION_WIDTH);
 							//.on("click", function(data){this.diagram.render(data);}.bind(this, this.data));		
 		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS);
+		
+		diagram.render(this.data);
 	}
 
 /*
@@ -75,6 +78,7 @@ var vis = (function(){
  */
 	function Diagram(){
 		var self = this;
+		var chartRoot;
 		
 		const DIAGRAM_HEIGHT = 300;
 		const DIAGRAM_WIDTH = 400;
@@ -95,18 +99,36 @@ var vis = (function(){
 						.attr("height", DIAGRAM_HEIGHT)
 						.attr("width", DIAGRAM_WIDTH);
 			
-			var chartRoot = this.root.append("svg:g")
+			chartRoot = this.root.append("svg:g")
 			chartRoot.attr("transform", "translate("+ DIAGRAM_PADDING_W +", " + (DIAGRAM_HEIGHT - DIAGRAM_PADDING_S) +  ") scale(1, -1)");
 			
 			chartRoot.append("svg:rect")
-					.attr("fill", d3.rgb(0, 0, 100))
-					.attr("width", 100)
-					.attr("height", 100);
+					.attr("fill-opacity", 0.0)
+					.attr("stroke", d3.rgb(0, 0, 200))
+					.attr("width", DIAGRAM_WIDTH - DIAGRAM_PADDING_W - DIAGRAM_PADDING_E)
+					.attr("height", DIAGRAM_HEIGHT - DIAGRAM_PADDING_N - DIAGRAM_PADDING_S);
 		}
 		
+		x = d3.scale.linear()
+				.domain([0, MEASUREMENTS])
+				.range([0, DIAGRAM_WIDTH - DIAGRAM_PADDING_W]); // TODO investigate this!!! why no other paddings?
+		y = d3.scale.linear()
+				.domain([0, VALUE_MAX])
+				.range([0, DIAGRAM_HEIGHT - DIAGRAM_PADDING_N - DIAGRAM_PADDING_S]); // TODO investigate this!!! why other padding?
+		
 		this.render = function(data){
+			alert("rendering");
+			chartRoot.selectAll(".dataGraph").remove();
+			
 			for(var i = 0; i < data.length; i++){
-				
+				chartRoot.selectAll(".dataGraph").data(data[i]).enter()
+					.append("svg:path")
+					.attr("class", "dataGraph")
+					.attr("d", d3.svg.line()
+						.x(function(d, i){return x(i)})
+						.y(function(d, i){return y(d)})
+						.interpolate("basis")
+					)
 			}
 		}	
 	}
