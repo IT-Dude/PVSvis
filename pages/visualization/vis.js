@@ -68,9 +68,14 @@ var vis = (function(){
 							.attr("height", SELECTION_HEIGHT)
 							.attr("width", SELECTION_WIDTH);
 							//.on("click", function(data){this.diagram.render(data);}.bind(this, this.data));		
-		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS);
+		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS); // small PREVIEW
 		
+		setUpSelection();
 		diagram.render(this.data[0]);
+		
+		function setUpSelection(){
+			
+		}
 	}
 
 /*
@@ -117,10 +122,10 @@ var vis = (function(){
 				.range([0, DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM]);
 		
 		var color = d3.scale.linear()
-			.domain([0, 5])
+			.domain([0, VALUE_MAX])
 			.range(["red", "green"]);
 			
-		stroke = d3.scale.category20();
+		var stroke = d3.scale.category20();
 		
 		this.render = function(data){
 			chartRoot.selectAll(".dataGraph").remove();
@@ -128,7 +133,7 @@ var vis = (function(){
 		chartRoot.selectAll(".dataGraph").data(data).map(function(d){return d.data;}).enter()
 			.append("svg:path")
 			.attr("class", "dataGraph")
-			.style("stroke", function(d, i){return stroke(d);})
+			.style("stroke", function(d, i){return stroke(d);}) // TODO use alternative: return color(d[0])
 			.attr("d", d3.svg.line()
 				.x(function(d, i){return x(i)})
 				.y(function(d, i){return y(d)})
