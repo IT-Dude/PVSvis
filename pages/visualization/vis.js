@@ -125,28 +125,23 @@ var vis = (function(){
 		this.render = function(data){
 			chartRoot.selectAll(".dataGraph").remove();
 			
-			for(var i = 0; i < data.length; i++){ // TODO eliminate this loop?
-				chartRoot.selectAll(".dataGraph").data(data).map(function(d){return d.data;}).enter()
-					
-					.append("svg:path")
-					.attr("class", "dataGraph")
-					.style("stroke", function(d, i){return stroke(i);})
-					.attr("d", d3.svg.line()
-						.x(function(d, i){return x(i)})
-						.y(function(d, i){return y(d)})
-						.interpolate("basis")
-					)
-					/*
-					.on("mouseover", function(){
-							d3.select(this).attr("class", "dataGraph dataGraphHighlight");
-						}
-					)
-					.on("mouseout", function(){
-							d3.select(this).style("stroke", function(d, i){return stroke(i);});
-						}
-					);
-					*/
-			}
+		chartRoot.selectAll(".dataGraph").data(data).map(function(d){return d.data;}).enter()
+			.append("svg:path")
+			.attr("class", "dataGraph")
+			.style("stroke", function(d, i){return stroke(d);})
+			.attr("d", d3.svg.line()
+				.x(function(d, i){return x(i)})
+				.y(function(d, i){return y(d)})
+				.interpolate("basis")
+			)
+			.on("mouseover", function(){
+					d3.select(this).style("stroke", d3.rgb(0, 0, 0));
+				}
+			)
+			.on("mouseout", function(){
+					d3.select(this).style("stroke", function(d, i){return stroke(d);});
+				}
+			);
 		}	
 	}
 
