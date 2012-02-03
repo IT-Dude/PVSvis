@@ -109,7 +109,7 @@ var vis = (function(){
 				.range([0, DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT]);
 		var y = d3.scale.linear()
 				.domain([0, VALUE_MAX])
-				.range([0, DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM]);
+				.range([DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM, 0]);
 		
 		setUpDiagram();
 		
@@ -125,7 +125,7 @@ var vis = (function(){
 						.attr("width", DIAGRAM_WIDTH);
 			
 			chartRoot = this.root.append("svg:g")
-			chartRoot.attr("transform", "translate("+ PADDING_LEFT +", " + (DIAGRAM_HEIGHT - PADDING_BOTTOM) +  ") scale(1, -1)");
+			chartRoot.attr("transform", "translate("+ PADDING_LEFT +", " + PADDING_TOP + ")");
 			
 			chartRoot.append("svg:rect")
 					.attr("fill-opacity", 0.0)
@@ -136,7 +136,7 @@ var vis = (function(){
 			
 			// axes
 			var axisRoot = this.root.append("svg:g");
-			axisRoot.attr("transform", "translate(" + PADDING_LEFT + ", " + (PADDING_BOTTOM) + ")");
+			axisRoot.attr("transform", "translate(" + PADDING_LEFT + ", " + PADDING_TOP + ")");
 			
 			// y-axis
 			var yAxis = d3.svg.axis()
