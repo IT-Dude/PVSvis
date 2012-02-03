@@ -59,9 +59,19 @@ var vis = (function(){
 		this.data = data;
 		this.diagram = diagram;
 		
-		setUpSelection();
-		diagram.render(this.data[0]);
+		var fill = d3.scale.category20();		
 		
+		
+		this.showSelection = function(selectedMonth){
+			selectionRoot.selectAll("#dayContainer").remove();
+			selectionRoot.append("svg:rect")
+							.attr("class", "dayContainer")
+							.attr("fill", function(d, i){return fill(selectedMonth)})
+							.attr("width", SELECTION_WIDTH)
+							.attr("height", SELECTION_HEIGHT - MONTH_SELECTOR_HEIGHT)
+							.attr("transform", "translate(0, " + MONTH_SELECTOR_HEIGHT + ")");
+		}
+
 		function setUpSelection(){
 			this.root = d3.select("#selection").append("svg:svg")
 						.attr("height", SELECTION_HEIGHT)
@@ -76,7 +86,7 @@ var vis = (function(){
 			
 			selectionRoot = this.root.append("svg:g");
 			
-			var fill = d3.scale.category20();
+			
 			var monthSelectors = selectionRoot.selectAll("#monthSelectors").data(self.data).enter()
 									.append("svg:rect")
 									.attr("fill", function(d, i){return fill(i)})
@@ -86,8 +96,12 @@ var vis = (function(){
 											return "translate(" + (i * (SELECTION_WIDTH / self.data.length))+ ", 0)";
 										}
 									)
-									.on("click", function(d, i){alert(i)});
+									.on("click", function(d, i){self.showSelection(i)});
 		}
+		
+		setUpSelection();
+		this.showSelection(0);
+		diagram.render(this.data[0]);
 	}
 
 /*
@@ -151,6 +165,7 @@ var vis = (function(){
 				.call(yAxis);
 			
 			// x-axis
+			// TODO improve the x-axis
 			startDate = new Date(2000, 0, 0, 0, 0, 0);
 			endDate = new Date(2000, 0, 0, 23, 59, 59);
 			format = d3.time.format("%H:%M");
