@@ -104,6 +104,13 @@ var vis = (function(){
 		const PADDING_LEFT = 80;
 		const PADDING_RIGHT = 100;
 		
+		var x = d3.scale.linear()
+				.domain([0, MEASUREMENTS - 1])
+				.range([0, DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT]);
+		var y = d3.scale.linear()
+				.domain([0, VALUE_MAX])
+				.range([0, DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM]);
+		
 		setUpDiagram();
 		
 		function setUpDiagram(){
@@ -124,14 +131,22 @@ var vis = (function(){
 					.attr("stroke", d3.rgb(0, 0, 200))
 					.attr("width", DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT)
 					.attr("height", DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM);
+			
+			// y-Axis
+			
+			var yAxis = d3.svg.axis()
+							.scale(y)
+							.tickSize(5)
+							.ticks(10)
+							.orient("left");
+
+			chartRoot.append("svg:g")
+				.attr("id", "yAxis")
+				.attr("class", "axis")
+				.call(yAxis);
+			
+			// x-Axis
 		}
-		
-		var x = d3.scale.linear()
-				.domain([0, MEASUREMENTS - 1])
-				.range([0, DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT]);
-		var y = d3.scale.linear()
-				.domain([0, VALUE_MAX])
-				.range([0, DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM]);
 		
 		// TODO calculate the color based on the data's mean value
 		var color = d3.scale.linear()
