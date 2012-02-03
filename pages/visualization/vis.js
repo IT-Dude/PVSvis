@@ -1,6 +1,9 @@
 var vis = (function(){
 	const MEASUREMENTS = 20;
+	const MONTHS = 3;
+	const DAYS = 10;
 	const VALUE_MAX = 10;
+	const VALUE_RANGE = 2;
 	
 	function visualize(){
 		var visualization = new Visualization();
@@ -13,10 +16,6 @@ var vis = (function(){
  */
 	function Visualization(){
 		var self = this;
-		
-		const MONTHS = 1;
-		const DAYS = 10;
-		const VALUE_RANGE = 2;
 		
 		this.data = setUpData();
 		//console.log(this.data);
@@ -51,27 +50,43 @@ var vis = (function(){
  */	
 	function Selection(data, diagram){
 		var self = this;
+		var selectionRoot;
 		
 		const SELECTION_HEIGHT = 300;
 		const SELECTION_WIDTH = 400;
+		const MONTH_SELECTOR_HEIGHT = 50;
 		
 		this.data = data;
 		this.diagram = diagram;
-		this.root = d3.select("#selection").append("svg:svg")
-						.attr("height", SELECTION_HEIGHT)
-						.attr("width", SELECTION_WIDTH)
-							.append("svg:rect")
-							.attr("class", "selectionBackground")
-							.attr("height", SELECTION_HEIGHT)
-							.attr("width", SELECTION_WIDTH);
-							//.on("click", function(data){this.diagram.render(data);}.bind(this, this.data));		
-		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS); // small PREVIEW
 		
 		setUpSelection();
 		diagram.render(this.data[0]);
 		
 		function setUpSelection(){
+			this.root = d3.select("#selection").append("svg:svg")
+						.attr("height", SELECTION_HEIGHT)
+						.attr("width", SELECTION_WIDTH);
+						
+			this.root.append("svg:rect")
+							.attr("class", "selectionBackground")
+							.attr("height", SELECTION_HEIGHT)
+							.attr("width", SELECTION_WIDTH);
+							//.on("click", function(data){this.diagram.render(data);}.bind(this, this.data));		
+		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS); // small PREVIEW
 			
+			selectionRoot = this.root.append("svg:g");
+			
+			var fill = d3.scale.category20();
+			var monthSelectors = selectionRoot.selectAll("#monthSelectors").data(self.data).enter()
+									.append("svg:rect")
+									.attr("fill", function(d, i){return fill(i)})
+									.attr("width", SELECTION_WIDTH / self.data.length)
+									.attr("height", MONTH_SELECTOR_HEIGHT)
+									.attr("transform", function(d, i){
+											return "translate(" + (i * (SELECTION_WIDTH / self.data.length))+ ", 0)";
+										}
+									)
+									.on("click", function(d, i){alert(i)});
 		}
 	}
 
@@ -131,7 +146,7 @@ var vis = (function(){
 			chartRoot.selectAll(".dataGraph").data(data).map(function(d){return d.data;}).enter()
 				.append("svg:path")
 				.attr("class", "dataGraph")
-				.style("stroke", function(d, i){return stroke(d);}) // TODO use alternative: return color(d[0])
+				.style("stroke", function(d, i){return stroke(d);}) // TODO use alternative: return color(d[0]) // TODO use i instead of d?
 				.attr("d", d3.svg.line()
 					.x(function(d, i){return x(i)})
 					.y(function(d, i){return y(d)})
