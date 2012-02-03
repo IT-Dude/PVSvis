@@ -117,7 +117,8 @@ var vis = (function(){
 			this.root = d3.select("#diagram").append("svg:svg")
 							.attr("height", DIAGRAM_HEIGHT)
 							.attr("width", DIAGRAM_WIDTH);
-					
+			
+			// background
 			this.root.append("svg:rect")
 						.attr("class", "diagramBackground")
 						.attr("height", DIAGRAM_HEIGHT)
@@ -132,20 +133,24 @@ var vis = (function(){
 					.attr("width", DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT)
 					.attr("height", DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM);
 			
-			// y-Axis
 			
+			// axes
+			var axisRoot = this.root.append("svg:g");
+			axisRoot.attr("transform", "translate(" + PADDING_LEFT + ", " + (PADDING_BOTTOM) + ")");
+			
+			// y-axis
 			var yAxis = d3.svg.axis()
 							.scale(y)
 							.tickSize(5)
 							.ticks(10)
 							.orient("left");
 
-			chartRoot.append("svg:g")
+			axisRoot.append("svg:g")
 				.attr("id", "yAxis")
 				.attr("class", "axis")
 				.call(yAxis);
 			
-			// x-Axis
+			// x-axis
 		}
 		
 		// TODO calculate the color based on the data's mean value
