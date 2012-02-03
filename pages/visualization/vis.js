@@ -141,7 +141,7 @@ var vis = (function(){
 			// y-axis
 			var yAxis = d3.svg.axis()
 							.scale(y)
-							.tickSize(5, 3, 0)
+							.tickSize(6, 4, 2)
 							.ticks(VALUE_MAX)
 							.orient("left");
 
@@ -151,6 +151,24 @@ var vis = (function(){
 				.call(yAxis);
 			
 			// x-axis
+			startDate = new Date(2000, 0, 0, 0, 0, 0);
+			endDate = new Date(2000, 0, 0, 23, 59, 59);
+			format = d3.time.format("%H:%M");
+			var xTime = d3.time.scale()
+							.range([0, DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT])
+							.domain([startDate, endDate]);
+			
+			var  xAxis = d3.svg.axis().scale(xTime)
+							.tickSize(6, 4, 2)
+							.tickFormat(format)
+							.ticks(d3.time.hours, 3)
+							.tickSubdivide(true);
+			
+			axisRoot.append("svg:g")
+		    	.attr("id", "xAxis")
+				.attr("class", "axis")
+				.attr("transform", "translate(0," + (DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM)+ ")")
+				.call(xAxis);
 		}
 		
 		// TODO calculate the color based on the data's mean value
