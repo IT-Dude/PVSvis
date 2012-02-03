@@ -5,6 +5,20 @@ var vis = (function(){
 	const VALUE_MAX = 10;
 	const VALUE_RANGE = 2;
 	
+	var inputTangle;
+	function setUpTangle(){
+		inputTangle = new Tangle(document.getElementById("inputTangle"), {
+			initialize: function(){
+				this.tangleMONTHS = MONTHS;
+			},
+			update: function(){
+				document.getElementById("selection").innerHTML = "";
+				document.getElementById("diagram").innerHTML = "";
+				visualize();
+			}
+		});
+	}
+	
 	function visualize(){
 		var visualization = new Visualization();
 		var diagram = new Diagram();
@@ -224,6 +238,7 @@ var vis = (function(){
  * public stuff of the "vis" namespace
  */
 	return{
-		visualize: visualize,
+		setUpTangle: setUpTangle,
+		visualize: visualize
 	}
 })();

@@ -7,11 +7,11 @@
 	<link type="text/css" rel="stylesheet" href="vis.css">
 	<link type="text/css" rel="stylesheet" href="../../js/TangleKit/TangleKit.css">
 	
-	<script type="text/javascript" src="../js/Tangle.js"></script>
-	<script type="text/javascript" src="../js/TangleKit/mootools.js"></script>
-	<script type="text/javascript" src="../js/TangleKit/sprintf.js"></script>
-	<script type="text/javascript" src="../js/TangleKit/BVTouchable.js"></script>
-	<script type="text/javascript" src="../js/TangleKit/TangleKit.js"></script>
+	<script type="text/javascript" src="../../js/Tangle.js"></script>
+	<script type="text/javascript" src="../../js/TangleKit/mootools.js"></script>
+	<script type="text/javascript" src="../../js/TangleKit/sprintf.js"></script>
+	<script type="text/javascript" src="../../js/TangleKit/BVTouchable.js"></script>
+	<script type="text/javascript" src="../../js/TangleKit/TangleKit.js"></script>
 	
 	<script type="text/javascript" src="../../js/d3.js"></script>
 	<script type="text/javascript" src="../../js/d3.time.js"></script>
@@ -19,11 +19,14 @@
 	
 </head>
 
-<body onload="vis.visualize();">
+<body onload="vis.setUpTangle();">
 	<div class="textHeader">
 		This site is best viewed on a widescreen monitor!
 	</div><br />
 	
+	<div id="inputTangle">
+		Months: <span data-var="tangleMONTHS" class="TKAdjustableNumber" data-min="1" data-max="10" data-step="1"></span><br/>
+	</div>
 	
 	<div class="selection" id="selection">
 	</div>
