@@ -141,8 +141,8 @@ var vis = (function(){
 			// y-axis
 			var yAxis = d3.svg.axis()
 							.scale(y)
-							.tickSize(5)
-							.ticks(10)
+							.tickSize(5, 3, 0)
+							.ticks(VALUE_MAX)
 							.orient("left");
 
 			axisRoot.append("svg:g")
