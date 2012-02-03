@@ -10,3 +10,11 @@ body{
 	color: rgb(255, 255, 255);;
 	font-size: 20px;
 }
+
+.selection{
+    float: left;
+}
+
+.diagram{
+    float: left;
+}
