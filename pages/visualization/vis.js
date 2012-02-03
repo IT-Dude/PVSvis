@@ -16,9 +16,6 @@ var vis = (function(){
 		
 		const MONTHS = 1;
 		const DAYS = 10;
-		
-		
-		
 		const VALUE_RANGE = 2;
 		
 		this.data = setUpData();
@@ -115,12 +112,13 @@ var vis = (function(){
 		}
 		
 		var x = d3.scale.linear()
-				.domain([0, MEASUREMENTS - 1]) // TODO investigate this!!! why -1???
+				.domain([0, MEASUREMENTS - 1])
 				.range([0, DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT]);
 		var y = d3.scale.linear()
 				.domain([0, VALUE_MAX])
 				.range([0, DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM]);
 		
+		// TODO calculate the color based on the data's mean value
 		var color = d3.scale.linear()
 			.domain([0, VALUE_MAX])
 			.range(["red", "green"]);
@@ -130,27 +128,33 @@ var vis = (function(){
 		this.render = function(data){
 			chartRoot.selectAll(".dataGraph").remove();
 			
-		chartRoot.selectAll(".dataGraph").data(data).map(function(d){return d.data;}).enter()
-			.append("svg:path")
-			.attr("class", "dataGraph")
-			.style("stroke", function(d, i){return stroke(d);}) // TODO use alternative: return color(d[0])
-			.attr("d", d3.svg.line()
-				.x(function(d, i){return x(i)})
-				.y(function(d, i){return y(d)})
-				.interpolate("basis")
-			)
-			.on("mouseover", function(){
-					d3.select(this).style("stroke", d3.rgb(0, 0, 0));
-				}
-			)
-			.on("mouseout", function(){
-					d3.select(this).style("stroke", function(d, i){return stroke(d);});
-				}
-			);
-		}	
+			chartRoot.selectAll(".dataGraph").data(data).map(function(d){return d.data;}).enter()
+				.append("svg:path")
+				.attr("class", "dataGraph")
+				.style("stroke", function(d, i){return stroke(d);}) // TODO use alternative: return color(d[0])
+				.attr("d", d3.svg.line()
+					.x(function(d, i){return x(i)})
+					.y(function(d, i){return y(d)})
+					.interpolate("basis")
+				)
+				.on("mouseover", function(){
+						d3.select(this).style("stroke", d3.rgb(0, 0, 0));
+					}
+				)
+				.on("mouseout", function(){
+						d3.select(this).style("stroke", function(d, i){return stroke(d);});
+					}
+				);
+		}
 	}
 
-	// public stuff of the "vis" namespace
+
+
+
+
+/*
+ * public stuff of the "vis" namespace
+ */
 	return{
 		visualize: visualize,
 	}
