@@ -91,6 +91,8 @@ var vis = (function(){
 		const MONTH_SELECTOR_HEIGHT = 50;
 		const DAY_SELECTOR_SIZE = 40;
 		const DAY_SELECTOR_PADDING = 10;
+		const PREVIEW_HEIGHT = 100;
+		const PREVIEW_WIDTH = 100;
 		
 		this.data = data;
 		this.diagram = diagram;
@@ -113,7 +115,9 @@ var vis = (function(){
 									.attr("width", DAY_SELECTOR_SIZE)
 									.attr("height", DAY_SELECTOR_SIZE)
 									.attr("transform", function(d, i){
+											// TODO do some math here! simplify things?
 											var itemsPerRow = Math.floor(SELECTION_WIDTH / (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING));
+											var paddingLeft = (SELECTION_WIDTH + DAY_SELECTOR_PADDING - itemsPerRow * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING)) / 2;
 											var row = 0;
 											
 											for(var j = 0; j < i; j++){
@@ -122,11 +126,20 @@ var vis = (function(){
 												}
 											}
 											
-											var transX = DAY_SELECTOR_PADDING / 2 + (i % itemsPerRow) * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING);
+											var transX = paddingLeft + (i % itemsPerRow) * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING);
 											var transY = MONTH_SELECTOR_HEIGHT + DAY_SELECTOR_PADDING + row * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING);
 											return "translate(" + transX + ", "+ transY + ")";
 										}
+									)
+									.on("mouseover", function(d, i){showPreview(self.data, selectedMonth, i);})
+									.on("mouseout", function(){
+											// TODO destroy the preview
+										}
 									);
+		}
+		
+		function showPreview(data, selectedMonth, day){
+			
 		}
 
 		function setUpSelection(){
