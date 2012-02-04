@@ -5,6 +5,20 @@ var vis = (function(){
 	const VALUE_MAX = 10;
 	const VALUE_RANGE = 2;
 	
+	updateConstants();
+	function updateConstants(){
+		MONTHS = getTangleValue("MONTHS");
+	}
+	
+	function getTangleValue(variable){
+		if(typeof inputTangle === "undefined"){
+			return eval("I_" + variable);
+		}
+		else{
+			return inputTangle.getValue("tangle" + variable);
+		}
+	}
+	
 	var inputTangle;
 	function setUpTangle(){
 		inputTangle = new Tangle(document.getElementById("inputTangle"), {
@@ -16,23 +30,13 @@ var vis = (function(){
 				
 				document.getElementById("selection").innerHTML = "";
 				document.getElementById("diagram").innerHTML = "";
+				updateConstants();
 				visualize();
 				
 			}
 		});
 	}
-	
-	MONTHS = function(){
-		if(typeof inputTangle === "undefined"){
-			return I_MONTHS;
-		}
-		else{
-			return inputTangle.getValue("tangleMONTHS")
-		}
-	}
-	
-	
-	
+
 	function visualize(){
 		var visualization = new Visualization();
 		var diagram = new Diagram();
@@ -50,7 +54,7 @@ var vis = (function(){
 		
 		function setUpData() {
 			data = [];
-			for(var i = 0; i < MONTHS(); i++){
+			for(var i = 0; i < MONTHS; i++){
 				var month = [];
 				for(var j = 0; j < DAYS; j++){
 					var day = [];
