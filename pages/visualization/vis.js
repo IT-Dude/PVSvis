@@ -89,14 +89,15 @@ var vis = (function(){
 		const SELECTION_HEIGHT = 300;
 		const SELECTION_WIDTH = 400;
 		const MONTH_SELECTOR_HEIGHT = 50;
+		const DAY_SELECTOR_SIZE = 40;
+		const DAY_SELECTOR_PADDING = 10;
 		
 		this.data = data;
 		this.diagram = diagram;
 		
-		var fill = d3.scale.category20();		
+		var fill = d3.scale.category20();
 		
-		
-		this.showSelection = function(selectedMonth){
+		this.showMonthSelection = function(selectedMonth){
 			selectionRoot.selectAll("#dayContainer").remove();
 			selectionRoot.append("svg:rect")
 							.attr("class", "dayContainer")
@@ -104,6 +105,19 @@ var vis = (function(){
 							.attr("width", SELECTION_WIDTH)
 							.attr("height", SELECTION_HEIGHT - MONTH_SELECTOR_HEIGHT)
 							.attr("transform", "translate(0, " + MONTH_SELECTOR_HEIGHT + ")");
+			
+			var daySelectors = selectionRoot.selectAll("#daySelector").data(self.data).map(function(d){return d.data;}).enter()
+									.append("svg:rect")
+									.attr("class", "daySelector")
+									.attr("fill", function(d, i){return fill(i)})
+									.attr("width", DAY_SELECTOR_SIZE)
+									.attr("height", DAY_SELECTOR_SIZE)
+									.attr("transform", function(d, i){
+											var transX = i * DAY_SELECTOR_SIZE;
+											var transY = DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING;
+											return "translate(" + transX + ", "+ transY + ")";
+										}
+									);
 		}
 
 		function setUpSelection(){
@@ -116,13 +130,14 @@ var vis = (function(){
 							.attr("height", SELECTION_HEIGHT)
 							.attr("width", SELECTION_WIDTH);
 							//.on("click", function(data){this.diagram.render(data);}.bind(this, this.data));		
-		//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS); // small PREVIEW
+							//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS); // small PREVIEW
 			
 			selectionRoot = this.root.append("svg:g");
 			
 			
-			var monthSelectors = selectionRoot.selectAll("#monthSelectors").data(self.data).enter()
+			var monthSelectors = selectionRoot.selectAll("#monthSelector").data(self.data).enter()
 									.append("svg:rect")
+									.attr("class", "monthSelector")
 									.attr("fill", function(d, i){return fill(i)})
 									.attr("width", SELECTION_WIDTH / self.data.length)
 									.attr("height", MONTH_SELECTOR_HEIGHT)
@@ -130,11 +145,11 @@ var vis = (function(){
 											return "translate(" + (i * (SELECTION_WIDTH / self.data.length))+ ", 0)";
 										}
 									)
-									.on("click", function(d, i){self.showSelection(i)});
+									.on("click", function(d, i){self.showMonthSelection(i)});
 		}
 		
 		setUpSelection();
-		this.showSelection(0);
+		this.showMonthSelection(0);
 		diagram.render(this.data[0]);
 	}
 
