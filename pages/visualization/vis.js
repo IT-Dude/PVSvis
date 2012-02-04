@@ -1,6 +1,6 @@
 var vis = (function(){
 	const I_MONTHS = 4;
-	const I_DAYS = 10;
+	const I_DAYS = 15;
 	const I_MEASUREMENTS = 10;
 	const VALUE_MAX = 10;
 	const VALUE_RANGE = 2;
@@ -113,8 +113,17 @@ var vis = (function(){
 									.attr("width", DAY_SELECTOR_SIZE)
 									.attr("height", DAY_SELECTOR_SIZE)
 									.attr("transform", function(d, i){
-											var transX = i * DAY_SELECTOR_SIZE;
-											var transY = MONTH_SELECTOR_HEIGHT + DAY_SELECTOR_PADDING;
+											var itemsPerRow = Math.floor(SELECTION_WIDTH / DAY_SELECTOR_SIZE);
+											var row = 0;
+											
+											for(var j = 0; j < i; j++){
+												if((i * DAY_SELECTOR_SIZE - (row * SELECTION_WIDTH)) >= SELECTION_WIDTH){
+													row = row + 1;
+												}
+											}
+											
+											var transX = (i % itemsPerRow) * DAY_SELECTOR_SIZE;
+											var transY = MONTH_SELECTOR_HEIGHT + DAY_SELECTOR_PADDING + row * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING);
 											return "translate(" + transX + ", "+ transY + ")";
 										}
 									);
