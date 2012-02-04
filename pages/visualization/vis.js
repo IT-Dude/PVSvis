@@ -106,7 +106,7 @@ var vis = (function(){
 							.attr("height", SELECTION_HEIGHT - MONTH_SELECTOR_HEIGHT)
 							.attr("transform", "translate(0, " + MONTH_SELECTOR_HEIGHT + ")");
 			
-			var daySelectors = selectionRoot.selectAll("#daySelector").data(self.data).map(function(d){return d.data;}).enter()
+			var daySelectors = selectionRoot.selectAll("#daySelector").data(self.data[selectedMonth]).enter()
 									.append("svg:rect")
 									.attr("class", "daySelector")
 									.attr("fill", function(d, i){return fill(i)})
@@ -114,7 +114,7 @@ var vis = (function(){
 									.attr("height", DAY_SELECTOR_SIZE)
 									.attr("transform", function(d, i){
 											var transX = i * DAY_SELECTOR_SIZE;
-											var transY = DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING;
+											var transY = MONTH_SELECTOR_HEIGHT + DAY_SELECTOR_PADDING;
 											return "translate(" + transX + ", "+ transY + ")";
 										}
 									);
