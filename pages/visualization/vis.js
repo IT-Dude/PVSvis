@@ -1,13 +1,14 @@
 var vis = (function(){
 	const MEASUREMENTS = 10;
 	const I_MONTHS = 4;
-	const DAYS = 20;
+	const I_DAYS = 20;
 	const VALUE_MAX = 10;
 	const VALUE_RANGE = 2;
 	
 	updateConstants();
 	function updateConstants(){
 		MONTHS = getTangleValue("MONTHS");
+		DAYS = getTangleValue("DAYS");
 	}
 	
 	function getTangleValue(variable){
@@ -24,15 +25,14 @@ var vis = (function(){
 		inputTangle = new Tangle(document.getElementById("inputTangle"), {
 			initialize: function(){
 				this.tangleMONTHS = I_MONTHS;
+				this.tangleDAYS = I_DAYS;
 			},
 			update: function(){
 				// TODO remove elements via DOM, removeChildren()
-				
 				document.getElementById("selection").innerHTML = "";
 				document.getElementById("diagram").innerHTML = "";
 				updateConstants();
 				visualize();
-				
 			}
 		});
 	}
