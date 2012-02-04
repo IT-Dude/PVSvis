@@ -13,14 +13,25 @@ var vis = (function(){
 			},
 			update: function(){
 				// TODO remove elements via DOM, removeChildren()
-				/*
+				
 				document.getElementById("selection").innerHTML = "";
 				document.getElementById("diagram").innerHTML = "";
 				visualize();
-				*/
+				
 			}
 		});
 	}
+	
+	fooMONTH = function(){
+		if(typeof inputTangle === "undefined"){
+			return MONTHS;
+		}
+		else{
+			return inputTangle.getValue("tangleMONTHS")
+		}
+	}
+	
+	
 	
 	function visualize(){
 		var visualization = new Visualization();
@@ -39,7 +50,7 @@ var vis = (function(){
 		
 		function setUpData() {
 			data = [];
-			for(var i = 0; i < MONTHS; i++){
+			for(var i = 0; i < fooMONTH(); i++){
 				var month = [];
 				for(var j = 0; j < DAYS; j++){
 					var day = [];
