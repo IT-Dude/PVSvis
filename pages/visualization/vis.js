@@ -1,7 +1,7 @@
 var vis = (function(){
-	const MEASUREMENTS = 1;
-	const iMONTHS = 3;
-	const DAYS = 1;
+	const MEASUREMENTS = 10;
+	const MONTHS = 4;
+	const DAYS = 20;
 	const VALUE_MAX = 10;
 	const VALUE_RANGE = 2;
 	
@@ -9,29 +9,18 @@ var vis = (function(){
 	function setUpTangle(){
 		inputTangle = new Tangle(document.getElementById("inputTangle"), {
 			initialize: function(){
-				this.tangleMONTHS = iMONTHS;
+				this.tangleMONTHS = MONTHS;
 			},
 			update: function(){
 				// TODO remove elements via DOM, removeChildren()
+				/*
 				document.getElementById("selection").innerHTML = "";
 				document.getElementById("diagram").innerHTML = "";
 				visualize();
+				*/
 			}
 		});
 	}
-	
-	
-	// TODO make this shit work!!!
-	function foo(){
-		if(inputTangle == undefined){
-			return iMONTHS;
-		}
-		else{
-			return inputTangle.getValue("tangleMONTHS");
-		}
-	}
-	
-	MONTHS = foo();
 	
 	function visualize(){
 		var visualization = new Visualization();
