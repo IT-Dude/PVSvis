@@ -1,7 +1,7 @@
 var vis = (function(){
-	const MEASUREMENTS = 10;
 	const I_MONTHS = 4;
-	const I_DAYS = 20;
+	const I_DAYS = 10;
+	const I_MEASUREMENTS = 10;
 	const VALUE_MAX = 10;
 	const VALUE_RANGE = 2;
 	
@@ -9,6 +9,7 @@ var vis = (function(){
 	function updateConstants(){
 		MONTHS = getTangleValue("MONTHS");
 		DAYS = getTangleValue("DAYS");
+		MEASUREMENTS = getTangleValue("MEASUREMENTS");
 	}
 	
 	function getTangleValue(variable){
@@ -26,6 +27,7 @@ var vis = (function(){
 			initialize: function(){
 				this.tangleMONTHS = I_MONTHS;
 				this.tangleDAYS = I_DAYS;
+				this.tangleMEASUREMENTS = I_MEASUREMENTS;
 			},
 			update: function(){
 				// TODO remove elements via DOM, removeChildren()
