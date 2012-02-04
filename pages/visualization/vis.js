@@ -109,20 +109,20 @@ var vis = (function(){
 			var daySelectors = selectionRoot.selectAll("#daySelector").data(self.data[selectedMonth]).enter()
 									.append("svg:rect")
 									.attr("class", "daySelector")
-									.attr("fill", function(d, i){return fill(i)})
+									.attr("fill", function(d, i){return fill(i)}) // TODO give days a apropriate color
 									.attr("width", DAY_SELECTOR_SIZE)
 									.attr("height", DAY_SELECTOR_SIZE)
 									.attr("transform", function(d, i){
-											var itemsPerRow = Math.floor(SELECTION_WIDTH / DAY_SELECTOR_SIZE);
+											var itemsPerRow = Math.floor(SELECTION_WIDTH / (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING));
 											var row = 0;
 											
 											for(var j = 0; j < i; j++){
-												if((i * DAY_SELECTOR_SIZE - (row * SELECTION_WIDTH)) >= SELECTION_WIDTH){
+												if((i * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING) - (row * SELECTION_WIDTH)) >= SELECTION_WIDTH){
 													row = row + 1;
 												}
 											}
 											
-											var transX = (i % itemsPerRow) * DAY_SELECTOR_SIZE;
+											var transX = DAY_SELECTOR_PADDING / 2 + (i % itemsPerRow) * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING);
 											var transY = MONTH_SELECTOR_HEIGHT + DAY_SELECTOR_PADDING + row * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING);
 											return "translate(" + transX + ", "+ transY + ")";
 										}
