@@ -100,11 +100,11 @@ var vis = (function(){
 		//var fill = d3.scale.category20();
 		
 		var monthFill = d3.scale.linear()
-			.domain([0, MONTHS])
+			.domain([0, MONTHS - 1])
 			.range(["green", "blue"]);
 		
 		var dayFill = d3.scale.linear()
-			.domain([0, DAYS])
+			.domain([0, DAYS - 1])
 			.range(["yellow", "red"]);
 		
 		var dayFillNew = d3.scale.linear()
