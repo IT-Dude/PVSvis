@@ -97,13 +97,21 @@ var vis = (function(){
 		this.data = data;
 		this.diagram = diagram;
 		
-		var fill = d3.scale.category20();
+		//var fill = d3.scale.category20();
+		
+		var monthFill = d3.scale.linear()
+			.domain([0, MONTHS])
+			.range(["green", "blue"]);
+		
+		var dayFill = d3.scale.linear()
+			.domain([0, DAYS])
+			.range(["yellow", "red"]);
 		
 		this.showMonthSelection = function(selectedMonth){
 			selectionRoot.selectAll("#dayContainer").remove();
 			selectionRoot.append("svg:rect")
 							.attr("class", "dayContainer")
-							.attr("fill", function(d, i){return fill(selectedMonth)})
+							.attr("fill", function(d, i){return monthFill(selectedMonth)})
 							.attr("width", SELECTION_WIDTH)
 							.attr("height", SELECTION_HEIGHT - MONTH_SELECTOR_HEIGHT)
 							.attr("transform", "translate(0, " + MONTH_SELECTOR_HEIGHT + ")");
@@ -111,7 +119,7 @@ var vis = (function(){
 			var daySelectors = selectionRoot.selectAll("#daySelector").data(self.data[selectedMonth]).enter()
 									.append("svg:rect")
 									.attr("class", "daySelector")
-									.attr("fill", function(d, i){return fill(i)}) // TODO give days a apropriate color
+									.attr("fill", function(d, i){return dayFill(i)}) // TODO give days a apropriate color
 									.attr("width", DAY_SELECTOR_SIZE)
 									.attr("height", DAY_SELECTOR_SIZE)
 									.attr("transform", function(d, i){
@@ -160,7 +168,7 @@ var vis = (function(){
 			var monthSelectors = selectionRoot.selectAll("#monthSelector").data(self.data).enter()
 									.append("svg:rect")
 									.attr("class", "monthSelector")
-									.attr("fill", function(d, i){return fill(i)})
+									.attr("fill", function(d, i){return monthFill(i)})
 									.attr("width", SELECTION_WIDTH / self.data.length)
 									.attr("height", MONTH_SELECTOR_HEIGHT)
 									.attr("transform", function(d, i){
