@@ -107,6 +107,20 @@ var vis = (function(){
 			.domain([0, DAYS])
 			.range(["yellow", "red"]);
 		
+		var dayFillNew = d3.scale.linear()
+			.domain([0, VALUE_MAX])
+			.range(["yellow", "red"]);
+		
+		this.calculateDayColor = function(d){
+			var sum = 0;
+			for(var i = 0; i< d.length; i++){
+				sum = sum + d[i];
+			}
+			
+			var average = sum / d.length;
+			return dayFillNew(average);
+		}
+		
 		this.showMonthSelection = function(selectedMonth){
 			selectionRoot.selectAll("#dayContainer").remove();
 			selectionRoot.append("svg:rect")
