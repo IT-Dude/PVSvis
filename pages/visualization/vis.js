@@ -107,9 +107,9 @@ var vis = (function(){
 			.domain([0, DAYS - 1])
 			.range(["yellow", "red"]);
 		
-		var dayFillNew = d3.scale.linear()
+		var dayFillNew = d3.scale.linear() // TODO use a polylinear interpolation, does not seem to work properly
 			.domain([0, VALUE_MAX])
-			.range(["white", "red"]);
+			.range(["yellow", "red"]);
 		
 		this.calculateDayColor = function(d){
 			var sum = 0;
@@ -153,15 +153,16 @@ var vis = (function(){
 											return "translate(" + transX + ", "+ transY + ")";
 										}
 									)
-									.on("mouseover", function(d, i){showPreview(self.data, selectedMonth, i);})
+									.on("mouseover", function(d, i){
+											self.diagram.showPreviewGraph(d);
+											d3.select(this).attr("class", "daySelector daySelectorHighlight");
+										}
+									)
 									.on("mouseout", function(){
-											// TODO destroy the preview
+											self.diagram.removePreviewGraph();
+											d3.select(this).attr("class", "daySelector");
 										}
 									);
-		}
-		
-		function showPreview(data, selectedMonth, day){
-			
 		}
 
 		function setUpSelection(){
@@ -288,7 +289,6 @@ var vis = (function(){
 		
 		this.render = function(data){
 			chartRoot.selectAll(".dataGraph").remove();
-			
 			chartRoot.selectAll(".dataGraph").data(data).map(function(d){return d.data;}).enter()
 				.append("svg:path")
 				.attr("class", "dataGraph")
@@ -306,6 +306,23 @@ var vis = (function(){
 						d3.select(this).style("stroke", function(d, i){return stroke(d);});
 					}
 				);
+		}
+		
+		this.showPreviewGraph = function(d){
+			var data = [d];
+			chartRoot.selectAll(".previewGraph").remove();
+			chartRoot.selectAll(".previewGraph").data(data).enter()
+				.append("svg:path")
+				.attr("class", "previewGraph")
+				.attr("d", d3.svg.line()
+					.x(function(d, i){return x(i)})
+					.y(function(d, i){return y(d)})
+					.interpolate("basis")
+				);
+		}
+		
+		this.removePreviewGraph = function(){
+			chartRoot.selectAll(".previewGraph").remove();
 		}
 	}
 
