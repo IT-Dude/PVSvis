@@ -109,7 +109,7 @@ var vis = (function(){
 		
 		var dayFillNew = d3.scale.linear()
 			.domain([0, VALUE_MAX])
-			.range(["yellow", "red"]);
+			.range(["white", "red"]);
 		
 		this.calculateDayColor = function(d){
 			var sum = 0;
@@ -133,7 +133,7 @@ var vis = (function(){
 			var daySelectors = selectionRoot.selectAll("#daySelector").data(self.data[selectedMonth]).enter()
 									.append("svg:rect")
 									.attr("class", "daySelector")
-									.attr("fill", function(d, i){return dayFill(i)}) // TODO give days a apropriate color
+									.attr("fill", function(d, i){return self.calculateDayColor(d)})
 									.attr("width", DAY_SELECTOR_SIZE)
 									.attr("height", DAY_SELECTOR_SIZE)
 									.attr("transform", function(d, i){
