@@ -155,7 +155,7 @@ var vis = (function(){
 									)
 									.on("mouseover", function(d, i){
 											self.diagram.showPreviewGraph(d);
-											d3.select(this).attr("class", "daySelector daySelectorHighlight");
+											d3.select(this).attr("class", "daySelectorHighlight");
 										}
 									)
 									.on("mouseout", function(){
@@ -299,11 +299,13 @@ var vis = (function(){
 					.interpolate("basis")
 				)
 				.on("mouseover", function(){
-						d3.select(this).style("stroke", d3.rgb(0, 0, 0));
+						d3.select(this)
+							.style("stroke", d3.rgb(0, 0, 0));
 					}
 				)
 				.on("mouseout", function(){
-						d3.select(this).style("stroke", function(d, i){return stroke(d);});
+						d3.select(this)
+							.style("stroke", function(d, i){return stroke(d);});
 					}
 				);
 		}

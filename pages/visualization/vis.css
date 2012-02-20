@@ -11,14 +11,14 @@
 }
 
 .dataGraph{
-    fill: none;
     stroke-width: 4px;
+    fill: none;
 }
 
 .previewGraph{
+    stroke-width: 4px;
     fill: none;
     stroke: rgb(0, 0, 0);
-    stroke-width: 6px;
 }
 
 .monthSelector{
