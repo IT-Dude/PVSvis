@@ -19,6 +19,7 @@ var vis = (function(){
 		else{
 			return inputTangle.getValue("tangle" + variable);
 		}
+		
 	}
 	
 	var inputTangle;
