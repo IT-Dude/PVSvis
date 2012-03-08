@@ -1,0 +1,3 @@
+- mehrere Achsen
+- Farbunterschiede zwischen Graphen, Beziehung zu Achsen
+- Brushes, Zoomfunktionalität
