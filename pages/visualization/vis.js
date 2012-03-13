@@ -212,6 +212,7 @@ var vis = (function(){
 		const PADDING_BOTTOM = 80;
 		const PADDING_LEFT = 80;
 		const PADDING_RIGHT = 100;
+		const AXIS_SPACING = 40;
 		
 		var x = d3.scale.linear()
 				.domain([0, MEASUREMENTS - 1])
@@ -248,7 +249,7 @@ var vis = (function(){
 			axisRoot.attr("transform", "translate(" + PADDING_LEFT + ", " + PADDING_TOP + ")");
 			
 			// y-axis
-			var yAxis = d3.svg.axis()
+			var yAxisLeftA = d3.svg.axis()
 							.scale(y)
 							.tickSize(6, 4, 2)
 							.ticks(VALUE_MAX)
@@ -257,7 +258,19 @@ var vis = (function(){
 			axisRoot.append("svg:g")
 				.attr("id", "yAxis")
 				.attr("class", "axis")
-				.call(yAxis);
+				.call(yAxisLeftA);
+			
+			var yAxisLeftB = d3.svg.axis()
+							.scale(y)
+							.tickSize(6, 4, 2)
+							.ticks(VALUE_MAX)
+							.orient("left");
+
+			axisRoot.append("svg:g")
+				.attr("id", "yAxis")
+				.attr("class", "axis")
+				.attr("transform", "translate(" + -AXIS_SPACING + " , 0)")
+				.call(yAxisLeftB);
 			
 			// x-axis
 			// TODO improve the x-axis
@@ -277,7 +290,7 @@ var vis = (function(){
 			axisRoot.append("svg:g")
 		    	.attr("id", "xAxis")
 				.attr("class", "axis")
-				.attr("transform", "translate(0," + (DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM)+ ")")
+				.attr("transform", "translate(0, " + (DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM)+ ")")
 				.call(xAxis);
 		}
 		
