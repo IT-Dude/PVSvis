@@ -1,6 +1,4 @@
-var vis = (function(){	
-	console.log(chartData);
-	
+var vis = (function(){
 	const I_MONTHS = 4;
 	const I_DAYS = 15;
 	const I_MEASUREMENTS = 10;
@@ -12,6 +10,12 @@ var vis = (function(){
 		MONTHS = getTangleValue("MONTHS");
 		DAYS = getTangleValue("DAYS");
 		MEASUREMENTS = getTangleValue("MEASUREMENTS");
+	}
+	
+	function setUp()
+	{
+		document.getElementById("textHeader").innerHTML = chartData.title;
+		setUpTangle();
 	}
 	
 	function getTangleValue(variable){
@@ -356,7 +360,7 @@ var vis = (function(){
  * public stuff of the "vis" namespace
  */
 	return{
-		setUpTangle: setUpTangle,
+		setUp: setUp,
 		visualize: visualize
 	}
 })();
