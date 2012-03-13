@@ -212,13 +212,17 @@ var vis = (function(){
 		const PADDING_BOTTOM = 80;
 		const PADDING_LEFT = 80;
 		const PADDING_RIGHT = 100;
-		const AXIS_SPACING = 40;
+		const AXIS_SPACING = 30;
 		
 		var x = d3.scale.linear()
 				.domain([0, MEASUREMENTS - 1])
 				.range([0, DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT]);
 		var y = d3.scale.linear()
 				.domain([0, VALUE_MAX])
+				.range([DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM, 0]);
+		
+		var y2 = d3.scale.linear()
+				.domain([0, 1000])
 				.range([DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM, 0]);
 		
 		setUpDiagram();
@@ -261,7 +265,7 @@ var vis = (function(){
 				.call(yAxisLeftA);
 			
 			var yAxisLeftB = d3.svg.axis()
-							.scale(y)
+							.scale(y2)
 							.tickSize(6, 4, 2)
 							.ticks(VALUE_MAX)
 							.orient("left");
