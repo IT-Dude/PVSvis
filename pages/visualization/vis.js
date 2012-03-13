@@ -1,4 +1,15 @@
 var vis = (function(){
+	
+	// TODO use this piece of code, current workaround is the inclusion of the data as .js file
+	/*
+	var chartData;
+	d3.json("chart-data.json", function(json) {
+		chartData = json;
+	});
+	console.log(data);
+	*/
+	console.log(chartData);
+	
 	const I_MONTHS = 4;
 	const I_DAYS = 15;
 	const I_MEASUREMENTS = 10;
