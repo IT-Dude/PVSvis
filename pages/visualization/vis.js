@@ -60,7 +60,7 @@ var vis = (function(){
 	function visualize(){
 		var visualization = new Visualization();
 		var diagram = new Diagram();
-		var selection = new Selection(visualization.data ,diagram);
+		diagram.render(visualization.data[0]);
 	}
 	
 /*
@@ -95,125 +95,6 @@ var vis = (function(){
 			}
 			return data;
 		}
-	}
-	
-/*
- * Selection object
- */	
-	function Selection(data, diagram){
-		var self = this;
-		var selectionRoot;
-		
-		const SELECTION_HEIGHT = 300;
-		const SELECTION_WIDTH = 400;
-		const MONTH_SELECTOR_HEIGHT = 50;
-		const DAY_SELECTOR_SIZE = 40;
-		const DAY_SELECTOR_PADDING = 10;
-		const PREVIEW_HEIGHT = 100;
-		const PREVIEW_WIDTH = 100;
-		
-		this.data = data;
-		this.diagram = diagram;
-		
-		//var fill = d3.scale.category20();
-		
-		var monthFill = d3.scale.linear()
-			.domain([0, MONTHS - 1])
-			.range(["green", "blue"]);
-		
-		var dayFill = d3.scale.linear()
-			.domain([0, DAYS - 1])
-			.range(["yellow", "red"]);
-		
-		var dayFillNew = d3.scale.linear() // TODO use a polylinear interpolation, does not seem to work properly
-			.domain([0, VALUE_MAX])
-			.range(["yellow", "red"]);
-		
-		this.calculateDayColor = function(d){
-			var sum = 0;
-			for(var i = 0; i< d.length; i++){
-				sum = sum + d[i];
-			}
-			
-			var average = sum / d.length;
-			return dayFillNew(average);
-		}
-		
-		this.showMonthSelection = function(selectedMonth){
-			selectionRoot.selectAll("#dayContainer").remove();
-			selectionRoot.append("svg:rect")
-							.attr("class", "dayContainer")
-							.attr("fill", function(d, i){return monthFill(selectedMonth)})
-							.attr("width", SELECTION_WIDTH)
-							.attr("height", SELECTION_HEIGHT - MONTH_SELECTOR_HEIGHT)
-							.attr("transform", "translate(0, " + MONTH_SELECTOR_HEIGHT + ")");
-			
-			var daySelectors = selectionRoot.selectAll("#daySelector").data(self.data[selectedMonth]).enter()
-									.append("svg:rect")
-									.attr("class", "daySelector")
-									.attr("fill", function(d, i){return self.calculateDayColor(d)})
-									.attr("width", DAY_SELECTOR_SIZE)
-									.attr("height", DAY_SELECTOR_SIZE)
-									.attr("transform", function(d, i){
-											// TODO do some math here! simplify things?
-											var itemsPerRow = Math.floor(SELECTION_WIDTH / (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING));
-											var paddingLeft = (SELECTION_WIDTH + DAY_SELECTOR_PADDING - itemsPerRow * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING)) / 2;
-											var row = 0;
-											
-											for(var j = 0; j < i; j++){
-												if((i * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING) - (row * SELECTION_WIDTH)) >= SELECTION_WIDTH){
-													row = row + 1;
-												}
-											}
-											
-											var transX = paddingLeft + (i % itemsPerRow) * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING);
-											var transY = MONTH_SELECTOR_HEIGHT + DAY_SELECTOR_PADDING + row * (DAY_SELECTOR_SIZE + DAY_SELECTOR_PADDING);
-											return "translate(" + transX + ", "+ transY + ")";
-										}
-									)
-									.on("mouseover", function(d, i){
-											self.diagram.showPreviewGraph(d);
-											d3.select(this).attr("class", "daySelectorHighlight");
-										}
-									)
-									.on("mouseout", function(){
-											self.diagram.removePreviewGraph();
-											d3.select(this).attr("class", "daySelector");
-										}
-									);
-		}
-
-		function setUpSelection(){
-			this.root = d3.select("#selection").append("svg:svg")
-						.attr("height", SELECTION_HEIGHT)
-						.attr("width", SELECTION_WIDTH);
-						
-			this.root.append("svg:rect")
-							.attr("class", "selectionBackground")
-							.attr("height", SELECTION_HEIGHT)
-							.attr("width", SELECTION_WIDTH);
-							//.on("click", function(data){this.diagram.render(data);}.bind(this, this.data));		
-							//onMouseover: diagram.render(WHOLE BUNCH OF ARGUMENTS); // small PREVIEW
-			
-			selectionRoot = this.root.append("svg:g");
-			
-			
-			var monthSelectors = selectionRoot.selectAll("#monthSelector").data(self.data).enter()
-									.append("svg:rect")
-									.attr("class", "monthSelector")
-									.attr("fill", function(d, i){return monthFill(i)})
-									.attr("width", SELECTION_WIDTH / self.data.length)
-									.attr("height", MONTH_SELECTOR_HEIGHT)
-									.attr("transform", function(d, i){
-											return "translate(" + (i * (SELECTION_WIDTH / self.data.length))+ ", 0)";
-										}
-									)
-									.on("click", function(d, i){self.showMonthSelection(i)});
-		}
-		
-		setUpSelection();
-		this.showMonthSelection(0);
-		diagram.render(this.data[0]);
 	}
 
 /*
