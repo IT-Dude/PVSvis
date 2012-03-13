@@ -1,10 +1,12 @@
-var vis = (function(){
+var vis = (function(){	
+	console.log(chartData);
+	
 	const I_MONTHS = 4;
 	const I_DAYS = 15;
 	const I_MEASUREMENTS = 10;
 	const VALUE_MAX = 10;
 	const VALUE_RANGE = 2;
-	
+
 	updateConstants();
 	function updateConstants(){
 		MONTHS = getTangleValue("MONTHS");
