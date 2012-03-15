@@ -105,8 +105,8 @@ var vis = (function(){
 					numValues = data.series[i].data.length;
 				}
 			}
-			xScale = self.scaleX(numValues);
-			xScale2 = self.scaleX(numValues);
+			xScale = scaleX(numValues);
+			xScale2 = scaleX(numValues);
 			
 			for(var i = 0; i < data.series.length; i++){
 				self.renderSeries(data.series[i]);
@@ -127,8 +127,8 @@ var vis = (function(){
 		this.renderSeries = function(series){
 			var maxValue = d3.max(series.data, function(d){return d[1];});
 
-			var yScale = self.scaleY(maxValue, sizeChart.height);
-			var yScale2 = self.scaleY(maxValue, sizeBrush.height);
+			var yScale = scaleY(maxValue, sizeChart.height);
+			var yScale2 = scaleY(maxValue, sizeBrush.height);
 			
 			yScales[series.label] = yScale;
 
@@ -171,14 +171,14 @@ var vis = (function(){
 				);
 		}
 		
-		this.scaleX = function(numValues){
+		function scaleX(numValues){
 			var scale = d3.scale.linear()
 				.domain([0, numValues])
 				.range([0, sizeChart.width]);
 			return scale;
 		}
 		
-		this.scaleY = function(maxValue, height){
+		function scaleY(maxValue, height){
 			var scale = d3.scale.linear()
 				.domain([0, maxValue])
 				.range([0, height]);
