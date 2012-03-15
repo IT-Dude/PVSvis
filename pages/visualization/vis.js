@@ -23,9 +23,19 @@ var vis = (function(){
 /*
  * global constants for configuration
  */
-	sizeChart = {
+	marginChart = {
+		top: 50,
+		bottom: 50,
+		left: 50,
+		right: 50
+	}
+	
+	sizeRoot = {
 		height: 400,
 		width: 700}
+	sizeChart = {
+		height: sizeRoot.height - marginChart.top - marginChart.bottom,
+		width: sizeRoot.width - marginChart.left - marginChart.right}
 
 /*
  * Chart object
@@ -36,13 +46,13 @@ var vis = (function(){
 
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg:svg")
-							.attr("height", sizeChart.height)
-							.attr("width", sizeChart.width);
+							.attr("height", sizeRoot.height)
+							.attr("width", sizeRoot.width);
 			
 			this.root.append("svg:rect")
-						.attr("class", "chartBackground")
-						.attr("height", sizeChart.height)
-						.attr("width", sizeChart.width);
+						.attr("class", "rootBackground")
+						.attr("height", sizeRoot.height)
+						.attr("width", sizeRoot.width);
 		}
 		
 		this.renderData = function(data){
