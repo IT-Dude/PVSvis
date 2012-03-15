@@ -45,7 +45,7 @@ var vis = (function(){
 		height: 100,
 		width: sizeChart.width
 	}
-	marginAxes = [0, -50, sizeChart.width, sizeChart.width + 50];
+	marginAxes = [-5, -60, sizeChart.width + 5, sizeChart.width + 60];
 	orientationAxes = ["left", "left", "right", "right"];
 /*
  * global functions

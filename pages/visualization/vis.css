@@ -17,6 +17,7 @@
     fill: rgb(160, 160, 210);
 }
 
+
 .graph{
     fill: none;
     stroke-width: 3;
@@ -34,10 +35,27 @@
     stroke: rgb(0, 0, 255);
 }
 
+.graphLeistung{
+    stroke: rgb(128, 70, 27);
+}
+
 .graphHighlight{
     stroke: rgb(255, 255, 255);
 }
 
-.yAxisWirkungsgrad text{
+
+.yAxisWirkungsgrad{
     fill: rgb(255, 0, 0);
+}
+
+.yAxisSpannung{
+    fill: rgb(0, 255, 0);
+}
+
+.yAxisErtrag{
+    fill: rgb(0, 0, 255);
+}
+
+.yAxisLeistung{
+    fill: rgb(128, 70, 27);
 }
