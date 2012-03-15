@@ -215,7 +215,7 @@ var vis = (function(){
 
 					var axis = d3.svg.axis().scale(scale).orient(orientationAxes[i]);
 					chartRoot.append("g")
-						.attr("class", "yAxis")
+						.attr("class", "yAxis" + type)
 						.attr("transform", "translate(" + marginAxes[i] + ", 0)")
 						.call(axis);
 						
