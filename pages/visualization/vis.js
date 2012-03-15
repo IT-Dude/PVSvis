@@ -21,26 +21,28 @@ var vis = (function(){
 		chart.renderData(chartData);
 	}
 /*
+ * global constants for configuration
+ */
+	sizeChart = {
+		height: 400,
+		width: 700}
+
+/*
  * Chart object
  */
 	function Chart(){
 		var self = this;
 		var chartRoot;
-		
-		this.foo = function(){
-			console.log("win");
-			
-		}
 
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg:svg")
-							.attr("height", 100)
-							.attr("width", 100);
+							.attr("height", sizeChart.height)
+							.attr("width", sizeChart.width);
 			
 			this.root.append("svg:rect")
 						.attr("class", "chartBackground")
-						.attr("height", 100)
-						.attr("width", 100);
+						.attr("height", sizeChart.height)
+						.attr("width", sizeChart.width);
 		}
 		
 		this.renderData = function(data){
