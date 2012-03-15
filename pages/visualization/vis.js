@@ -1,6 +1,7 @@
 var vis = (function(){
 	
 	// TODO use this piece of code, current workaround is the inclusion of the data as .js file
+	// use a server to deliver the data the standard way 
 	/*
 	var chartData;
 	d3.json("chart-data.json", function(json) {
@@ -8,7 +9,8 @@ var vis = (function(){
 	});
 	console.log(data);
 	*/
-	console.log(chartData);
+	
+	// console.log(chartData);
 	
 	const I_MONTHS = 4;
 	const I_DAYS = 15;
@@ -58,9 +60,28 @@ var vis = (function(){
 	}
 
 	function visualize(){
+		var chart = new Chart();
+		chart.renderData(chartData);
 		var visualization = new Visualization();
-		var diagram = new Diagram();
-		diagram.render(visualization.data[0]);
+		// uncomment to see the old chart
+		// var diagram = new Diagram();
+		// diagram.render(visualization.data[0]);
+	}
+/*
+ * Chart object
+ */
+	function Chart(){
+		this.setUp = function(){
+			
+		}
+		
+		this.renderData = function(data){
+		
+		}
+		
+		this.renderGraph = function(){
+			
+		}
 	}
 	
 /*
