@@ -59,3 +59,7 @@
 .yAxisLeistung{
     fill: rgb(128, 70, 27);
 }
+
+.axisHighlight{
+    fill: rgb(255, 255, 255);
+}

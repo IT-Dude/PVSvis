@@ -27,7 +27,7 @@ var vis = (function(){
 		height: 400,
 		width: 900}
 	marginChart = {
-		top: 50,
+		top: 30,
 		bottom: 120,
 		left: 110,
 		right: 110
@@ -153,11 +153,15 @@ var vis = (function(){
 							.attr("class", "textBox")
 							.attr("y", -10)
 							.text(series.label);
+						d3.select(".yAxis" + series.label)
+							.classed("axisHighlight", true);
 					}
 				)
 				.on("mouseout", function(){
 						d3.select(this).classed("graphHighlight", false);
 						chartRoot.selectAll(".textBox").remove();
+						d3.select(".yAxis" + series.label)
+							.classed("axisHighlight", false);
 					}
 				);
 			
