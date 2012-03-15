@@ -28,7 +28,7 @@ var vis = (function(){
 	function setUp()
 	{
 		document.getElementById("textHeader").innerHTML = chartData.title;
-		setUpTangle();
+		//setUpTangle();
 	}
 	
 	function getTangleValue(variable){
