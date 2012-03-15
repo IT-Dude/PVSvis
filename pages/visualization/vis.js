@@ -12,19 +12,6 @@ var vis = (function(){
 	
 	console.log(chartData);
 	
-	const I_MONTHS = 4;
-	const I_DAYS = 15;
-	const I_MEASUREMENTS = 10;
-	const VALUE_MAX = 10;
-	const VALUE_RANGE = 2;
-
-	updateConstants();
-	function updateConstants(){
-		MONTHS = getTangleValue("MONTHS");
-		DAYS = getTangleValue("DAYS");
-		MEASUREMENTS = getTangleValue("MEASUREMENTS");
-	}
-	
 	function setUp()
 	{
 		document.getElementById("textHeader").innerHTML = chartData.title;
@@ -32,42 +19,6 @@ var vis = (function(){
 		var chart = new Chart();
 		chart.setUp();
 		chart.renderData(chartData);
-
-		//setUpTangle();
-	}
-	
-	function getTangleValue(variable){
-		if(typeof inputTangle === "undefined"){
-			return eval("I_" + variable);
-		}
-		else{
-			return inputTangle.getValue("tangle" + variable);
-		}
-		
-	}
-	
-	var inputTangle;
-	function setUpTangle(){
-		inputTangle = new Tangle(document.getElementById("inputTangle"), {
-			initialize: function(){
-				this.tangleMONTHS = I_MONTHS;
-				this.tangleDAYS = I_DAYS;
-				this.tangleMEASUREMENTS = I_MEASUREMENTS;
-			},
-			update: function(){
-				// TODO remove elements via DOM, removeChildren()
-				document.getElementById("selection").innerHTML = "";
-				document.getElementById("diagram").innerHTML = "";
-				updateConstants();
-				visualize();
-			}
-		});
-	}
-
-	function visualize(){
-		var visualization = new Visualization();
-		var diagram = new Diagram();
-		diagram.render(visualization.data[0]);
 	}
 /*
  * Chart object
@@ -99,7 +50,6 @@ var vis = (function(){
 		}
 		
 		this.renderSeries = function(data){
-			console.log("foo");
 		}
 	}
 	
@@ -284,15 +234,10 @@ var vis = (function(){
 		}
 	}
 
-
-
-
-
 /*
- * public stuff of the "vis" namespace
+ * public functions of the "vis" namespace
  */
 	return{
-		setUp: setUp,
-		visualize: visualize
+		setUp: setUp
 	}
 })();
