@@ -64,40 +64,6 @@ var vis = (function(){
 		this.renderSeries = function(data){
 		}
 	}
-	
-/*
- * Visualization object
- */
-	function Visualization(){
-		var self = this;
-		
-		this.data = setUpData();
-		//console.log(this.data);
-		
-		function setUpData() {
-			data = [];
-			for(var i = 0; i < MONTHS; i++){
-				var month = [];
-				for(var j = 0; j < DAYS; j++){
-					var day = [];
-					var pivot = Math.random();
-					pivot = pivot * VALUE_MAX;
-					
-					if(pivot > (VALUE_MAX - VALUE_RANGE)){
-						pivot = VALUE_MAX - VALUE_RANGE;
-					}
-					
-					for(var k = 0; k < MEASUREMENTS; k++){
-						day.push(pivot + Math.random() * VALUE_RANGE)
-					}
-					
-					month.push(day)
-				}
-				data.push(month);
-			}
-			return data;
-		}
-	}
 
 /*
  * Diagram object
