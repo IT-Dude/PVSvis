@@ -1,3 +1,7 @@
 .rootBackground{
     fill: rgb(210, 210, 210);
 }
+
+.chartBackground{
+    fill: rgb(100, 100, 200);
+}

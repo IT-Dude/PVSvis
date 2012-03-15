@@ -53,6 +53,14 @@ var vis = (function(){
 						.attr("class", "rootBackground")
 						.attr("height", sizeRoot.height)
 						.attr("width", sizeRoot.width);
+			
+			chartRoot = this.root.append("svg:g")
+							.attr("transform", "translate(" + marginChart.left + ", " + marginChart.top + ")");
+			
+			chartRoot.append("svg:rect")
+						.attr("class", "chartBackground")
+						.attr("height", sizeChart.height)
+						.attr("width", sizeChart.width);
 		}
 		
 		this.renderData = function(data){
