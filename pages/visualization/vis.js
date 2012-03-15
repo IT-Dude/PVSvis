@@ -44,8 +44,11 @@ var vis = (function(){
 		var self = this;
 		var chartRoot;
 		
-		var x = d3.scale.linear().range([0, sizeChart.width]);
-    	var y = d3.scale.linear().range([sizeChart.height, 0]);
+		var x = d3.scale.linear()
+					.range([0, sizeChart.width]);
+    	var y = d3.scale.linear()
+    				.domain([0, 600]) // TODO make this dynamic
+    				.range([sizeChart.height, 0]);
 		
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg:svg")
@@ -69,8 +72,6 @@ var vis = (function(){
 		this.renderData = function(data){
 			self.renderSeries(data.series[0]);
 			
-			
-			
 			/*
 			for(var i = 0; i < data.series.length; i++){
 				self.renderSeries(data.series[i]);
@@ -79,7 +80,7 @@ var vis = (function(){
 		}
 		
 		this.renderSeries = function(data){
-			chartRoot.selectAll(".dataGraph").data(data.data).enter()
+			chartRoot.selectAll(".dataGraph").data(data.data).map(function(d){return d[0];}).enter()
 				.append("svg:path")
 				.attr("class", "dataGraph")
 				.attr("d", d3.svg.line()
@@ -89,7 +90,7 @@ var vis = (function(){
 				);
 		}
 		
-		this.generateAxis = function(){
+		this.generateScales = function(){
 			
 		}
 	}
@@ -113,7 +114,7 @@ var vis = (function(){
 				.domain([0, MEASUREMENTS - 1])
 				.range([0, DIAGRAM_WIDTH - PADDING_LEFT - PADDING_RIGHT]);
 		var y = d3.scale.linear()
-				.domain([0, VALUE_MAX])
+				
 				.range([DIAGRAM_HEIGHT - PADDING_TOP - PADDING_BOTTOM, 0]);
 		
 		var y2 = d3.scale.linear()
