@@ -44,10 +44,11 @@ var vis = (function(){
 		var self = this;
 		var chartRoot;
 		
+		// TODO generate these dynamically
 		var x = d3.scale.linear()
 					.range([0, sizeChart.width]);
     	var y = d3.scale.linear()
-    				.domain([0, 600]) // TODO make this dynamic
+    				.domain([0, 600])
     				.range([sizeChart.height, 0]);
 		
 		this.setUp = function(){
@@ -80,7 +81,7 @@ var vis = (function(){
 		}
 		
 		this.renderSeries = function(data){
-			chartRoot.selectAll(".dataGraph").data(data.data).map(function(d){return d[0];}).enter()
+			chartRoot.selectAll(".dataGraph").data(data.data).enter()
 				.append("svg:path")
 				.attr("class", "dataGraph")
 				.attr("d", d3.svg.line()
