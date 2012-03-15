@@ -25,12 +25,12 @@ var vis = (function(){
  */
 	sizeRoot = {
 		height: 400,
-		width: 700}
+		width: 900}
 	marginChart = {
 		top: 50,
 		bottom: 120,
-		left: 50,
-		right: 50
+		left: 100,
+		right: 100
 	}	
 	sizeChart = {
 		height: sizeRoot.height - marginChart.top - marginChart.bottom,
@@ -45,6 +45,8 @@ var vis = (function(){
 		height: 100,
 		width: sizeChart.width
 	}
+	marginAxes = [0, -40, sizeChart.width, sizeChart.width + 40];
+	orientationAxes = ["left", "left", "right", "right"];
 /*
  * global functions
  */
@@ -59,11 +61,11 @@ var vis = (function(){
 		var self = this;
 		var chartRoot;
 		var brushRoot;
-		
 		var xScale;
 		var xScale2;
 		var yScales = {};
 		var brush;
+		var activeAxes = [false, false, false, false];
 		
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg")
@@ -169,6 +171,8 @@ var vis = (function(){
 					.y(function(d, i){return yScale2(d[1])})
 					.interpolate("basis")
 				);
+
+			addAxis(yScale);
 		}
 		
 		function scaleX(numValues){
@@ -181,7 +185,7 @@ var vis = (function(){
 		function scaleY(maxValue, height){
 			var scale = d3.scale.linear()
 				.domain([0, maxValue])
-				.range([0, height]);
+				.range([height, 0]);
 			return scale;
 		}
 		
@@ -192,6 +196,30 @@ var vis = (function(){
 				.y(function(d, i){return yScales[d.type](d[1]);})
 				.interpolate("basis")
 			);
+		}
+		
+		function addAxis(scale) {			
+			for(var i = 0; i < activeAxes.length; i++)
+			{
+				if(i >= activeAxes.length)
+				{
+					break;
+				}
+				if(activeAxes[i] == true)
+				{
+					continue;
+				}
+				else
+				{
+					activeAxes[i] =true;
+					
+					var axis = d3.svg.axis().scale(scale).orient(orientationAxes[i]);
+					chartRoot.append("g")
+						.attr("class", "yAxis")
+						.attr("transform", "translate(" + marginAxes[i] + ", 0)")
+						.call(axis);
+				}
+			}
 		}
 	}
 
