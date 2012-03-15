@@ -1,21 +1,13 @@
 *{
-	color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
 }
 
 body{
-    background-color: rgb(20, 20, 20);
+    background-color: rgb(230, 230, 230);
 }
 
 #textHeader {
-	color: rgb(255, 255, 255);;
 	font-size: 20px;
-}
-
-.selectionContainer{
-    float: left;
-}
-
-.selection{
 }
 
 .chart{
