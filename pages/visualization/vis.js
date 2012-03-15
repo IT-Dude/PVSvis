@@ -82,20 +82,12 @@ var vis = (function(){
 		}
 		
 		this.renderSeries = function(data){
-			// TODO get rid of this
-			var localData = [];
-			for(var i = 0; i < data.data.length; i++)
-			{
-				localData[i] = data.data[i][1];
-			}
-			
-			// TODO do not use this localData stuff, map data the D3 way!
-			chartRoot.selectAll(".dataGraph").data([localData]).enter()
+			chartRoot.selectAll(".dataGraph").data([data.data]).enter()
 				.append("svg:path")
 				.attr("class", "dataGraph")
 				.attr("d", d3.svg.line()
 					.x(function(d, i){return x(i)})
-					.y(function(d, i){return y(d)})
+					.y(function(d, i){return y(d[1])})
 					.interpolate("basis")
 				);
 		}
