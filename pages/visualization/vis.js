@@ -43,7 +43,10 @@ var vis = (function(){
 	function Chart(){
 		var self = this;
 		var chartRoot;
-
+		
+		var x = d3.scale.linear().range([0, sizeChart.width]);
+    	var y = d3.scale.linear().range([sizeChart.height, 0]);
+		
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg:svg")
 							.attr("height", sizeRoot.height)
@@ -64,12 +67,30 @@ var vis = (function(){
 		}
 		
 		this.renderData = function(data){
+			self.renderSeries(data.series[0]);
+			
+			
+			
+			/*
 			for(var i = 0; i < data.series.length; i++){
 				self.renderSeries(data.series[i]);
 			}
+			*/
 		}
 		
 		this.renderSeries = function(data){
+			chartRoot.selectAll(".dataGraph").data(data.data).enter()
+				.append("svg:path")
+				.attr("class", "dataGraph")
+				.attr("d", d3.svg.line()
+					.x(function(d, i){return x(i)})
+					.y(function(d, i){return y(d)})
+					.interpolate("basis")
+				);
+		}
+		
+		this.generateAxis = function(){
+			
 		}
 	}
 
