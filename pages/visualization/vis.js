@@ -10,7 +10,7 @@ var vis = (function(){
 	console.log(data);
 	*/
 	
-	// console.log(chartData);
+	console.log(chartData);
 	
 	const I_MONTHS = 4;
 	const I_DAYS = 15;
@@ -71,15 +71,19 @@ var vis = (function(){
  * Chart object
  */
 	function Chart(){
+		var self = this;
+		
 		this.setUp = function(){
 			
 		}
 		
 		this.renderData = function(data){
-		
+			for(var i = 0; i < data.series.length; i++){
+				self.renderSeries(data.series[i]);
+			}
 		}
 		
-		this.renderGraph = function(){
+		this.renderSeries = function(data){
 			
 		}
 	}
