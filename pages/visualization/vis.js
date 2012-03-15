@@ -46,28 +46,29 @@ var vis = (function(){
 		
 		// TODO generate these dynamically
 		var x = d3.scale.linear()
-					.range([0, sizeChart.width]);
+			.domain([0, 400])
+			.range([0, sizeChart.width]);
     	var y = d3.scale.linear()
-    				.domain([0, 600])
-    				.range([sizeChart.height, 0]);
+			.domain([0, 600])
+			.range([sizeChart.height, 0]);
 		
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg:svg")
-							.attr("height", sizeRoot.height)
-							.attr("width", sizeRoot.width);
+				.attr("height", sizeRoot.height)
+				.attr("width", sizeRoot.width);
 			
 			this.root.append("svg:rect")
-						.attr("class", "rootBackground")
-						.attr("height", sizeRoot.height)
-						.attr("width", sizeRoot.width);
+				.attr("class", "rootBackground")
+				.attr("height", sizeRoot.height)
+				.attr("width", sizeRoot.width);
 			
 			chartRoot = this.root.append("svg:g")
-							.attr("transform", "translate(" + marginChart.left + ", " + marginChart.top + ")");
+				.attr("transform", "translate(" + marginChart.left + ", " + marginChart.top + ")");
 			
 			chartRoot.append("svg:rect")
-						.attr("class", "chartBackground")
-						.attr("height", sizeChart.height)
-						.attr("width", sizeChart.width);
+				.attr("class", "chartBackground")
+				.attr("height", sizeChart.height)
+				.attr("width", sizeChart.width);
 		}
 		
 		this.renderData = function(data){
@@ -81,7 +82,15 @@ var vis = (function(){
 		}
 		
 		this.renderSeries = function(data){
-			chartRoot.selectAll(".dataGraph").data(data.data).enter()
+			// TODO get rid of this
+			var localData = [];
+			for(var i = 0; i < data.data.length; i++)
+			{
+				localData[i] = data.data[i][1];
+			}
+			
+			// TODO do not use this localData stuff, map data the D3 way!
+			chartRoot.selectAll(".dataGraph").data([localData]).enter()
 				.append("svg:path")
 				.attr("class", "dataGraph")
 				.attr("d", d3.svg.line()
