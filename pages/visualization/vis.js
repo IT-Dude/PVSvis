@@ -28,6 +28,11 @@ var vis = (function(){
 	function setUp()
 	{
 		document.getElementById("textHeader").innerHTML = chartData.title;
+		
+		var chart = new Chart();
+		chart.setUp();
+		chart.renderData(chartData);
+
 		//setUpTangle();
 	}
 	
@@ -60,21 +65,31 @@ var vis = (function(){
 	}
 
 	function visualize(){
-		var chart = new Chart();
-		chart.renderData(chartData);
 		var visualization = new Visualization();
-		// uncomment to see the old chart
-		// var diagram = new Diagram();
-		// diagram.render(visualization.data[0]);
+		var diagram = new Diagram();
+		diagram.render(visualization.data[0]);
 	}
 /*
  * Chart object
  */
 	function Chart(){
 		var self = this;
+		var chartRoot;
 		
-		this.setUp = function(){
+		this.foo = function(){
+			console.log("win");
 			
+		}
+
+		this.setUp = function(){
+			this.root = d3.select("#chart").append("svg:svg")
+							.attr("height", 100)
+							.attr("width", 100);
+			
+			this.root.append("svg:rect")
+						.attr("class", "chartBackground")
+						.attr("height", 100)
+						.attr("width", 100);
 		}
 		
 		this.renderData = function(data){
@@ -84,7 +99,7 @@ var vis = (function(){
 		}
 		
 		this.renderSeries = function(data){
-			
+			console.log("foo");
 		}
 	}
 	
