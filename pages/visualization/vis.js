@@ -59,13 +59,17 @@ var vis = (function(){
 		var self = this;
 		var chartRoot;
 		
-		// TODO generate these dynamically
-		var x = d3.scale.linear()
+		var xBrush = d3.scale.linear()
 			.domain([0, 400])
-			.range([0, sizeChart.width]);
-    	var y = d3.scale.linear()
+			.range([0, sizeBrush.width]);
+    	var yBrush = d3.scale.linear()
 			.domain([0, 600])
-			.range([sizeChart.height, 0]);
+			.range([sizeBrush.height, 0]);
+			
+			
+		var brush = d3.svg.brush()
+		    .x(xBrush)
+		    .on("brush", brush);
 		
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg")
@@ -80,10 +84,28 @@ var vis = (function(){
 			chartRoot = this.root.append("g")
 				.attr("transform", "translate(" + marginChart.left + ", " + marginChart.top + ")");
 			
+			//////////////////////////////////////////////
+			// experimental brush stuff
+			//////////////////////////////////////////////
 			chartRoot.append("rect")
 				.attr("class", "chartBackground")
 				.attr("height", sizeChart.height)
 				.attr("width", sizeChart.width);
+			
+			chartRoot.append("defs").append("clipPath")
+				.attr("id", "clip")
+				.append("rect")
+					.attr("width", width)
+					.attr("height", height);
+			///////////////////////////////////////////////
+			//////////////////////////////////////////////
+			//////////////////////////////////////////////
+
+var focus = svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var context = svg.append("g")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 		}
 		
 		this.renderData = function(data){
