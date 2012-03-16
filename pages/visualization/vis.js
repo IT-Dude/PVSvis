@@ -99,6 +99,7 @@ var vis = (function(){
 				}
 			}
 			
+			// TODO maybe pass the series directly as data argument, somehow ".map()" the data 
 			chartRoot.selectAll("graph").data([series.data]).enter()
 				.append("svg:path")
 				.attr("class", "graph")
