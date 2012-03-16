@@ -6,6 +6,10 @@
     fill: rgb(120, 120, 210);
 }
 
+.brushBackground{
+    fill: rgb(120, 120, 210);
+}
+
 .graph{
     fill: none;
     stroke: rgb(0, 0, 0);

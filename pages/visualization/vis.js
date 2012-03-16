@@ -29,6 +29,12 @@ var vis = (function(){
 		left: 50,
 		right: 50
 	}
+	marginBrush = {
+		top: 10,
+		bottom: 10,
+		left: 10, 
+		right: 10
+	}
 	
 	sizeRoot = {
 		height: 400,
@@ -36,6 +42,10 @@ var vis = (function(){
 	sizeChart = {
 		height: sizeRoot.height - marginChart.top - marginChart.bottom,
 		width: sizeRoot.width - marginChart.left - marginChart.right}
+	sizeBrush = {
+		height: 100,
+		width: sizeChart.width
+	}
 
 /*
  * Chart object
@@ -89,7 +99,6 @@ var vis = (function(){
 					maxValue = series.data[i][1];
 				}
 			}
-			
 			
 			chartRoot.selectAll("graph").data([series.data]).enter()
 				.append("svg:path")
