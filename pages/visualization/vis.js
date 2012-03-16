@@ -72,28 +72,47 @@ var vis = (function(){
 		}
 		
 		this.renderData = function(data){
-			self.renderSeries(data.series[0]);
+			//self.renderSeries(data.series[0]);
 			
-			/*
 			for(var i = 0; i < data.series.length; i++){
 				self.renderSeries(data.series[i]);
 			}
-			*/
 		}
 		
-		this.renderSeries = function(data){
-			chartRoot.selectAll(".dataGraph").data([data.data]).enter()
+		this.renderSeries = function(series){
+			var numValues = series.data.length;
+			var maxValue = 0;
+			for(var i = 0; i < numValues; i++)
+			{
+				if(series.data[i][1] > maxValue)
+				{
+					maxValue = series.data[i][1];
+				}
+			}
+			
+			
+			chartRoot.selectAll("graph").data([series.data]).enter()
 				.append("svg:path")
-				.attr("class", "dataGraph")
+				.attr("class", "graph")
 				.attr("d", d3.svg.line()
-					.x(function(d, i){return x(i)})
-					.y(function(d, i){return y(d[1])})
+					.x(function(d, i){return self.scaleX(numValues)(i)})
+					.y(function(d, i){return self.scaleY(maxValue)(d[1])})
 					.interpolate("basis")
 				);
 		}
 		
-		this.generateScales = function(){
-			
+		this.scaleX = function(numValues){
+			var scale = d3.scale.linear()
+				.domain([0, numValues])
+				.range([0, sizeChart.width]);
+			return scale;
+		}
+		
+		this.scaleY = function(maxValue){
+			var scale = d3.scale.linear()
+				.domain([0, maxValue])
+				.range([0, sizeChart.height]);
+			return scale;
 		}
 	}
 

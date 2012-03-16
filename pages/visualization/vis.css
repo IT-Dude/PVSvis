@@ -6,8 +6,12 @@
     fill: rgb(120, 120, 210);
 }
 
-.dataGraph{
+.graph{
     fill: none;
     stroke: rgb(0, 0, 0);
     stroke-width: 3;
+}
+
+.graphHighlight{
+    stroke: rgb(255, 255, 255);
 }
