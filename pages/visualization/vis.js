@@ -48,10 +48,10 @@ var vis = (function(){
 /*
  * global functions
  */
-	p = function(s){
+	function p(s){
 		console.log(s);
 	}
-
+	
 /*
  * Chart object
  */
