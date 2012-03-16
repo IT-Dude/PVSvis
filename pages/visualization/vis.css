@@ -3,18 +3,30 @@
 }
 
 .chartBackground{
-    fill: rgb(120, 120, 210);
+    fill: rgb(160, 160, 210);
 }
 
 .brushBackground{
-    fill: rgb(120, 120, 210);
+    fill: rgb(160, 160, 210);
 }
 
 .graph{
     fill: none;
-    stroke: rgb(0, 0, 0);
     stroke-width: 3;
 }
+
+.graphWirkungsgrad{
+    stroke: rgb(255, 0, 0);
+}
+
+.graphSpannung{
+    stroke: rgb(0, 255, 0);
+}
+
+.graphErtrag{
+    stroke: rgb(0, 0, 255);
+}
+
 
 .graphHighlight{
     stroke: rgb(255, 255, 255);

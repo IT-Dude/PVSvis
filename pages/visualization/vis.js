@@ -45,6 +45,12 @@ var vis = (function(){
 		height: 100,
 		width: sizeChart.width
 	}
+/*
+ * global functions
+ */
+	p = function(s){
+		console.log(s);
+	}
 
 /*
  * Chart object
@@ -95,7 +101,8 @@ var vis = (function(){
 			// TODO maybe pass the series directly as data argument, somehow ".map()" the data 
 			chartRoot.selectAll("graph").data([series.data]).enter()
 				.append("path")
-				.attr("class", "graph")
+				.attr("class", "graph" + series.label)
+				.classed("graph", true)
 				.attr("d", d3.svg.line()
 					.x(function(d, i){return self.scaleX(numValues)(i)})
 					.y(function(d, i){return self.scaleY(maxValue)(d[1])})
