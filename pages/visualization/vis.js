@@ -90,14 +90,7 @@ var vis = (function(){
 		
 		this.renderSeries = function(series){
 			var numValues = series.data.length;
-			var maxValue = 0;
-			for(var i = 0; i < numValues; i++)
-			{
-				if(series.data[i][1] > maxValue)
-				{
-					maxValue = series.data[i][1];
-				}
-			}
+			var maxValue = d3.max(series.data, function(d){return d[1];});
 			
 			// TODO maybe pass the series directly as data argument, somehow ".map()" the data 
 			chartRoot.selectAll("graph").data([series.data]).enter()
