@@ -14,7 +14,7 @@ var vis = (function(){
 	
 	function setUp()
 	{
-		document.getElementById("textHeader").innerHTML = chartData.title;
+		d3.selectAll("#textHeader").text(chartData.title);
 		
 		var chart = new Chart();
 		chart.setUp();
