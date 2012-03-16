@@ -62,19 +62,19 @@ var vis = (function(){
 			.range([sizeChart.height, 0]);
 		
 		this.setUp = function(){
-			this.root = d3.select("#chart").append("svg:svg")
+			this.root = d3.select("#chart").append("svg")
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
 			
-			this.root.append("svg:rect")
+			this.root.append("rect")
 				.attr("class", "rootBackground")
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
 			
-			chartRoot = this.root.append("svg:g")
+			chartRoot = this.root.append("g")
 				.attr("transform", "translate(" + marginChart.left + ", " + marginChart.top + ")");
 			
-			chartRoot.append("svg:rect")
+			chartRoot.append("rect")
 				.attr("class", "chartBackground")
 				.attr("height", sizeChart.height)
 				.attr("width", sizeChart.width);
@@ -101,7 +101,7 @@ var vis = (function(){
 			
 			// TODO maybe pass the series directly as data argument, somehow ".map()" the data 
 			chartRoot.selectAll("graph").data([series.data]).enter()
-				.append("svg:path")
+				.append("path")
 				.attr("class", "graph")
 				.attr("d", d3.svg.line()
 					.x(function(d, i){return self.scaleX(numValues)(i)})
@@ -110,10 +110,15 @@ var vis = (function(){
 				)
 				.on("mouseover", function(){
 						d3.select(this).classed("graphHighlight", true);
+						chartRoot.append("text")
+							.attr("class", "textBox")
+							.attr("y", -10)
+							.text(series.label);
 					}
 				)
 				.on("mouseout", function(){
 						d3.select(this).classed("graphHighlight", false);
+						chartRoot.selectAll(".textBox").remove();
 					}
 				);
 		}
