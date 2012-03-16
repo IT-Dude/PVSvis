@@ -98,6 +98,14 @@ var vis = (function(){
 					.x(function(d, i){return self.scaleX(numValues)(i)})
 					.y(function(d, i){return self.scaleY(maxValue)(d[1])})
 					.interpolate("basis")
+				)
+				.on("mouseover", function(){
+						d3.select(this).classed("graphHighlight", true);
+					}
+				)
+				.on("mouseout", function(){
+						d3.select(this).classed("graphHighlight", false);
+					}
 				);
 		}
 		
