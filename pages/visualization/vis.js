@@ -23,25 +23,24 @@ var vis = (function(){
 /*
  * global constants for configuration
  */
-	marginChart = {
-		top: 50,
-		bottom: 50,
-		left: 50,
-		right: 50
-	}
-	marginBrush = {
-		top: 10,
-		bottom: 10,
-		left: 10, 
-		right: 10
-	}
-	
 	sizeRoot = {
 		height: 400,
 		width: 700}
+	marginChart = {
+		top: 50,
+		bottom: 120,
+		left: 50,
+		right: 50
+	}	
 	sizeChart = {
 		height: sizeRoot.height - marginChart.top - marginChart.bottom,
 		width: sizeRoot.width - marginChart.left - marginChart.right}
+	marginBrush = {
+		top: sizeChart.height + marginChart.top + 10,
+		bottom: 10,
+		left: marginChart.left, 
+		right: marginChart.right
+	}
 	sizeBrush = {
 		height: 100,
 		width: sizeChart.width
