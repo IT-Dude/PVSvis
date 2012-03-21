@@ -159,8 +159,8 @@ var vis = (function(){
 				.attr("class", "x brush")
 				.call(brush)
 				.selectAll("rect")
-				.attr("y", -6)
-				.attr("height", sizeBrush.height + 7);
+				.attr("y", +1)
+				.attr("height", sizeBrush.height - 1);
 			
 			
 			// TODO maybe pass the series directly as data argument, somehow ".map()" the data 

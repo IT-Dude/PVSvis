@@ -1,6 +1,7 @@
 .brush .extent {
-  stroke: #fff;
-  fill-opacity: .125;
+  stroke: rgb(255, 255, 255);
+  fill: rgb(0, 0, 0);
+  fill-opacity: 0.15;
   shape-rendering: crispEdges;
 }
 
