@@ -1,3 +1,9 @@
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
 .rootBackground{
     fill: rgb(210, 210, 210);
 }

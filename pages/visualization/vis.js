@@ -93,6 +93,12 @@ var vis = (function(){
 				.attr("class", "chartBackground")
 				.attr("height", sizeBrush.height)
 				.attr("width", sizeBrush.width);
+				
+			chartRoot.append("defs").append("clipPath")
+				.attr("id", "clip")
+				.append("rect")
+					.attr("width", sizeChart.width)
+					.attr("height", sizeChart.height);
 		}
 		
 		this.renderData = function(data){
@@ -110,9 +116,48 @@ var vis = (function(){
 			var maxValue = d3.max(series.data, function(d){return d[1];});
 			
 			xScale = self.scaleX(numValues);
-			yScale = self.scaleY(maxValue);
+			xScale2 = self.scaleX(numValues);
+			yScale = self.scaleY(maxValue, sizeChart.height);
+			yScale2 = self.scaleY(maxValue, sizeBrush.height);
+			
+			var brush = d3.svg.brush()
+			    .x(xScale2)
+			    .on("brush", brush);
+			
+			function brush() {
+				x.domain(brush.empty() ? xScale2.domain() : brush.extent());
+  				focus.select("path").attr("d", d3.svg.line()
+					.x(function(d, i){return xScale(i)})
+					.y(function(d, i){return yScale(d[1])})
+					.interpolate("basis")
+				);
+			}
+			
+			chartRoot.append("path")
+      			.data([series.data])
+      			.attr("class", "graph" + series.label)
+      			.classed("graph", true)
+				.attr("clip-path", "url(#clip)")
+				.attr("d", d3.svg.line()
+					.x(function(d, i){return xScale(i)})
+					.y(function(d, i){return yScale(d[1])})
+					.interpolate("basis")
+				);
+			
+			brushRoot.append("path")
+     			.data([series.data])
+      			.attr("class", "graph" + series.label)
+      			.classed("graph", true)
+				.attr("clip-path", "url(#clip)")
+				.attr("d", d3.svg.line()
+					.x(function(d, i){return xScale2(i)})
+					.y(function(d, i){return yScale2(d[1])})
+					.interpolate("basis")
+				);
+			
 			
 			// TODO maybe pass the series directly as data argument, somehow ".map()" the data 
+			/*
 			chartRoot.selectAll("graph").data([series.data]).enter()
 				.append("path")
 				.attr("class", "graph" + series.label)
@@ -135,6 +180,7 @@ var vis = (function(){
 						chartRoot.selectAll(".textBox").remove();
 					}
 				);
+			*/
 		}
 		
 		this.scaleX = function(numValues){
@@ -144,10 +190,10 @@ var vis = (function(){
 			return scale;
 		}
 		
-		this.scaleY = function(maxValue){
+		this.scaleY = function(maxValue, height){
 			var scale = d3.scale.linear()
 				.domain([0, maxValue])
-				.range([0, sizeChart.height]);
+				.range([0, height]);
 			return scale;
 		}
 	}
