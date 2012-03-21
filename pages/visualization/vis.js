@@ -60,13 +60,8 @@ var vis = (function(){
 		var chartRoot;
 		var brushRoot;
 		
-		// TODO generate these dynamically
-		var x = d3.scale.linear()
-			.domain([0, 400])
-			.range([0, sizeChart.width]);
-    	var y = d3.scale.linear()
-			.domain([0, 600])
-			.range([sizeChart.height, 0]);
+		var xScale;
+		var xScale2;
 		
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg")
@@ -102,8 +97,17 @@ var vis = (function(){
 		}
 		
 		this.renderData = function(data){
-			self.renderSeries(data.series[0]);
+			var numValues = 0;
+			for(var i = 0; i < data.series.length; i++){
+				if(data.series[i].data.length > numValues){
+					numValues = data.series[i].data.length;
+				}
+			}
+			xScale = self.scaleX(numValues);
+			xScale2 = self.scaleX(numValues);
 			
+			
+			self.renderSeries(data.series[0]);
 			/*
 			for(var i = 0; i < data.series.length; i++){
 				self.renderSeries(data.series[i]);
@@ -111,7 +115,6 @@ var vis = (function(){
 			*/
 			
 			for(var i = 0; i < data.series.length; i++){
-				//self.renderSeries(data.series[i]);
 				var maxValue = d3.max(data.series[i].data, function(d){return d[1];});
 				console.log("maxValue " + maxValue);
 				console.log("length " + data.series[i].data.length);
@@ -121,9 +124,7 @@ var vis = (function(){
 		this.renderSeries = function(series){
 			var numValues = series.data.length;
 			var maxValue = d3.max(series.data, function(d){return d[1];});
-			
-			xScale = self.scaleX(numValues);
-			xScale2 = self.scaleX(numValues);
+
 			yScale = self.scaleY(maxValue, sizeChart.height);
 			yScale2 = self.scaleY(maxValue, sizeBrush.height);
 			
