@@ -62,6 +62,8 @@ var vis = (function(){
 		
 		var xScale;
 		var xScale2;
+		var yScales = {};
+		var brush;
 		
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg")
@@ -106,19 +108,20 @@ var vis = (function(){
 			xScale = self.scaleX(numValues);
 			xScale2 = self.scaleX(numValues);
 			
-			
-			self.renderSeries(data.series[0]);
-			/*
 			for(var i = 0; i < data.series.length; i++){
 				self.renderSeries(data.series[i]);
 			}
-			*/
+
+			brush = d3.svg.brush()
+			    .x(xScale2)
+			    .on("brush", doBrush);
 			
-			for(var i = 0; i < data.series.length; i++){
-				var maxValue = d3.max(data.series[i].data, function(d){return d[1];});
-				//p("maxValue " + maxValue);
-				//p("length " + data.series[i].data.length);
-			}
+			brushRoot.append("g")
+				.attr("class", "x brush")
+				.call(brush)
+				.selectAll("rect")
+				.attr("y", +1)
+				.attr("height", sizeBrush.height - 1);
 		}
 		
 		this.renderSeries = function(series){
@@ -127,18 +130,7 @@ var vis = (function(){
 			var yScale = self.scaleY(maxValue, sizeChart.height);
 			var yScale2 = self.scaleY(maxValue, sizeBrush.height);
 			
-			var brush = d3.svg.brush()
-			    .x(xScale2)
-			    .on("brush", doBrush);
-			
-			function doBrush() {
-				xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
-  				chartRoot.select("path").attr("d", d3.svg.line()
-					.x(function(d, i){return xScale(i);})
-					.y(function(d, i){return yScale(d[1]);})
-					.interpolate("basis")
-				);
-			}
+			yScales[series.label] = yScale;
 
 			chartRoot.append("path")
       			.data([series.data])
@@ -146,8 +138,11 @@ var vis = (function(){
       			.classed("graph", true)
 				.attr("clip-path", "url(#clip)")
 				.attr("d", d3.svg.line()
-					.x(function(d, i){return xScale(i);})
-					.y(function(d, i){return yScale(d[1]);})
+					.x(function(d, i){
+						d.type = series.label;
+						return xScale(i);
+					})
+					.y(function(d, i){return yScales[d.type](d[1]);})
 					.interpolate("basis")
 				)
 				.on("mouseover", function(){
@@ -174,13 +169,6 @@ var vis = (function(){
 					.y(function(d, i){return yScale2(d[1])})
 					.interpolate("basis")
 				);
-			
-			brushRoot.append("g")
-				.attr("class", "x brush")
-				.call(brush)
-				.selectAll("rect")
-				.attr("y", +1)
-				.attr("height", sizeBrush.height - 1);
 		}
 		
 		this.scaleX = function(numValues){
@@ -196,10 +184,19 @@ var vis = (function(){
 				.range([0, height]);
 			return scale;
 		}
+		
+		function doBrush() {
+			xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
+			chartRoot.selectAll(".graph").attr("d", d3.svg.line()
+				.x(function(d, i){return xScale(i);})
+				.y(function(d, i){return yScales[d.type](d[1]);})
+				.interpolate("basis")
+			);
+		}
 	}
 
 /*
- * public functions of the "vis" namespace
+ * public object of the "vis" namespace
  */
 	return{
 		setUp: setUp
