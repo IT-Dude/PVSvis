@@ -109,14 +109,17 @@ var vis = (function(){
 			var numValues = series.data.length;
 			var maxValue = d3.max(series.data, function(d){return d[1];});
 			
+			xScale = self.scaleX(numValues);
+			yScale = self.scaleY(maxValue);
+			
 			// TODO maybe pass the series directly as data argument, somehow ".map()" the data 
 			chartRoot.selectAll("graph").data([series.data]).enter()
 				.append("path")
 				.attr("class", "graph" + series.label)
 				.classed("graph", true)
 				.attr("d", d3.svg.line()
-					.x(function(d, i){return self.scaleX(numValues)(i)})
-					.y(function(d, i){return self.scaleY(maxValue)(d[1])})
+					.x(function(d, i){return xScale(i)})
+					.y(function(d, i){return yScale(d[1])})
 					.interpolate("basis")
 				)
 				.on("mouseover", function(){
