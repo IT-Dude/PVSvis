@@ -139,7 +139,7 @@ var vis = (function(){
 					.interpolate("basis")
 				);
 			}
-			
+
 			chartRoot.append("path")
       			.data([series.data])
       			.attr("class", "graph" + series.label)
@@ -149,6 +149,19 @@ var vis = (function(){
 					.x(function(d, i){return xScale(i)})
 					.y(function(d, i){return yScale(d[1])})
 					.interpolate("basis")
+				)
+				.on("mouseover", function(){
+						d3.select(this).classed("graphHighlight", true);
+						chartRoot.append("text")
+							.attr("class", "textBox")
+							.attr("y", -10)
+							.text(series.label);
+					}
+				)
+				.on("mouseout", function(){
+						d3.select(this).classed("graphHighlight", false);
+						chartRoot.selectAll(".textBox").remove();
+					}
 				);
 			
 			brushRoot.append("path")
@@ -168,33 +181,6 @@ var vis = (function(){
 				.selectAll("rect")
 				.attr("y", +1)
 				.attr("height", sizeBrush.height - 1);
-			
-			
-			// TODO maybe pass the series directly as data argument, somehow ".map()" the data 
-			/*
-			chartRoot.selectAll("graph").data([series.data]).enter()
-				.append("path")
-				.attr("class", "graph" + series.label)
-				.classed("graph", true)
-				.attr("d", d3.svg.line()
-					.x(function(d, i){return xScale(i)})
-					.y(function(d, i){return yScale(d[1])})
-					.interpolate("basis")
-				)
-				.on("mouseover", function(){
-						d3.select(this).classed("graphHighlight", true);
-						chartRoot.append("text")
-							.attr("class", "textBox")
-							.attr("y", -10)
-							.text(series.label);
-					}
-				)
-				.on("mouseout", function(){
-						d3.select(this).classed("graphHighlight", false);
-						chartRoot.selectAll(".textBox").remove();
-					}
-				);
-			*/
 		}
 		
 		this.scaleX = function(numValues){
