@@ -125,8 +125,8 @@ var vis = (function(){
 			    .on("brush", brush);
 			
 			function brush() {
-				x.domain(brush.empty() ? xScale2.domain() : brush.extent());
-  				focus.select("path").attr("d", d3.svg.line()
+				xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
+  				chartRoot.select("path").attr("d", d3.svg.line()
 					.x(function(d, i){return xScale(i)})
 					.y(function(d, i){return yScale(d[1])})
 					.interpolate("basis")
@@ -154,6 +154,13 @@ var vis = (function(){
 					.y(function(d, i){return yScale2(d[1])})
 					.interpolate("basis")
 				);
+			
+			brushRoot.append("g")
+				.attr("class", "x brush")
+				.call(brush)
+				.selectAll("rect")
+				.attr("y", -6)
+				.attr("height", sizeBrush.height + 7);
 			
 			
 			// TODO maybe pass the series directly as data argument, somehow ".map()" the data 
