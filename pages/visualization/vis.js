@@ -109,6 +109,13 @@ var vis = (function(){
 				self.renderSeries(data.series[i]);
 			}
 			*/
+			
+			for(var i = 0; i < data.series.length; i++){
+				//self.renderSeries(data.series[i]);
+				var maxValue = d3.max(data.series[i].data, function(d){return d[1];});
+				console.log("maxValue " + maxValue);
+				console.log("length " + data.series[i].data.length);
+			}
 		}
 		
 		this.renderSeries = function(series){
