@@ -58,6 +58,7 @@ var vis = (function(){
 	function Chart(){
 		var self = this;
 		var chartRoot;
+		var brushRoot;
 		
 		// TODO generate these dynamically
 		var x = d3.scale.linear()
@@ -80,18 +81,28 @@ var vis = (function(){
 			chartRoot = this.root.append("g")
 				.attr("transform", "translate(" + marginChart.left + ", " + marginChart.top + ")");
 			
+			brushRoot = this.root.append("g")
+				.attr("transform", "translate(" + marginChart.left + ", " + marginBrush.top + ")");
+			
 			chartRoot.append("rect")
 				.attr("class", "chartBackground")
 				.attr("height", sizeChart.height)
 				.attr("width", sizeChart.width);
+			
+			brushRoot.append("rect")
+				.attr("class", "chartBackground")
+				.attr("height", sizeBrush.height)
+				.attr("width", sizeBrush.width);
 		}
 		
 		this.renderData = function(data){
-			//self.renderSeries(data.series[0]);
+			self.renderSeries(data.series[0]);
 			
+			/*
 			for(var i = 0; i < data.series.length; i++){
 				self.renderSeries(data.series[i]);
 			}
+			*/
 		}
 		
 		this.renderSeries = function(series){
