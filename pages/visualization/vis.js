@@ -116,27 +116,26 @@ var vis = (function(){
 			
 			for(var i = 0; i < data.series.length; i++){
 				var maxValue = d3.max(data.series[i].data, function(d){return d[1];});
-				console.log("maxValue " + maxValue);
-				console.log("length " + data.series[i].data.length);
+				//p("maxValue " + maxValue);
+				//p("length " + data.series[i].data.length);
 			}
 		}
 		
 		this.renderSeries = function(series){
-			var numValues = series.data.length;
 			var maxValue = d3.max(series.data, function(d){return d[1];});
 
-			yScale = self.scaleY(maxValue, sizeChart.height);
-			yScale2 = self.scaleY(maxValue, sizeBrush.height);
+			var yScale = self.scaleY(maxValue, sizeChart.height);
+			var yScale2 = self.scaleY(maxValue, sizeBrush.height);
 			
 			var brush = d3.svg.brush()
 			    .x(xScale2)
-			    .on("brush", brush);
+			    .on("brush", doBrush);
 			
-			function brush() {
+			function doBrush() {
 				xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
   				chartRoot.select("path").attr("d", d3.svg.line()
-					.x(function(d, i){return xScale(i)})
-					.y(function(d, i){return yScale(d[1])})
+					.x(function(d, i){return xScale(i);})
+					.y(function(d, i){return yScale(d[1]);})
 					.interpolate("basis")
 				);
 			}
@@ -147,8 +146,8 @@ var vis = (function(){
       			.classed("graph", true)
 				.attr("clip-path", "url(#clip)")
 				.attr("d", d3.svg.line()
-					.x(function(d, i){return xScale(i)})
-					.y(function(d, i){return yScale(d[1])})
+					.x(function(d, i){return xScale(i);})
+					.y(function(d, i){return yScale(d[1]);})
 					.interpolate("basis")
 				)
 				.on("mouseover", function(){
