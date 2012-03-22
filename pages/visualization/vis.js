@@ -28,7 +28,7 @@ var vis = (function(){
 		width: 900}
 	marginChart = {
 		top: 30,
-		bottom: 120,
+		bottom: 135,
 		left: 110,
 		right: 110
 	}	
@@ -36,7 +36,7 @@ var vis = (function(){
 		height: sizeRoot.height - marginChart.top - marginChart.bottom,
 		width: sizeRoot.width - marginChart.left - marginChart.right}
 	marginBrush = {
-		top: sizeChart.height + marginChart.top + 10,
+		top: sizeChart.height + marginChart.top + 25,
 		bottom: 10,
 		left: marginChart.left, 
 		right: marginChart.right
@@ -124,6 +124,12 @@ var vis = (function(){
 				.selectAll("rect")
 				.attr("y", +1)
 				.attr("height", sizeBrush.height - 1);
+			
+			var axis = d3.svg.axis().scale(xScale2).orient("bottom");
+			chartRoot.append("g")
+				.attr("class", "xAxis")
+				.attr("transform", "translate(0," + sizeChart.height + ")")
+				.call(axis);
 		}
 		
 		this.renderSeries = function(series){

@@ -17,7 +17,11 @@
     fill: rgb(160, 160, 210);
 }
 
-
+/*
+ * 
+ * graphs
+ * 
+ */
 .graph{
     fill: none;
     stroke-width: 3;
@@ -43,6 +47,14 @@
     stroke: rgb(255, 255, 255);
 }
 
+/*
+ * 
+ * axes
+ * 
+ */
+.xAxis{
+    fill: rgb(0, 0, 0);
+}
 
 .yAxisWirkungsgrad{
     fill: rgb(255, 0, 0);
