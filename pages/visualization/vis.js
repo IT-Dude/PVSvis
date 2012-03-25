@@ -127,7 +127,7 @@ var vis = (function(){
 				.attr("y", +1)
 				.attr("height", sizeBrush.height - 1);
 			
-			xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+			xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(12).tickSubdivide(2);
 			chartRoot.append("g")
 				.attr("class", "xAxis")
 				.attr("transform", "translate(0," + sizeChart.height + ")")
@@ -226,7 +226,7 @@ var vis = (function(){
 				{
 					activeAxes[i] =true;
 
-					var axis = d3.svg.axis().scale(scale).orient(orientationAxes[i]);
+					var axis = d3.svg.axis().scale(scale).orient(orientationAxes[i]).tickSize(5, 3, 1).ticks(10).tickSubdivide(2);
 					chartRoot.append("g")
 						.attr("class", "yAxis" + type)
 						.attr("transform", "translate(" + marginAxes[i] + ", 0)")
