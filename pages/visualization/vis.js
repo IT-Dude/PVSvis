@@ -67,6 +67,7 @@ var vis = (function(){
 		var yScales = {};
 		var brush;
 		var xAxis;
+		var xGrid;
 		var activeAxes = [false, false, false, false];
 		
 		this.setUp = function(){
@@ -127,11 +128,17 @@ var vis = (function(){
 				.attr("y", +1)
 				.attr("height", sizeBrush.height - 1);
 			
-			xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(12).tickSubdivide(1);
+			var xTicks = 12;
+			xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(xTicks);
 			chartRoot.append("g")
 				.attr("class", "xAxis")
 				.attr("transform", "translate(0," + sizeChart.height + ")")
 				.call(xAxis);
+			
+			xGrid = d3.svg.axis().scale(xScale).orient("bottom").tickSize(sizeChart.height, 0, 0).ticks(xTicks).tickFormat("");
+			chartRoot.append("g")
+				.attr("class", "xGrid")
+				.call(xGrid);
 		}
 		
 		this.renderSeries = function(series){
@@ -209,6 +216,7 @@ var vis = (function(){
 				.interpolate("basis")
 			);
 			chartRoot.selectAll(".xAxis").call(xAxis);
+			chartRoot.selectAll(".xGrid").call(xGrid);
 		}
 		
 		function addAxis(scale, type) {
