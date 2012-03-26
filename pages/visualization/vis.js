@@ -64,6 +64,7 @@ var vis = (function(){
 		var brushRoot;
 		var xScale;
 		var xScale2;
+		var xScaleTime;
 		var yScales = {};
 		var brush;
 		var xAxis;
@@ -113,6 +114,15 @@ var vis = (function(){
 			xScale = scaleX(numValues);
 			xScale2 = scaleX(numValues);
 			
+			// TODO make this more beautiful
+			var startDate = new Date(2000, 0, 0, 0, 0, 0);
+			var endDate = new Date(2000, 0, 0, 23, 59, 59);
+			var format = d3.time.format("%H:%M");
+			xScaleTime = d3.time.scale()
+						.domain([startDate, endDate])
+						.range([0, sizeChart.width]);
+			//
+
 			for(var i = 0; i < data.series.length; i++){
 				self.renderSeries(data.series[i]);
 			}
@@ -129,6 +139,8 @@ var vis = (function(){
 				.attr("height", sizeBrush.height - 1);
 			
 			var xTicks = 12;
+			// uncomment to use axis with time labels
+			//xAxis = d3.svg.axis().scale(xScaleTime).orient("bottom").tickSize(5, 3, 1).ticks(xTicks).tickFormat(format);
 			xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(xTicks);
 			chartRoot.append("g")
 				.attr("class", "axis xAxis")
