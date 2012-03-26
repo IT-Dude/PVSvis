@@ -139,15 +139,14 @@ var vis = (function(){
 				.attr("height", sizeBrush.height - 1);
 			
 			var xTicks = 12;
-			// uncomment to use axis with time labels
-			//xAxis = d3.svg.axis().scale(xScaleTime).orient("bottom").tickSize(5, 3, 1).ticks(xTicks).tickFormat(format);
-			xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(xTicks);
+			xAxis = d3.svg.axis().scale(xScaleTime).orient("bottom").tickSize(5, 3, 1).ticks(xTicks).tickFormat(format);
+			//xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(xTicks);
 			chartRoot.append("g")
 				.attr("class", "axis xAxis")
 				.attr("transform", "translate(0," + sizeChart.height + ")")
 				.call(xAxis);
-			
-			xGrid = d3.svg.axis().scale(xScale).orient("bottom").tickSize(sizeChart.height, 0, 0).ticks(xTicks).tickFormat("");
+										// xScale
+			xGrid = d3.svg.axis().scale(xScaleTime).orient("bottom").tickSize(sizeChart.height, 0, 0).ticks(xTicks).tickFormat("");
 			chartRoot.append("g")
 				.attr("class", "xGrid")
 				.call(xGrid);
@@ -222,6 +221,7 @@ var vis = (function(){
 		
 		function doBrush() {
 			xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
+			// TODO implement xScaleTime brush behavior
 			chartRoot.selectAll(".graph").attr("d", d3.svg.line()
 				.x(function(d, i){return xScale(i);})
 				.y(function(d, i){return yScales[d.type](d[1]);})
