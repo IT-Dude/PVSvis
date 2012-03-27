@@ -69,7 +69,6 @@ var vis = (function(){
 		var chartRoot;
 		var brushRoot;
 		var legendRoot;
-		var xScale;
 		var xScaleTime;
 		var xScale2;
 		var xScale2Time;
@@ -123,7 +122,6 @@ var vis = (function(){
 					numValues = data.series[i].data.length;
 				}
 			}
-			xScale = scaleX(numValues);
 			xScale2 = scaleX(numValues);
 
 			// TODO make this more beautiful
@@ -148,7 +146,7 @@ var vis = (function(){
 			}
 
 			brush = d3.svg.brush()
-			    .x(xScale2Time) // insert xScale2Time to make the x-axis work
+			    .x(xScale2Time)
 			    .on("brush", doBrush);
 			
 			brushRoot.append("g")
@@ -217,7 +215,7 @@ var vis = (function(){
       			.classed("graph", true)
 				.attr("clip-path", "url(#clip)")
 				.attr("d", d3.svg.line()
-					.x(function(d, i){return xScale2(i)})
+					.x(function(d, i){return xScale2Time(d.date)})
 					.y(function(d, i){return yScale2(d[1])})
 					.interpolate("basis")
 				);
@@ -241,7 +239,6 @@ var vis = (function(){
 		
 		function doBrush() {
 			xScaleTime.domain(brush.empty() ? xScale2Time.domain() : brush.extent());
-			// TODO implement xScaleTime brush behavior
 			chartRoot.selectAll(".graph").attr("d", d3.svg.line()
 				.x(function(d, i){return xScaleTime(d.date);})
 				.y(function(d, i){return yScales[d.type](d[1]);})
