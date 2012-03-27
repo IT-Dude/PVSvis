@@ -24,10 +24,10 @@ var vis = (function(){
  * global constants for configuration
  */
 	sizeRoot = {
-		height: 400,
+		height: 500,
 		width: 900}
 	marginChart = {
-		top: 30,
+		top: 10,
 		bottom: 135,
 		left: 110,
 		right: 110
@@ -37,13 +37,19 @@ var vis = (function(){
 		width: sizeRoot.width - marginChart.left - marginChart.right}
 	marginBrush = {
 		top: sizeChart.height + marginChart.top + 25,
-		bottom: 10,
+		bottom: 30,
 		left: marginChart.left, 
 		right: marginChart.right
 	}
 	sizeBrush = {
-		height: 100,
+		height: sizeRoot.height - marginBrush.top - marginBrush.bottom,
 		width: sizeChart.width
+	}
+	sizeLegend = {
+		
+	}
+	marginLegend = {
+		
 	}
 	marginAxes = [-5, -60, sizeChart.width + 5, sizeChart.width + 60];
 	orientationAxes = ["left", "left", "right", "right"];
