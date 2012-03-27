@@ -247,18 +247,14 @@ var vis = (function(){
 		}
 		
 		function addAxis(scale, type) {
-			for(var i = 0; i < activeAxes.length; i++)
-			{
-				if(i >= activeAxes.length)
-				{
+			for(var i = 0; i < activeAxes.length; i++){
+				if(i >= activeAxes.length){
 					break;
 				}
-				if(activeAxes[i] == true)
-				{
+				if(activeAxes[i] == true){
 					continue;
 				}
-				else
-				{
+				else{
 					activeAxes[i] =true;
 
 					var axis = d3.svg.axis().scale(scale).orient(orientationAxes[i]).tickSize(5, 3, 1).ticks(10).tickSubdivide(1);
