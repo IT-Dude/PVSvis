@@ -154,7 +154,7 @@ var vis = (function(){
 				.attr("y", +1)
 				.attr("height", sizeBrush.height - 1);
 			
-			var xTicks = 10;
+			var xTicks = 8;
 			xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(xTicks).tickFormat(format);
 			chartRoot.append("g")
 				.attr("class", "axis xAxis")
