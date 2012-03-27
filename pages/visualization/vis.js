@@ -70,7 +70,6 @@ var vis = (function(){
 		var brushRoot;
 		var legendRoot;
 		var xScaleTime;
-		var xScale2;
 		var xScale2Time;
 		var timeValueScale;
 		var yScales = {};
@@ -122,7 +121,6 @@ var vis = (function(){
 					numValues = data.series[i].data.length;
 				}
 			}
-			xScale2 = scaleX(numValues);
 
 			// TODO make this more beautiful
 			var startDate = new Date(2000, 0, 0, 0, 0, 0);
