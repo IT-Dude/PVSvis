@@ -63,8 +63,9 @@ var vis = (function(){
 		var chartRoot;
 		var brushRoot;
 		var xScale;
-		var xScale2;
 		var xScaleTime;
+		var xScale2;
+		var xScale2Time;
 		var yScales = {};
 		var brush;
 		var xAxis;
@@ -121,6 +122,10 @@ var vis = (function(){
 			xScaleTime = d3.time.scale()
 						.domain([startDate, endDate])
 						.range([0, sizeChart.width]);
+			
+			xScale2Time = d3.time.scale()
+						.domain([startDate, endDate])
+						.range([0, sizeChart.width]);
 			//
 
 			for(var i = 0; i < data.series.length; i++){
@@ -128,7 +133,7 @@ var vis = (function(){
 			}
 
 			brush = d3.svg.brush()
-			    .x(xScale2)
+			    .x(xScale2) // insert xScale2Time to make the x-axis work
 			    .on("brush", doBrush);
 			
 			brushRoot.append("g")
@@ -221,6 +226,7 @@ var vis = (function(){
 		
 		function doBrush() {
 			xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
+			xScaleTime.domain(brush.empty() ? xScale2Time.domain() : brush.extent());
 			// TODO implement xScaleTime brush behavior
 			chartRoot.selectAll(".graph").attr("d", d3.svg.line()
 				.x(function(d, i){return xScale(i);})
