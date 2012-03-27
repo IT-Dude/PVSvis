@@ -69,8 +69,8 @@ var vis = (function(){
 		var chartRoot;
 		var brushRoot;
 		var legendRoot;
-		var xScaleTime;
-		var xScale2Time;
+		var xScale;
+		var xScale2;
 		var timeValueScale;
 		var yScales = {};
 		var brush;
@@ -126,11 +126,11 @@ var vis = (function(){
 			var startDate = new Date(2000, 0, 0, 0, 0, 0);
 			var endDate = new Date(2000, 0, 0, 23, 59, 59);
 			var format = d3.time.format("%H:%M");
-			xScaleTime = d3.time.scale()
+			xScale = d3.time.scale()
 						.domain([startDate, endDate])
 						.range([0, sizeChart.width]);
 			
-			xScale2Time = d3.time.scale()
+			xScale2 = d3.time.scale()
 						.domain([startDate, endDate])
 						.range([0, sizeChart.width]);
 						
@@ -144,7 +144,7 @@ var vis = (function(){
 			}
 
 			brush = d3.svg.brush()
-			    .x(xScale2Time)
+			    .x(xScale2)
 			    .on("brush", doBrush);
 			
 			brushRoot.append("g")
@@ -155,13 +155,13 @@ var vis = (function(){
 				.attr("height", sizeBrush.height - 1);
 			
 			var xTicks = 10;
-			xAxis = d3.svg.axis().scale(xScaleTime).orient("bottom").tickSize(5, 3, 1).ticks(xTicks).tickFormat(format);
+			xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(xTicks).tickFormat(format);
 			chartRoot.append("g")
 				.attr("class", "axis xAxis")
 				.attr("transform", "translate(0," + sizeChart.height + ")")
 				.call(xAxis);
 
-			xGrid = d3.svg.axis().scale(xScaleTime).orient("bottom").tickSize(sizeChart.height, 0, 0).ticks(xTicks).tickFormat("");
+			xGrid = d3.svg.axis().scale(xScale).orient("bottom").tickSize(sizeChart.height, 0, 0).ticks(xTicks).tickFormat("");
 			chartRoot.append("g")
 				.attr("class", "xGrid")
 				.call(xGrid);
@@ -184,7 +184,7 @@ var vis = (function(){
 					.x(function(d, i){
 						d.type = series.label;
 						d.date = timeValueScale.invert(i);
-						return xScaleTime(d.date);
+						return xScale(d.date);
 					})
 					.y(function(d, i){return yScales[d.type](d[1]);})
 					.interpolate("basis")
@@ -213,7 +213,7 @@ var vis = (function(){
       			.classed("graph", true)
 				.attr("clip-path", "url(#clip)")
 				.attr("d", d3.svg.line()
-					.x(function(d, i){return xScale2Time(d.date)})
+					.x(function(d, i){return xScale2(d.date)})
 					.y(function(d, i){return yScale2(d[1])})
 					.interpolate("basis")
 				);
@@ -236,9 +236,9 @@ var vis = (function(){
 		}
 		
 		function doBrush() {
-			xScaleTime.domain(brush.empty() ? xScale2Time.domain() : brush.extent());
+			xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
 			chartRoot.selectAll(".graph").attr("d", d3.svg.line()
-				.x(function(d, i){return xScaleTime(d.date);})
+				.x(function(d, i){return xScale(d.date);})
 				.y(function(d, i){return yScales[d.type](d[1]);})
 				.interpolate("basis")
 			);
