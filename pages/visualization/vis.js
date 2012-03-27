@@ -73,7 +73,7 @@ var vis = (function(){
 		var xScaleTime;
 		var xScale2;
 		var xScale2Time;
-		var newScale;
+		var timeValueScale;
 		var yScales = {};
 		var brush;
 		var xAxis;
@@ -125,9 +125,7 @@ var vis = (function(){
 			}
 			xScale = scaleX(numValues);
 			xScale2 = scaleX(numValues);
-			
-			
-			
+
 			// TODO make this more beautiful
 			var startDate = new Date(2000, 0, 0, 0, 0, 0);
 			var endDate = new Date(2000, 0, 0, 23, 59, 59);
@@ -140,7 +138,7 @@ var vis = (function(){
 						.domain([startDate, endDate])
 						.range([0, sizeChart.width]);
 						
-			newScale = d3.time.scale()
+			timeValueScale = d3.time.scale()
 						.domain([startDate, endDate])
 						.range([0, numValues]);
 			//
@@ -189,7 +187,7 @@ var vis = (function(){
 				.attr("d", d3.svg.line()
 					.x(function(d, i){
 						d.type = series.label;
-						d.date = newScale.invert(i);
+						d.date = timeValueScale.invert(i);
 						return xScaleTime(d.date);
 					})
 					.y(function(d, i){return yScales[d.type](d[1]);})
