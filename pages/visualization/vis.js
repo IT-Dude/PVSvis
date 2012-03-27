@@ -37,7 +37,7 @@ var vis = (function(){
 		width: sizeRoot.width - marginChart.left - marginChart.right}
 	marginBrush = {
 		top: sizeChart.height + marginChart.top + 25,
-		bottom: 30,
+		bottom: 40,
 		left: marginChart.left, 
 		right: marginChart.right
 	}
@@ -49,7 +49,7 @@ var vis = (function(){
 		
 	}
 	marginLegend = {
-		
+		top: marginBrush.top + sizeBrush.height + 5
 	}
 	marginAxes = [-5, -60, sizeChart.width + 5, sizeChart.width + 60];
 	orientationAxes = ["left", "left", "right", "right"];
@@ -68,10 +68,12 @@ var vis = (function(){
 		var self = this;
 		var chartRoot;
 		var brushRoot;
+		var legendRoot;
 		var xScale;
 		var xScaleTime;
 		var xScale2;
 		var xScale2Time;
+		var newScale;
 		var yScales = {};
 		var brush;
 		var xAxis;
@@ -93,6 +95,9 @@ var vis = (function(){
 			
 			brushRoot = this.root.append("g")
 				.attr("transform", "translate(" + marginChart.left + ", " + marginBrush.top + ")");
+			
+			legendRoot = this.root.append("g")
+				.attr("transform", "translate(" + marginChart.left + ", " + marginLegend.top + ")");
 			
 			chartRoot.append("rect")
 				.attr("class", "chartBackground")
@@ -121,6 +126,8 @@ var vis = (function(){
 			xScale = scaleX(numValues);
 			xScale2 = scaleX(numValues);
 			
+			
+			
 			// TODO make this more beautiful
 			var startDate = new Date(2000, 0, 0, 0, 0, 0);
 			var endDate = new Date(2000, 0, 0, 23, 59, 59);
@@ -132,6 +139,10 @@ var vis = (function(){
 			xScale2Time = d3.time.scale()
 						.domain([startDate, endDate])
 						.range([0, sizeChart.width]);
+						
+			newScale = d3.time.scale()
+						.domain([startDate, endDate])
+						.range([0, numValues]);
 			//
 
 			for(var i = 0; i < data.series.length; i++){
@@ -139,7 +150,7 @@ var vis = (function(){
 			}
 
 			brush = d3.svg.brush()
-			    .x(xScale2) // insert xScale2Time to make the x-axis work
+			    .x(xScale2Time) // insert xScale2Time to make the x-axis work
 			    .on("brush", doBrush);
 			
 			brushRoot.append("g")
@@ -149,14 +160,13 @@ var vis = (function(){
 				.attr("y", +1)
 				.attr("height", sizeBrush.height - 1);
 			
-			var xTicks = 12;
+			var xTicks = 10;
 			xAxis = d3.svg.axis().scale(xScaleTime).orient("bottom").tickSize(5, 3, 1).ticks(xTicks).tickFormat(format);
-			//xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(xTicks);
 			chartRoot.append("g")
 				.attr("class", "axis xAxis")
 				.attr("transform", "translate(0," + sizeChart.height + ")")
 				.call(xAxis);
-										// xScale
+
 			xGrid = d3.svg.axis().scale(xScaleTime).orient("bottom").tickSize(sizeChart.height, 0, 0).ticks(xTicks).tickFormat("");
 			chartRoot.append("g")
 				.attr("class", "xGrid")
@@ -179,7 +189,8 @@ var vis = (function(){
 				.attr("d", d3.svg.line()
 					.x(function(d, i){
 						d.type = series.label;
-						return xScale(i);
+						d.date = newScale.invert(i);
+						return xScaleTime(d.date);
 					})
 					.y(function(d, i){return yScales[d.type](d[1]);})
 					.interpolate("basis")
@@ -231,11 +242,10 @@ var vis = (function(){
 		}
 		
 		function doBrush() {
-			xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
 			xScaleTime.domain(brush.empty() ? xScale2Time.domain() : brush.extent());
 			// TODO implement xScaleTime brush behavior
 			chartRoot.selectAll(".graph").attr("d", d3.svg.line()
-				.x(function(d, i){return xScale(i);})
+				.x(function(d, i){return xScaleTime(d.date);})
 				.y(function(d, i){return yScales[d.type](d[1]);})
 				.interpolate("basis")
 			);
