@@ -1,34 +1,34 @@
 text{
-    stroke: none;
+	stroke: none;
 }
 
 path{
-    stroke: none;
+	stroke: none;
 }
 
-.brush .extent {
-  stroke: rgb(255, 255, 255);
-  fill: rgb(0, 0, 0);
-  fill-opacity: 0.15;
-  shape-rendering: crispEdges;
+.brush .extent{
+	stroke: rgb(255, 255, 255);
+	fill: rgb(0, 0, 0);
+	fill-opacity: 0.15;
+	shape-rendering: crispEdges;
 }
 
 .rootBackground{
-    fill: rgb(210, 210, 210);
-    stroke: rgb(0, 0, 0);
-    stroke-width: 4px;
+	fill: rgb(210, 210, 210);
+	stroke: rgb(0, 0, 0);
+	stroke-width: 4px;
 }
 
 .chartBackground{
-    fill: rgb(160, 160, 210);
-    stroke: rgb(0, 0, 0);
-    stroke-width: 2px;
+	fill: rgb(160, 160, 210);
+	stroke: rgb(0, 0, 0);
+	stroke-width: 2px;
 }
 
 .brushBackground{
-    fill: rgb(160, 160, 210);
-    stroke: rgb(0, 0, 0);
-    stroke-width: 2px;
+	fill: rgb(160, 160, 210);
+	stroke: rgb(0, 0, 0);
+	stroke-width: 2px;
 }
 
 
@@ -36,28 +36,28 @@ path{
  * graphs
  */
 .graph{
-    fill: none;
-    stroke-width: 3;
+	fill: none;
+	stroke-width: 3;
 }
 
 .graphWirkungsgrad{
-    stroke: rgb(255, 0, 0);
+	stroke: rgb(255, 0, 0);
 }
 
 .graphSpannung{
-    stroke: rgb(0, 255, 0);
+	stroke: rgb(0, 255, 0);
 }
 
 .graphErtrag{
-    stroke: rgb(0, 0, 255);
+	stroke: rgb(0, 0, 255);
 }
 
 .graphLeistung{
-    stroke: rgb(128, 70, 27);
+	stroke: rgb(128, 70, 27);
 }
 
 .graphHighlight{
-    stroke: rgb(255, 255, 255);
+	stroke: rgb(255, 255, 255);
 }
 
 
@@ -65,17 +65,17 @@ path{
  * axes
  */
 .axis{
-    shape-rendering: crispEdges;
+	shape-rendering: crispEdges;
 }
 
 .xAxis{
-    fill: rgb(0, 0, 0);
-    stroke: rgb(0, 0, 0);
+	fill: rgb(0, 0, 0);
+	stroke: rgb(0, 0, 0);
 }
 
 .axisHighlight{
-    fill: rgb(255, 255, 255);
-    stroke: rgb(255, 255, 255);
+	fill: rgb(255, 255, 255);
+	stroke: rgb(255, 255, 255);
 }
 
 
@@ -83,8 +83,8 @@ path{
  * grid
  */
 .xGrid{
-    fill: rgb(0, 0, 0);
-    stroke: rgb(0, 0, 0);
-    opacity: 0.3;
-    shape-rendering: crispEdges;
+	fill: rgb(0, 0, 0);
+	stroke: rgb(0, 0, 0);
+	opacity: 0.3;
+	shape-rendering: crispEdges;
 }
