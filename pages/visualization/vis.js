@@ -53,6 +53,7 @@ var vis = (function(){
 		top: marginBrush.top + sizeBrush.height + 9,
 		topText: 18,
 		leftText: sizeLegend.sizeSquare + 3,
+		rightText: 12,
 		topSquare: 5
 	}
 	marginAxes = [-5, -60, sizeChart.width + 5, sizeChart.width + 60];
@@ -82,6 +83,7 @@ var vis = (function(){
 		var xGrid;
 		var activeAxes = [false, false, false, false];
 		var numLegendElements = 0;
+		var legendWidth = 0;
 		
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg")
@@ -270,21 +272,23 @@ var vis = (function(){
 		}
 		
 		function addLegendElement(name){
-			legendRoot.append("text")
+			var text = legendRoot.append("text")
 				.attr("class", "legendText" + name)
-				.attr("x", numLegendElements * sizeLegend.widthElement + marginLegend.leftText)
+				.attr("x", legendWidth + marginLegend.leftText)
 				.attr("y", marginLegend.topText)
 				.text(name);
 			
 			legendRoot.append("rect")
 				.attr("class", "legendSquare" + name)
-				.attr("x", numLegendElements * sizeLegend.widthElement)
+				.attr("x", legendWidth)
 				.attr("y", marginLegend.topSquare)
 				.attr("height", sizeLegend.sizeSquare)
 				.attr("width", sizeLegend.sizeSquare)
 				.style("fill", d3.select(".graph" + name).style("stroke"));
 			
+			legendWidth += text.node().getBBox().width + marginLegend.leftText + marginLegend.rightText;
 			numLegendElements++;
+			p(text.node().getBBox().width);
 		}
 	}
 
