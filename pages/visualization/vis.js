@@ -57,9 +57,9 @@ var vis = (function(){
 		topSquare: 5
 	}
 	marginAxes = {
-		left: [-5, -60, sizeChart.width + 5, sizeChart.width + 60],
-		topLabel: 22,
-		leftLabel: [-40, -40, 13, 13]
+		left: [-5, -50, sizeChart.width + 5, sizeChart.width + 50],
+		topLabel: 20,
+		leftLabel: [-30, -30, 5, 5]
 	}
 	orientationAxes = ["left", "left", "right", "right"];
 	graphOffsets = {"Leistung" : 1.1, "Ertrag" : 1.2, "Wirkungsgrad" : 1.3, "Spannung" : 1.4};
@@ -250,6 +250,25 @@ var vis = (function(){
 			chartRoot.selectAll(".xAxis").call(xAxis);
 			chartRoot.selectAll(".xGrid").call(xGrid);
 		}
+
+		function convertSiUnit(value){
+			var steps =	[[1e12, "T"],
+						[1e9, "G"],
+						[1e6, "M"],
+						[1e3, "k"],
+						[1, ""],
+						[1e-3, "m"],
+						[1e-6, "µ"],
+						[1e-9, "n"]];
+
+			for(var i = 0; i < steps.length; i++){
+				if(value >= steps[i][0]){
+					var number = value / steps[i][0];
+					var postfix = steps[i][1];
+					return number + postfix;
+				}
+			}
+		}
 		
 		function addAxis(scale, name, unit){
 			for(var i = 0; i < activeAxes.length; i++){
@@ -261,9 +280,6 @@ var vis = (function(){
 				}
 				else{
 					activeAxes[i] =true;
-					var format = function(number){
-						return number;
-					};
 					
 					var axis = d3.svg.axis()
 						.scale(scale)
@@ -271,7 +287,7 @@ var vis = (function(){
 						.tickSize(5, 3, 1)
 						.ticks(10)
 						.tickSubdivide(1)
-						.tickFormat(format);
+						.tickFormat(convertSiUnit);
 
 					var color = d3.select(".graph" + name).style("stroke");
 					
