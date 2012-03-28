@@ -288,7 +288,6 @@ var vis = (function(){
 			
 			legendWidth += text.node().getBBox().width + marginLegend.leftText + marginLegend.rightText;
 			numLegendElements++;
-			p(text.node().getBBox().width);
 		}
 	}
 
