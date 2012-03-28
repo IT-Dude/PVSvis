@@ -202,8 +202,6 @@ var vis = (function(){
 				)
 				.on("mouseover", function(){
 						d3.select(this).classed("graphHighlight", true);
-						d3.select(".yAxis" + series.label)
-							.classed("axisHighlight", true);
 						d3.select(".yGrid" + series.label)
 							.style("visibility", "visible");
 				})
