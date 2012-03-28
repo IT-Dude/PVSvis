@@ -56,7 +56,11 @@ var vis = (function(){
 		rightText: 12,
 		topSquare: 5
 	}
-	marginAxes = [-5, -60, sizeChart.width + 5, sizeChart.width + 60];
+	marginAxes = {
+		left: [-5, -60, sizeChart.width + 5, sizeChart.width + 60],
+		topLabel: 22,
+		leftLabel: [-40, -40, 13, 13]
+	}
 	orientationAxes = ["left", "left", "right", "right"];
 	graphOffsets = {"Leistung" : 1.1, "Ertrag" : 1.2, "Wirkungsgrad" : 1.3, "Spannung" : 1.4};
 /*
@@ -218,7 +222,7 @@ var vis = (function(){
 					.interpolate("basis")
 				);
 			
-			addAxis(yScale, series.label);
+			addAxis(yScale, series.label, series.unit);
 			addLegendElement(series.label);
 		}
 		
@@ -247,7 +251,7 @@ var vis = (function(){
 			chartRoot.selectAll(".xGrid").call(xGrid);
 		}
 		
-		function addAxis(scale, type){
+		function addAxis(scale, name, unit){
 			for(var i = 0; i < activeAxes.length; i++){
 				if(i >= activeAxes.length){
 					break;
@@ -259,13 +263,19 @@ var vis = (function(){
 					activeAxes[i] =true;
 
 					var axis = d3.svg.axis().scale(scale).orient(orientationAxes[i]).tickSize(5, 3, 1).ticks(10).tickSubdivide(1);
-					chartRoot.append("g")
-						.attr("class", "axis yAxis" + type)
-						.attr("transform", "translate(" + marginAxes[i] + ", 0)")
-						.style("fill", d3.select(".graph" + type).style("stroke"))
-						.style("stroke", d3.select(".graph" + type).style("stroke"))
+					var color = d3.select(".graph" + name).style("stroke");
+					
+					var axisGroup = chartRoot.append("g")
+						.attr("class", "axis yAxis" + name)
+						.attr("transform", "translate(" + marginAxes.left[i] + ", 0)")
+						.style("fill", color)
+						.style("stroke", color)
 						.call(axis);
-						
+					
+					axisGroup.append("text")
+						.attr("transform", "translate(" + marginAxes.leftLabel[i] + ", " + (sizeChart.height + marginAxes.topLabel) + ")")
+						.text(unit);
+					
 					break;
 				}
 			}
