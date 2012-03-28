@@ -25,14 +25,9 @@ path{
     fill: rgb(160, 160, 210);
 }
 
-.legendText{
-    stroke: none;
-}
 
 /*
- * 
  * graphs
- * 
  */
 .graph{
     fill: none;
@@ -59,10 +54,9 @@ path{
     stroke: rgb(255, 255, 255);
 }
 
+
 /*
- * 
  * axes
- * 
  */
 .axis{
     shape-rendering: crispEdges;
@@ -78,12 +72,10 @@ path{
     stroke: rgb(255, 255, 255);
 }
 
-/*
- * 
- * grid
- * 
- */
 
+/*
+ * grid
+ */
 .xGrid{
     fill: rgb(0, 0, 0);
     stroke: rgb(0, 0, 0);
