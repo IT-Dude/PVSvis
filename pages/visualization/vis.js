@@ -113,7 +113,7 @@ var vis = (function(){
 				.attr("width", sizeBrush.width);
 				
 			chartRoot.append("defs").append("clipPath")
-				.attr("id", "clip")
+					.attr("id", "clip")
 				.append("rect")
 					.attr("width", sizeChart.width)
 					.attr("height", sizeChart.height);
@@ -132,16 +132,16 @@ var vis = (function(){
 			var endDate = new Date(2000, 0, 0, 23, 59, 59);
 			var format = d3.time.format("%H:%M");
 			xScale = d3.time.scale()
-						.domain([startDate, endDate])
-						.range([0, sizeChart.width]);
+				.domain([startDate, endDate])
+				.range([0, sizeChart.width]);
 			
 			xScale2 = d3.time.scale()
-						.domain([startDate, endDate])
-						.range([0, sizeChart.width]);
+				.domain([startDate, endDate])
+				.range([0, sizeChart.width]);
 						
 			timeValueScale = d3.time.scale()
-						.domain([startDate, endDate])
-						.range([0, numValues]);
+				.domain([startDate, endDate])
+				.range([0, numValues]);
 			//
 
 			for(var i = 0; i < data.series.length; i++){
@@ -149,8 +149,8 @@ var vis = (function(){
 			}
 
 			brush = d3.svg.brush()
-			    .x(xScale2)
-			    .on("brush", doBrush);
+				.x(xScale2)
+				.on("brush", doBrush);
 			
 			brushRoot.append("g")
 				.attr("class", "x brush")
