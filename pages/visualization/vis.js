@@ -191,17 +191,12 @@ var vis = (function(){
 				)
 				.on("mouseover", function(){
 						d3.select(this).classed("graphHighlight", true);
-						chartRoot.append("text")
-							.attr("class", "textBox")
-							.attr("y", -10)
-							.text(series.label);
 						d3.select(".yAxis" + series.label)
 							.classed("axisHighlight", true);
 					}
 				)
 				.on("mouseout", function(){
 						d3.select(this).classed("graphHighlight", false);
-						chartRoot.selectAll(".textBox").remove();
 						d3.select(".yAxis" + series.label)
 							.classed("axisHighlight", false);
 					}
