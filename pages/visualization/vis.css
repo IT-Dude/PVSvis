@@ -86,5 +86,9 @@ path{
 	fill: rgb(0, 0, 0);
 	stroke: rgb(0, 0, 0);
 	opacity: 0.3;
+}
+
+.yGrid{
+	opacity: 0.8;
 	shape-rendering: crispEdges;
 }

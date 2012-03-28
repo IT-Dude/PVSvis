@@ -204,11 +204,15 @@ var vis = (function(){
 						d3.select(this).classed("graphHighlight", true);
 						d3.select(".yAxis" + series.label)
 							.classed("axisHighlight", true);
+						d3.select(".yGrid" + series.label)
+							.style("visibility", "visible");
 				})
 				.on("mouseout", function(){
 						d3.select(this).classed("graphHighlight", false);
 						d3.select(".yAxis" + series.label)
 							.classed("axisHighlight", false);
+						d3.select(".yGrid" + series.label)
+							.style("visibility", "hidden");
 				});
 			
 			brushRoot.append("path")
@@ -280,12 +284,13 @@ var vis = (function(){
 				}
 				else{
 					activeAxes[i] =true;
+					var yTicks = 10;
 					
 					var axis = d3.svg.axis()
 						.scale(scale)
 						.orient(orientationAxes[i])
 						.tickSize(5, 3, 1)
-						.ticks(10)
+						.ticks(yTicks)
 						.tickSubdivide(1)
 						.tickFormat(convertSiUnit);
 
@@ -301,6 +306,29 @@ var vis = (function(){
 					axisGroup.append("text")
 						.attr("transform", "translate(" + marginAxes.leftLabel[i] + ", " + (sizeChart.height + marginAxes.topLabel) + ")")
 						.text(unit);
+					
+					var size = 0;
+					if(orientationAxes[i] == "left"){
+						size = -(sizeChart.width - marginAxes.left[i]);
+					}
+					if(orientationAxes[i] == "right"){
+						size = marginAxes.left[i];
+					}
+					
+					var yGrid = d3.svg.axis()
+						.scale(yScales[name])
+						.orient("left")
+						.tickSize(size, 0, 0)
+						.ticks(yTicks)
+						.tickFormat("");
+
+					chartRoot.append("g")
+						.attr("class", "yGrid yGrid" + name)
+						.attr("transform", "translate(" + marginAxes.left[i] + ", 0)")
+						.style("fill", color)
+						.style("stroke", color)
+						.style("visibility", "hidden")
+						.call(yGrid);
 					
 					break;
 				}
