@@ -15,14 +15,20 @@ path{
 
 .rootBackground{
     fill: rgb(210, 210, 210);
+    stroke: rgb(0, 0, 0);
+    stroke-width: 4px;
 }
 
 .chartBackground{
     fill: rgb(160, 160, 210);
+    stroke: rgb(0, 0, 0);
+    stroke-width: 2px;
 }
 
 .brushBackground{
     fill: rgb(160, 160, 210);
+    stroke: rgb(0, 0, 0);
+    stroke-width: 2px;
 }
 
 
