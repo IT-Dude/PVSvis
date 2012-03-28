@@ -261,8 +261,18 @@ var vis = (function(){
 				}
 				else{
 					activeAxes[i] =true;
+					var format = function(number){
+						return number;
+					};
+					
+					var axis = d3.svg.axis()
+						.scale(scale)
+						.orient(orientationAxes[i])
+						.tickSize(5, 3, 1)
+						.ticks(10)
+						.tickSubdivide(1)
+						.tickFormat(format);
 
-					var axis = d3.svg.axis().scale(scale).orient(orientationAxes[i]).tickSize(5, 3, 1).ticks(10).tickSubdivide(1);
 					var color = d3.select(".graph" + name).style("stroke");
 					
 					var axisGroup = chartRoot.append("g")
