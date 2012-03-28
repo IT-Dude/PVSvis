@@ -25,6 +25,10 @@ path{
     fill: rgb(160, 160, 210);
 }
 
+.legendText{
+    stroke: none;
+}
+
 /*
  * 
  * graphs

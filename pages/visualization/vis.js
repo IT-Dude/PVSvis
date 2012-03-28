@@ -46,10 +46,14 @@ var vis = (function(){
 		width: sizeChart.width
 	}
 	sizeLegend = {
-		
+		sizeSquare: 15,
+		widthElement: 110
 	}
 	marginLegend = {
-		top: marginBrush.top + sizeBrush.height + 5
+		top: marginBrush.top + sizeBrush.height + 9,
+		topText: 18,
+		leftText: sizeLegend.sizeSquare + 3,
+		topSquare: 5
 	}
 	marginAxes = [-5, -60, sizeChart.width + 5, sizeChart.width + 60];
 	orientationAxes = ["left", "left", "right", "right"];
@@ -77,6 +81,7 @@ var vis = (function(){
 		var xAxis;
 		var xGrid;
 		var activeAxes = [false, false, false, false];
+		var numLegendElements = 0;
 		
 		this.setUp = function(){
 			this.root = d3.select("#chart").append("svg")
@@ -193,14 +198,12 @@ var vis = (function(){
 						d3.select(this).classed("graphHighlight", true);
 						d3.select(".yAxis" + series.label)
 							.classed("axisHighlight", true);
-					}
-				)
+				})
 				.on("mouseout", function(){
 						d3.select(this).classed("graphHighlight", false);
 						d3.select(".yAxis" + series.label)
 							.classed("axisHighlight", false);
-					}
-				);
+				});
 			
 			brushRoot.append("path")
      			.data([series.data])
@@ -214,6 +217,7 @@ var vis = (function(){
 				);
 			
 			addAxis(yScale, series.label);
+			addLegendElement(series.label);
 		}
 		
 		function scaleX(numValues){
@@ -241,7 +245,7 @@ var vis = (function(){
 			chartRoot.selectAll(".xGrid").call(xGrid);
 		}
 		
-		function addAxis(scale, type) {
+		function addAxis(scale, type){
 			for(var i = 0; i < activeAxes.length; i++){
 				if(i >= activeAxes.length){
 					break;
@@ -261,6 +265,25 @@ var vis = (function(){
 					break;
 				}
 			}
+		}
+		
+		function addLegendElement(name){
+			legendRoot.append("text")
+				.attr("class", "legendText" + name)
+				.attr("x", numLegendElements * sizeLegend.widthElement + marginLegend.leftText)
+				.attr("y", marginLegend.topText)
+				//.style("fill", d3.select(".graph" + name).style("stroke"))
+				.text(name);
+			
+			legendRoot.append("rect")
+				.attr("class", "legendSquare" + name)
+				.attr("x", numLegendElements * sizeLegend.widthElement)
+				.attr("y", marginLegend.topSquare)
+				.attr("height", sizeLegend.sizeSquare)
+				.attr("width", sizeLegend.sizeSquare)
+				.style("fill", d3.select(".graph" + name).style("stroke"));
+			
+			numLegendElements++;
 		}
 	}
 
