@@ -260,6 +260,8 @@ var vis = (function(){
 					chartRoot.append("g")
 						.attr("class", "axis yAxis" + type)
 						.attr("transform", "translate(" + marginAxes[i] + ", 0)")
+						.style("fill", d3.select(".graph" + type).style("stroke"))
+						.style("stroke", d3.select(".graph" + type).style("stroke"))
 						.call(axis);
 						
 					break;
@@ -272,7 +274,6 @@ var vis = (function(){
 				.attr("class", "legendText" + name)
 				.attr("x", numLegendElements * sizeLegend.widthElement + marginLegend.leftText)
 				.attr("y", marginLegend.topText)
-				//.style("fill", d3.select(".graph" + name).style("stroke"))
 				.text(name);
 			
 			legendRoot.append("rect")
