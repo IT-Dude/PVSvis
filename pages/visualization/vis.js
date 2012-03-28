@@ -28,7 +28,7 @@ var vis = (function(){
 		width: 900}
 	marginChart = {
 		top: 10,
-		bottom: 135,
+		bottom: 100,
 		left: 110,
 		right: 110
 	}	
