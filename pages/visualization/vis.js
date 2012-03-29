@@ -201,7 +201,7 @@ var vis = (function(){
 					.interpolate("basis")
 				)
 				.on("mouseover", function(){
-						opacity = 0.2;
+						opacity = 0.08;
 						d3.select(this).classed("graphHighlight", true);
 						d3.select(".yGrid" + series.label)
 							.style("visibility", "visible");
