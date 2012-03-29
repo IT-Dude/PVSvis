@@ -201,6 +201,7 @@ var vis = (function(){
 					.interpolate("basis")
 				)
 				.on("mouseover", function(){
+						opacity = 0.2;
 						d3.select(this).classed("graphHighlight", true);
 						d3.select(".yGrid" + series.label)
 							.style("visibility", "visible");
@@ -217,7 +218,21 @@ var vis = (function(){
 									return this;
 								}
 							})
-							.style("opacity", 0.2);
+							.style("opacity", opacity);
+						d3.selectAll(".legendText")
+							.filter(function(d, i){
+								if(d3.select(this).classed("legendText" + series.label) != true){
+									return this;
+								}
+							})
+							.style("opacity", opacity);
+						d3.selectAll(".legendSquare")
+							.filter(function(d, i){
+								if(d3.select(this).classed("legendSquare" + series.label) != true){
+									return this;
+								}
+							})
+							.style("opacity", opacity);							
 				})
 				.on("mouseout", function(){
 						d3.select(this).classed("graphHighlight", false);
@@ -228,6 +243,10 @@ var vis = (function(){
 						d3.selectAll(".yAxis")
 							.style("visibility", "visible");
 						d3.selectAll(".graph")
+							.style("opacity", 1.0);
+						d3.selectAll(".legendText")
+							.style("opacity", 1.0);
+						d3.selectAll(".legendSquare")
 							.style("opacity", 1.0);
 						
 				});
@@ -354,13 +373,13 @@ var vis = (function(){
 		
 		function addLegendElement(name){
 			var text = legendRoot.append("text")
-				.attr("class", "legendText" + name)
+				.attr("class", "legendText legendText" + name)
 				.attr("x", legendWidth + marginLegend.leftText)
 				.attr("y", marginLegend.topText)
 				.text(name);
 			
 			legendRoot.append("rect")
-				.attr("class", "legendSquare" + name)
+				.attr("class", "legendSquare legendSquare" + name)
 				.attr("x", legendWidth)
 				.attr("y", marginLegend.topSquare)
 				.attr("height", sizeLegend.sizeSquare)
