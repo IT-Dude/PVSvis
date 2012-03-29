@@ -204,6 +204,20 @@ var vis = (function(){
 						d3.select(this).classed("graphHighlight", true);
 						d3.select(".yGrid" + series.label)
 							.style("visibility", "visible");
+						d3.selectAll(".yAxis")
+							.filter(function(d, i){
+								if(d3.select(this).classed("yAxis" + series.label) != true){
+									return this;
+								}
+							})
+							.style("visibility", "hidden");
+						d3.selectAll(".graph")
+							.filter(function(d, i){
+								if(d3.select(this).classed("graph" + series.label) != true){
+									return this;
+								}
+							})
+							.style("opacity", 0.2);
 				})
 				.on("mouseout", function(){
 						d3.select(this).classed("graphHighlight", false);
@@ -211,6 +225,11 @@ var vis = (function(){
 							.classed("axisHighlight", false);
 						d3.select(".yGrid" + series.label)
 							.style("visibility", "hidden");
+						d3.selectAll(".yAxis")
+							.style("visibility", "visible");
+						d3.selectAll(".graph")
+							.style("opacity", 1.0);
+						
 				});
 			
 			brushRoot.append("path")
@@ -295,7 +314,7 @@ var vis = (function(){
 					var color = d3.select(".graph" + name).style("stroke");
 					
 					var axisGroup = chartRoot.append("g")
-						.attr("class", "axis yAxis" + name)
+						.attr("class", "axis yAxis yAxis" + name)
 						.attr("transform", "translate(" + marginAxes.left[i] + ", 0)")
 						.style("fill", color)
 						.style("stroke", color)
