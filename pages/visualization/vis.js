@@ -1,20 +1,5 @@
 var vis = (function(){
-	
 	var chartData;
-	d3.json("chart-data.json", function(json) {
-		p("OOOOOOOOOOOOOOOOOOOOOOOOO");
-		p(json);
-		p("OOOOOOOOOOOOOOOOOOOOOOOOO");
-		chartData = json;
-		p(chartData);
-		p("OOOOOOOOOOOOOOOOOOOOOOOOO");
-	});
-
-	chartData = theData;
-	
-	p("IIIIIIIIIIIIIIIII");
-	p(chartData);
-	p("IIIIIIIIIIIIIIIII");
 	
 	var config = {
 		"title" : "",
@@ -94,12 +79,7 @@ var vis = (function(){
 	
 	function data(d){
 		chartData = d;
-	}
-
-	function dataFromJSON(fileName){
-		d3.json(fileName, function(json){
-			chartData = json;
-		});
+		p(chartData);
 	}
 	
 /*
@@ -431,7 +411,6 @@ var vis = (function(){
 		visualize: visualize,
 		createChart: createChart,
 		p: p,
-		data: data,
-		dataFromJSON: dataFromJSON
+		data: data
 	}
 })();
