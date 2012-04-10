@@ -1,17 +1,20 @@
 var vis = (function(){
 	
-	// TODO use this piece of code, current workaround is the inclusion of the data as .js file
-	// use a server to deliver the data the standard way 
-	/*
 	var chartData;
 	d3.json("chart-data.json", function(json) {
+		p("OOOOOOOOOOOOOOOOOOOOOOOOO");
+		p(json);
+		p("OOOOOOOOOOOOOOOOOOOOOOOOO");
 		chartData = json;
+		p(chartData);
+		p("OOOOOOOOOOOOOOOOOOOOOOOOO");
 	});
-	console.log(data);
-	*/
-	var chartData = theData;
 
+	chartData = theData;
+	
+	p("IIIIIIIIIIIIIIIII");
 	p(chartData);
+	p("IIIIIIIIIIIIIIIII");
 	
 	var config = {
 		"title" : "",
@@ -92,7 +95,7 @@ var vis = (function(){
 	function data(d){
 		chartData = d;
 	}
-	
+
 	function dataFromJSON(fileName){
 		d3.json(fileName, function(json){
 			chartData = json;
