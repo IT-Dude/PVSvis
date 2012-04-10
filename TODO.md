@@ -1,3 +1,8 @@
-- mehrere Achsen
-- Farbunterschiede zwischen Graphen, Beziehung zu Achsen
-- Brushes, Zoomfunktionalit�t
+- API aufbauen
+- Daten extern hinzufügen können
+- Farbabstufung bei Graphen gleicher Art
+- Tooltip am Graphen, soll z.B. Wert anzeigen
+- Lineal
+- Toggle zum Ausblenden von Graphen
+- x-Achse reparieren, Unix Timestamps aus dem Datensatz nutzen
+- Farben der Visualisierung anpassen
