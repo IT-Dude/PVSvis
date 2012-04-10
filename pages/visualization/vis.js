@@ -9,7 +9,7 @@ var vis = (function(){
 	});
 	console.log(data);
 	*/
-	
+
 	p(chartData);
 	
 	var config = {
@@ -19,17 +19,11 @@ var vis = (function(){
 		"width" : 900,
 	}
 	function createChart(conf){
-		for(var item in conf){
-			config[item] = conf[item];
-		}
-		
+		$.extend(true, config, conf);
 		setConstants();
 		setUp();
 	}
-	
-	/*
-	 * global constants for configuration
-	 */
+
 	function setConstants(){
 		sizeRoot = {
 			height: config["height"],
