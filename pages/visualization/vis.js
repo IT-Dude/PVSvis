@@ -10,12 +10,21 @@ var vis = (function(){
 	console.log(data);
 	*/
 	
-	console.log(chartData);
+	p(chartData);
 	
-	function createChart(config){
+	var config = {
+		"root" : "#chart",
+		"height" : 500,
+		"width" : 900,
+	}
+	function createChart(conf){
+		//conf = config;
+		for(var item in conf){
+			config[item] = conf[item];
+		}
+		setUp();
 		return "foobar";
 	}
-	
 	
 	function setUp(){
 		d3.selectAll("#textHeader").text(chartData.title);

@@ -2,8 +2,8 @@ var application = (function(){
 	var chart;	
 	var config = {
 		"root" : "#chart",
-		"height" : 500,
-		"width" : 900
+		"height" : 300,
+		"width" : 500
 	};
 	
 	function setUp(){
