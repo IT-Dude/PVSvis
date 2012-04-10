@@ -22,10 +22,10 @@ var vis = (function(){
 		$.extend(true, config, conf);
 		setConstants();
 		
-		return vis; // TODO do not return vis!
+		return vis;
 	}
 	
-	// TODO make this a function of the Chart object
+	// TODO make this a function of the Chart object???
 	function visualize(){
 		setConstants();
 		setUp();
@@ -83,11 +83,19 @@ var vis = (function(){
 		chart.setUp();
 		chart.renderData(chartData);
 	}
-/*
- * global functions
- */
+	
 	function p(s){
 		console.log(s);
+	}
+	
+	function data(d){
+		chartData = d;
+	}
+	
+	function dataFromJSON(fileName){
+		d3.json(fileName, function(json){
+			chartData = json;
+		});
 	}
 	
 /*
@@ -418,6 +426,8 @@ var vis = (function(){
 		setUp: setUp,
 		visualize: visualize,
 		createChart: createChart,
-		p: p
+		p: p,
+		data: data,
+		dataFromJSON: dataFromJSON
 	}
 })();
