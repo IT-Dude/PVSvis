@@ -13,69 +13,75 @@ var vis = (function(){
 	p(chartData);
 	
 	var config = {
+		"title" : "",
 		"root" : "#chart",
 		"height" : 500,
 		"width" : 900,
 	}
 	function createChart(conf){
-		//conf = config;
 		for(var item in conf){
 			config[item] = conf[item];
 		}
+		
+		setConstants();
 		setUp();
-		return "foobar";
+	}
+	
+	/*
+	 * global constants for configuration
+	 */
+	function setConstants(){
+		sizeRoot = {
+			height: config["height"],
+			width: config["width"]
+		}
+		marginChart = {
+			top: 10,
+			bottom: 100,
+			left: 110,
+			right: 110
+		}	
+		sizeChart = {
+			height: sizeRoot.height - marginChart.top - marginChart.bottom,
+			width: sizeRoot.width - marginChart.left - marginChart.right
+		}
+		marginBrush = {
+			top: sizeChart.height + marginChart.top + 25,
+			bottom: 40,
+			left: marginChart.left, 
+			right: marginChart.right
+		}
+		sizeBrush = {
+			height: sizeRoot.height - marginBrush.top - marginBrush.bottom,
+			width: sizeChart.width
+		}
+		sizeLegend = {
+			sizeSquare: 15,
+			widthElement: 110
+		}
+		marginLegend = {
+			top: marginBrush.top + sizeBrush.height + 9,
+			topText: 18,
+			leftText: sizeLegend.sizeSquare + 3,
+			rightText: 12,
+			topSquare: 5
+		}
+		marginAxes = {
+			left: [-5, -50, sizeChart.width + 5, sizeChart.width + 50],
+			topLabel: 20,
+			leftLabel: [-30, -30, 5, 5]
+		}
+		orientationAxes = ["left", "left", "right", "right"];
+		graphOffsets = {"Leistung" : 1.1, "Ertrag" : 1.2, "Wirkungsgrad" : 1.3, "Spannung" : 1.4};
 	}
 	
 	function setUp(){
-		d3.selectAll("#textHeader").text(chartData.title);
+		d3.selectAll("#textHeader").text(config["title"]);
 		
 		var chart = new Chart();
 		chart.setUp();
 		chart.renderData(chartData);
 	}
-/*
- * global constants for configuration
- */
-	sizeRoot = {
-		height: 500,
-		width: 900}
-	marginChart = {
-		top: 10,
-		bottom: 100,
-		left: 110,
-		right: 110
-	}	
-	sizeChart = {
-		height: sizeRoot.height - marginChart.top - marginChart.bottom,
-		width: sizeRoot.width - marginChart.left - marginChart.right}
-	marginBrush = {
-		top: sizeChart.height + marginChart.top + 25,
-		bottom: 40,
-		left: marginChart.left, 
-		right: marginChart.right
-	}
-	sizeBrush = {
-		height: sizeRoot.height - marginBrush.top - marginBrush.bottom,
-		width: sizeChart.width
-	}
-	sizeLegend = {
-		sizeSquare: 15,
-		widthElement: 110
-	}
-	marginLegend = {
-		top: marginBrush.top + sizeBrush.height + 9,
-		topText: 18,
-		leftText: sizeLegend.sizeSquare + 3,
-		rightText: 12,
-		topSquare: 5
-	}
-	marginAxes = {
-		left: [-5, -50, sizeChart.width + 5, sizeChart.width + 50],
-		topLabel: 20,
-		leftLabel: [-30, -30, 5, 5]
-	}
-	orientationAxes = ["left", "left", "right", "right"];
-	graphOffsets = {"Leistung" : 1.1, "Ertrag" : 1.2, "Wirkungsgrad" : 1.3, "Spannung" : 1.4};
 /*
  * global functions
  */
@@ -103,7 +109,7 @@ var vis = (function(){
 		var legendWidth = 0;
 		
 		this.setUp = function(){
-			this.root = d3.select("#chart").append("svg")
+			this.root = d3.select(config["root"]).append("svg")
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
 			

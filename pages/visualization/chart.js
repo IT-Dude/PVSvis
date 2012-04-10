@@ -1,9 +1,10 @@
 var application = (function(){
 	var chart;	
 	var config = {
+		"title" : "Chart!",
 		"root" : "#chart",
-		"height" : 300,
-		"width" : 500
+		"height" : 500,
+		"width" : 900
 	};
 	
 	function setUp(){
