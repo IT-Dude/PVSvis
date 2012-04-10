@@ -12,8 +12,12 @@ var vis = (function(){
 	
 	console.log(chartData);
 	
-	function setUp()
-	{
+	function createChart(config){
+		return "foobar";
+	}
+	
+	
+	function setUp(){
 		d3.selectAll("#textHeader").text(chartData.title);
 		
 		var chart = new Chart();
@@ -392,9 +396,11 @@ var vis = (function(){
 	}
 
 /*
- * public object of the "vis" namespace
+ * public objects of the "vis" namespace
  */
 	return{
-		setUp: setUp
+		setUp: setUp,
+		createChart: createChart,
+		p: p
 	}
 })();
