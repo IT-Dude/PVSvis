@@ -9,7 +9,7 @@ var application = (function(){
 	
 	function setUp(){
 		chart = vis.createChart(config);
-		chart.dataFromJSON("chart-data.json");
+		//chart.dataFromJSON("chart-data.json");
 		chart.visualize();
 		doSomething();
 	}

@@ -9,6 +9,7 @@ var vis = (function(){
 	});
 	console.log(data);
 	*/
+	var chartData = theData;
 
 	p(chartData);
 	
