@@ -9,6 +9,7 @@ var application = (function(){
 	
 	function setUp(){
 		chart = vis.createChart(config);
+		chart.visualize();
 		doSomething();
 	}
 

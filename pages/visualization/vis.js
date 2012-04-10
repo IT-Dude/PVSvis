@@ -21,6 +21,13 @@ var vis = (function(){
 	function createChart(conf){
 		$.extend(true, config, conf);
 		setConstants();
+		
+		return vis; // TODO do not return vis!
+	}
+	
+	// TODO make this a function of the Chart object
+	function visualize(){
+		setConstants();
 		setUp();
 	}
 
@@ -409,6 +416,7 @@ var vis = (function(){
  */
 	return{
 		setUp: setUp,
+		visualize: visualize,
 		createChart: createChart,
 		p: p
 	}
