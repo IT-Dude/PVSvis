@@ -1,12 +1,12 @@
 var vis = (function(){
-	var chartData;
-	
 	var config = {
 		"title" : "",
 		"root" : "#chart",
 		"height" : 500,
 		"width" : 900,
 	}
+	var chart;
+	var chartData;
 	function createChart(conf){
 		$.extend(true, config, conf);
 		setConstants();
@@ -68,7 +68,7 @@ var vis = (function(){
 	function setUp(){
 		d3.selectAll("#textHeader").text(config["title"]);
 		
-		var chart = new Chart();
+		chart = new Chart();
 		chart.setUp();
 		chart.renderData(chartData);
 	}

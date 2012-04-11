@@ -8,8 +8,8 @@ var application = (function(){
 	};
 	
 	function setUp(){
-		chart = vis.createChart(config);
 		d3.json("chart-data.json", function(json){
+			chart = vis.createChart(config);
 			chart.data(json);
 			chart.visualize();
 		});
