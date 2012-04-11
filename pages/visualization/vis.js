@@ -5,8 +5,7 @@ var vis = (function(){
 		"height" : 500,
 		"width" : 900,
 	}
-	
-	var chartData;
+
 	function createChart(conf){
 		$.extend(true, config, conf);
 		setConstants();
@@ -76,6 +75,7 @@ var vis = (function(){
 		var chartRoot;
 		var brushRoot;
 		var legendRoot;
+		var chartData;
 		var xScale;
 		var xScale2;
 		var timeValueScale;
@@ -87,8 +87,7 @@ var vis = (function(){
 		var numLegendElements = 0;
 		var legendWidth = 0;
 		
-		var localData; // TODO rename this
-		
+				
 		this.setUp = function(){
 			this.root = d3.select(config["root"]).append("svg")
 				.attr("height", sizeRoot.height)
@@ -125,13 +124,14 @@ var vis = (function(){
 					.attr("height", sizeChart.height);
 		}
 		
-		this.setData = function(data){
-			localData = data;
-			p(localData);
+		// TODO really try to update existing data, not just overwite it
+		this.addData = function(data){
+			chartData = data;
+			p(chartData);
 		}
 		
 		this.visualize = function(){
-			self.renderData(localData);
+			self.renderData(chartData);
 		}
 		
 		this.renderData = function(data){
@@ -157,7 +157,6 @@ var vis = (function(){
 			timeValueScale = d3.time.scale()
 				.domain([startDate, endDate])
 				.range([0, numValues]);
-			//
 
 			for(var i = 0; i < data.series.length; i++){
 				self.renderSeries(data.series[i]);
