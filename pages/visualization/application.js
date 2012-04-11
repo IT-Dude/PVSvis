@@ -10,7 +10,7 @@ var application = (function(){
 	function setUp(){
 		d3.json("chart-data.json", function(json){
 			chart = vis.createChart(config);
-			chart.data(json);
+			chart.setData(json);
 			chart.visualize();
 		});
 		doSomething();

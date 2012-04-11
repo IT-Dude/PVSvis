@@ -1,4 +1,4 @@
-var vis = (function(){
+var vis = (function(){	
 	var config = {
 		"title" : "",
 		"root" : "#chart",
@@ -11,17 +11,11 @@ var vis = (function(){
 		$.extend(true, config, conf);
 		setConstants();
 		
-		return vis;
-	}
-	
-	// TODO make this a function of the Chart object???
-	function visualize(){
-		setConstants();
-		
 		d3.selectAll("#textHeader").text(config["title"]);
 		chart = new Chart();
 		chart.setUp();
-		chart.renderData(chartData);
+		
+		return chart;
 	}
 
 	function setConstants(){
@@ -137,6 +131,7 @@ var vis = (function(){
 		
 		this.setData = function(data){
 			localData = data;
+			p(localData);
 		}
 		
 		this.visualize = function(){
@@ -413,7 +408,6 @@ var vis = (function(){
  * public objects of the "vis" namespace
  */
 	return{
-		visualize: visualize,
 		createChart: createChart,
 		p: p,
 		data: data
