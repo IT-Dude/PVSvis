@@ -5,16 +5,17 @@ var vis = (function(){
 		"height" : 500,
 		"width" : 900,
 	}
-	var chart;
+	
 	var chartData;
 	function createChart(conf){
 		$.extend(true, config, conf);
 		setConstants();
 		
 		d3.selectAll("#textHeader").text(config["title"]);
+		
+		var chart;
 		chart = new Chart();
 		chart.setUp();
-		
 		return chart;
 	}
 
@@ -65,11 +66,6 @@ var vis = (function(){
 	
 	function p(s){
 		console.log(s);
-	}
-	
-	function data(d){
-		chartData = d;
-		p(chartData);
 	}
 	
 /*
@@ -409,7 +405,6 @@ var vis = (function(){
  */
 	return{
 		createChart: createChart,
-		p: p,
-		data: data
+		p: p
 	}
 })();
