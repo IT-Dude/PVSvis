@@ -101,6 +101,8 @@ var vis = (function(){
 		var numLegendElements = 0;
 		var legendWidth = 0;
 		
+		var localData; // TODO rename this
+		
 		this.setUp = function(){
 			this.root = d3.select(config["root"]).append("svg")
 				.attr("height", sizeRoot.height)
@@ -135,6 +137,14 @@ var vis = (function(){
 				.append("rect")
 					.attr("width", sizeChart.width)
 					.attr("height", sizeChart.height);
+		}
+		
+		this.setData = function(data){
+			localData = data;
+		}
+		
+		this.visualize = function(){
+			self.renderData(localData);
 		}
 		
 		this.renderData = function(data){
