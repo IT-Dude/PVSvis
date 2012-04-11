@@ -17,7 +17,11 @@ var vis = (function(){
 	// TODO make this a function of the Chart object???
 	function visualize(){
 		setConstants();
-		setUp();
+		
+		d3.selectAll("#textHeader").text(config["title"]);
+		chart = new Chart();
+		chart.setUp();
+		chart.renderData(chartData);
 	}
 
 	function setConstants(){
@@ -63,14 +67,6 @@ var vis = (function(){
 		}
 		orientationAxes = ["left", "left", "right", "right"];
 		graphOffsets = {"Leistung" : 1.1, "Ertrag" : 1.2, "Wirkungsgrad" : 1.3, "Spannung" : 1.4};
-	}
-	
-	function setUp(){
-		d3.selectAll("#textHeader").text(config["title"]);
-		
-		chart = new Chart();
-		chart.setUp();
-		chart.renderData(chartData);
 	}
 	
 	function p(s){
@@ -417,7 +413,6 @@ var vis = (function(){
  * public objects of the "vis" namespace
  */
 	return{
-		setUp: setUp,
 		visualize: visualize,
 		createChart: createChart,
 		p: p,
