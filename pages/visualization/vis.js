@@ -136,9 +136,26 @@ var vis = (function(){
 			}
 		}
 		
+		// TODO create a method which resets all attributes
+		// maybe somehow return a new object
 		this.clear = function(){
-			p(legendWidth);
 			d3.selectAll("#masterRoot").remove();
+			
+			chartRoot;
+			brushRoot;
+			legendRoot;
+			chartData = [];
+			xScale;
+			xScale2;
+			timeValueScale;
+			yScales = {};
+			brush;
+			xAxis;
+			xGrid;
+			activeAxes = [false, false, false, false];
+			numLegendElements = 0;
+			legendWidth = 0;
+		
 			self.setUp();
 		}
 		
