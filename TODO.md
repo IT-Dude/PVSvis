@@ -4,5 +4,4 @@
 - Tooltip am Graphen, soll z.B. Wert anzeigen
 - Lineal
 - Toggle zum Ausblenden von Graphen
-- x-Achse reparieren, Unix Timestamps aus dem Datensatz nutzen
 - Farben der Visualisierung anpassen

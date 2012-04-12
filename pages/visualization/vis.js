@@ -86,9 +86,10 @@ var vis = (function(){
 		var activeAxes = [false, false, false, false];
 		var numLegendElements = 0;
 		var legendWidth = 0;
-				
-		this.setUp = function(){
-			
+		
+
+		
+		this.setUp = function(){			
 			this.root = d3.select(config["root"]).append("svg")
 				.attr("id", "masterRoot")
 				.attr("height", sizeRoot.height)
@@ -167,9 +168,11 @@ var vis = (function(){
 				}
 			}
 
-			// TODO use the unix timestamps from the data
-			var startDate = new Date(2000, 0, 0, 0, 0, 0);
-			var endDate = new Date(2000, 0, 0, 23, 59, 59);
+			var firstPointInTime = data[0].data[0][0];
+			var lastPointInTime = data[0].data[data.length - 1][0];
+			var startDate = new Date(firstPointInTime);
+			var endDate = new Date(lastPointInTime);
+			
 			var format = d3.time.format("%H:%M");
 			xScale = d3.time.scale()
 				.domain([startDate, endDate])

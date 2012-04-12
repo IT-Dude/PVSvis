@@ -11,6 +11,7 @@ var application = (function(){
 		};
 	
 		d3.json("chart-data.json", function(json){
+			console.log(json);
 			chart = vis.createChart(config);
 			for(var i = 0; i < json.series.length; i++){
 				chart.addSeries(json.series[i]);
@@ -19,7 +20,7 @@ var application = (function(){
 		});
 		
 		setTimeout(function(){
-			chart.clear();
+			//chart.clear();
 		}, 2000);
 		// end of example
 		
