@@ -131,12 +131,15 @@ var vis = (function(){
 			p(chartData);
 		}
 		
+		// TODO test if new series is already in array
 		this.addSeries = function(series){
 			chartData.push(series);
 		}
 		
 		this.visualize = function(){
-			self.renderData(chartData);
+			if(chartData.length > 0){
+				self.renderData(chartData);
+			}
 		}
 		
 		this.renderData = function(data){

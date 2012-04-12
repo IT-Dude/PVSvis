@@ -11,14 +11,16 @@ var application = (function(){
 		d3.json("chart-data.json", function(json){
 			chart = vis.createChart(config);
 			//chart.addData(json); // deprecated!
-			for(var i = 0; i < 2; i++){
+			vis.p(json);
+			for(var i = 0; i < json.series.length - 1; i++){
 				chart.addSeries(json.series[i]);
+				chart.visualize();
 			}
-			chart.visualize();
 			
-			chart.addSeries(json.series[2]);
-			chart.addSeries(json.series[3]);
-			chart.visualize();
+			setTimeout(function(){
+				chart.addSeries(json.series[json.series.length - 1]);
+				chart.visualize();
+			}, 1000);
 		});
 		doSomething();
 	}
