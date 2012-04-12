@@ -75,7 +75,7 @@ var vis = (function(){
 		var chartRoot;
 		var brushRoot;
 		var legendRoot;
-		var chartData;
+		var chartData = [];
 		var xScale;
 		var xScale2;
 		var timeValueScale;
@@ -125,9 +125,14 @@ var vis = (function(){
 		}
 		
 		// TODO really try to update existing data, not just overwite it
+		// TODO remove this function!
 		this.addData = function(data){
 			chartData = data;
 			p(chartData);
+		}
+		
+		this.addSeries = function(series){
+			chartData.push(series);
 		}
 		
 		this.visualize = function(){
@@ -136,9 +141,9 @@ var vis = (function(){
 		
 		this.renderData = function(data){
 			var numValues = 0;
-			for(var i = 0; i < data.series.length; i++){
-				if(data.series[i].data.length > numValues){
-					numValues = data.series[i].data.length;
+			for(var i = 0; i < data.length; i++){
+				if(data[i].data.length > numValues){
+					numValues = data[i].data.length;
 				}
 			}
 
@@ -157,9 +162,20 @@ var vis = (function(){
 			timeValueScale = d3.time.scale()
 				.domain([startDate, endDate])
 				.range([0, numValues]);
-
-			for(var i = 0; i < data.series.length; i++){
-				self.renderSeries(data.series[i]);
+			
+			// TODO optimize this!!!
+			d3.selectAll(".graph").remove();
+			d3.selectAll(".axis").remove();
+			d3.selectAll(".yGrid").remove();
+			d3.selectAll(".legendText").remove();
+			d3.selectAll(".legendSquare").remove();
+			d3.selectAll(".brush").remove(); // ???
+			numLegendElements = 0;
+			legendWidth = 0;
+			activeAxes = [false, false, false, false];
+			
+			for(var i = 0; i < data.length; i++){
+				self.renderSeries(data[i]);
 			}
 
 			brush = d3.svg.brush()
