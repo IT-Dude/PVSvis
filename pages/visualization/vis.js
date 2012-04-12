@@ -1,4 +1,6 @@
-var vis = (function(){	
+var vis = (function(){
+	var idCounter = 0;
+
 	var config = {
 		"title" : "",
 		"root" : "#chart",
@@ -6,12 +8,17 @@ var vis = (function(){
 		"width" : 900,
 	}
 
-	function createChart(conf){
-		$.extend(true, config, conf);
-		setConstants();
-		
-		d3.selectAll("#textHeader").text(config["title"]);
-		
+	function createChart(obj){
+		if(obj instanceof Chart){
+			idCounter++;
+			d3.selectAll("#masterRoot" + obj.id).remove();
+		}
+		else{
+			$.extend(true, config, obj);
+			setConstants();
+			d3.selectAll("#textHeader").text(config["title"]);
+		}
+
 		var chart;
 		chart = new Chart();
 		chart.setUp();
@@ -86,12 +93,11 @@ var vis = (function(){
 		var activeAxes = [false, false, false, false];
 		var numLegendElements = 0;
 		var legendWidth = 0;
-		
-
+		this.id = idCounter;
 		
 		this.setUp = function(){			
 			this.root = d3.select(config["root"]).append("svg")
-				.attr("id", "masterRoot")
+				.attr("id", "masterRoot" + self.id)
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
 			
@@ -135,29 +141,6 @@ var vis = (function(){
 			if(chartData.length > 0){
 				self.renderData(chartData);
 			}
-		}
-		
-		// TODO create a method which resets all attributes
-		// maybe somehow return a new object
-		this.clear = function(){
-			d3.selectAll("#masterRoot").remove();
-			
-			chartRoot;
-			brushRoot;
-			legendRoot;
-			chartData = [];
-			xScale;
-			xScale2;
-			timeValueScale;
-			yScales = {};
-			brush;
-			xAxis;
-			xGrid;
-			activeAxes = [false, false, false, false];
-			numLegendElements = 0;
-			legendWidth = 0;
-		
-			self.setUp();
 		}
 		
 		this.renderData = function(data){

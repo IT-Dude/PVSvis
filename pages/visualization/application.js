@@ -1,7 +1,9 @@
 var application = (function(){
 	function setUp(){
 		
-		// example for API usage
+////////////////////////
+// example for API usage
+////////////////////////
 		var chart;	
 		var config = {
 			"title" : "Awesome chart",
@@ -9,7 +11,8 @@ var application = (function(){
 			"height" : 500,
 			"width" : 900
 		};
-	
+		
+		// create initial chart, fill with data
 		d3.json("chart-data.json", function(json){
 			console.log(json);
 			chart = vis.createChart(config);
@@ -19,10 +22,23 @@ var application = (function(){
 			chart.visualize();
 		});
 		
+		// clear chart
 		setTimeout(function(){
-			//chart.clear();
-		}, 2000);
-		// end of example
+			chart = vis.createChart(chart);
+		}, 3000);
+		
+		// fill chart again
+		setTimeout(function(){
+			d3.json("chart-data.json", function(json){
+				for(var i = 0; i < json.series.length; i++){
+					chart.addSeries(json.series[i]);
+				}
+				chart.visualize();
+			});
+		}, 6000);
+/////////////////
+// end of example
+/////////////////
 		
 	}
 
