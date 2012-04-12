@@ -86,10 +86,11 @@ var vis = (function(){
 		var activeAxes = [false, false, false, false];
 		var numLegendElements = 0;
 		var legendWidth = 0;
-		
 				
 		this.setUp = function(){
+			
 			this.root = d3.select(config["root"]).append("svg")
+				.attr("id", "masterRoot")
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
 			
@@ -133,6 +134,12 @@ var vis = (function(){
 			if(chartData.length > 0){
 				self.renderData(chartData);
 			}
+		}
+		
+		this.clear = function(){
+			p(legendWidth);
+			d3.selectAll("#masterRoot").remove();
+			self.setUp();
 		}
 		
 		this.renderData = function(data){
@@ -410,6 +417,21 @@ var vis = (function(){
 			numLegendElements++;
 		}
 	}
+/*
+ * end Chart object
+ */
+
+/*
+ * DataManager object
+ */
+
+	function DataManager(){
+		
+	}
+
+/*
+ * end DataManager object
+ */
 
 /*
  * public objects of the "vis" namespace

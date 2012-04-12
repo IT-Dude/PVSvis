@@ -17,6 +17,10 @@ var application = (function(){
 			}
 			chart.visualize();
 		});
+		
+		setTimeout(function(){
+			chart.clear();
+		}, 2000);
 		// end of example
 		
 	}
