@@ -1,31 +1,24 @@
 var application = (function(){
-	var chart;	
-	var config = {
-		"title" : "Chart!",
-		"root" : "#chart",
-		"height" : 500,
-		"width" : 900
-	};
-	
 	function setUp(){
+		
+		// example for API usage
+		var chart;	
+		var config = {
+			"title" : "Awesome chart",
+			"root" : "#chart",
+			"height" : 500,
+			"width" : 900
+		};
+	
 		d3.json("chart-data.json", function(json){
 			chart = vis.createChart(config);
-			//chart.addData(json); // deprecated!
-			vis.p(json);
-			for(var i = 0; i < json.series.length - 1; i++){
+			for(var i = 0; i < json.series.length; i++){
 				chart.addSeries(json.series[i]);
-				chart.visualize();
 			}
-			
-			setTimeout(function(){
-				chart.addSeries(json.series[json.series.length - 1]);
-				chart.visualize();
-			}, 1000);
+			chart.visualize();
 		});
-		doSomething();
-	}
-
-	function doSomething(){
+		// end of example
+		
 	}
 
 	return{

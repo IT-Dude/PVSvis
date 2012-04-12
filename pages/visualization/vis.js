@@ -124,13 +124,6 @@ var vis = (function(){
 					.attr("height", sizeChart.height);
 		}
 		
-		// TODO really try to update existing data, not just overwite it
-		// TODO remove this function!
-		this.addData = function(data){
-			chartData = data;
-			p(chartData);
-		}
-		
 		// TODO test if new series is already in array
 		this.addSeries = function(series){
 			chartData.push(series);
@@ -150,7 +143,7 @@ var vis = (function(){
 				}
 			}
 
-			// TODO make this more beautiful
+			// TODO use the unix timestamps from the data
 			var startDate = new Date(2000, 0, 0, 0, 0, 0);
 			var endDate = new Date(2000, 0, 0, 23, 59, 59);
 			var format = d3.time.format("%H:%M");
