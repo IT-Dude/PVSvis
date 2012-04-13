@@ -82,6 +82,7 @@ var vis = (function(){
 		var chartRoot;
 		var brushRoot;
 		var legendRoot;
+		var defs;
 		var chartData = [];
 		var xScale;
 		var xScale2;
@@ -96,23 +97,23 @@ var vis = (function(){
 		this.id = idCounter;
 		
 		this.setUp = function(){			
-			this.root = d3.select(config["root"]).append("svg")
+			var root = d3.select(config["root"]).append("svg")
 				.attr("id", "masterRoot" + self.id)
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
 			
-			this.root.append("rect")
+			root.append("rect")
 				.attr("class", "rootBackground")
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
 			
-			chartRoot = this.root.append("g")
+			chartRoot = root.append("g")
 				.attr("transform", "translate(" + marginChart.left + ", " + marginChart.top + ")");
 			
-			brushRoot = this.root.append("g")
+			brushRoot = root.append("g")
 				.attr("transform", "translate(" + marginChart.left + ", " + marginBrush.top + ")");
 			
-			legendRoot = this.root.append("g")
+			legendRoot = root.append("g")
 				.attr("transform", "translate(" + marginChart.left + ", " + marginLegend.top + ")");
 			
 			chartRoot.append("rect")
@@ -130,6 +131,8 @@ var vis = (function(){
 				.append("rect")
 					.attr("width", sizeChart.width)
 					.attr("height", sizeChart.height);
+			
+			
 		}
 		
 		// TODO test if new series is already in array
