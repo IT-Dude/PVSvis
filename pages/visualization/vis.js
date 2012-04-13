@@ -431,7 +431,20 @@ var vis = (function(){
 	// some ideas for a data management object to control the chart's data
 	// and request new data from certain time periods and certain resolution
 	function DataManager(){
-		this.addSeries(id, startDate, endDate) = function(){};
+		var seriesIDs = [];
+		
+		this.addSeries(id) = function(){
+			// introduce a series to the DataManager
+			seriesIDs.push(id);
+		};
+		
+		this.setMaximumDataPoints(number) = function(){
+			
+		};
+		
+		this.getSeriesData(id, startDate, endDate) = function(){
+		
+		};
 	}
 
 /*
