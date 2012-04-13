@@ -70,6 +70,12 @@ var vis = (function(){
 		graphOffsets = {"Leistung" : 1.1, "Ertrag" : 1.2, "Wirkungsgrad" : 1.3, "Spannung" : 1.4};
 	}
 	
+	// TODO remove this function, grant direct access to the DataManager class???
+	function createDataManager(){
+		var manager = new DataManager();
+		return manager;
+	}
+	
 	function p(s){
 		console.log(s);
 	}
@@ -93,6 +99,7 @@ var vis = (function(){
 		var activeAxes = [false, false, false, false];
 		var numLegendElements = 0;
 		var legendWidth = 0;
+		var dataManager;
 		this.id = idCounter;
 		
 		this.setUp = function(){			
@@ -135,6 +142,10 @@ var vis = (function(){
 		// TODO test if new series is already in array
 		this.addSeries = function(series){
 			chartData.push(series);
+		}
+		
+		this.attachDataManager = function(manager){
+			dataManager = manager;
 		}
 		
 		this.visualize = function(){
@@ -433,16 +444,16 @@ var vis = (function(){
 	function DataManager(){
 		var seriesIDs = [];
 		
-		this.addSeries(id) = function(){
+		this.addSeries = function(id){
 			// introduce a series to the DataManager
 			seriesIDs.push(id);
 		};
 		
-		this.setMaximumDataPoints(number) = function(){
+		this.setMaximumDataPoints = function(number){
 			
 		};
 		
-		this.getSeriesData(id, startDate, endDate) = function(){
+		this.getSeriesData = function(id, startDate, endDate){
 		
 		};
 	}
@@ -456,6 +467,7 @@ var vis = (function(){
  */
 	return{
 		createChart: createChart,
+		createDataManager: createDataManager,
 		p: p
 	}
 })();

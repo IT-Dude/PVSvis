@@ -17,13 +17,21 @@ var application = (function(){
 			vis.p(json);
 			chart = vis.createChart(config);
 			for(var i = 0; i < json.series.length; i++){
-				chart.addSeries(json.series[i]);
+				chart.addSeries(json.series[i]); // addSeries will become deprecated after DataManager implementation
 			}
 			chart.visualize();
+			loadingFinished();
 		});
 		
-		// clear chart
-		// chart = vis.createChart(chart);		
+		function loadingFinished(){
+			// clear chart
+			// chart = vis.createChart(chart);
+			
+			var manager;
+			manager = vis.createDataManager();
+			
+			chart.attachDataManager(manager);
+		}
 		
 /////////////////
 // end of example
