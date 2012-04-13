@@ -70,12 +70,6 @@ var vis = (function(){
 		graphOffsets = {"Leistung" : 1.1, "Ertrag" : 1.2, "Wirkungsgrad" : 1.3, "Spannung" : 1.4};
 	}
 	
-	// TODO remove this function, grant direct access to the DataManager class???
-	function createDataManager(){
-		var manager = new DataManager();
-		return manager;
-	}
-	
 	function p(s){
 		console.log(s);
 	}
@@ -99,7 +93,7 @@ var vis = (function(){
 		var activeAxes = [false, false, false, false];
 		var numLegendElements = 0;
 		var legendWidth = 0;
-		var dataManager;
+		var dataManager = new DataManager();
 		this.id = idCounter;
 		
 		this.setUp = function(){			
@@ -144,8 +138,8 @@ var vis = (function(){
 			chartData.push(series);
 		}
 		
-		this.attachDataManager = function(manager){
-			dataManager = manager;
+		this.getDataManager = function(){
+			return dataManager;
 		}
 		
 		this.visualize = function(){
@@ -442,19 +436,17 @@ var vis = (function(){
 	// some ideas for a data management object to control the chart's data
 	// and request new data from certain time periods and certain resolution
 	function DataManager(){
-		var seriesIDs = [];
+		var seriesMetaData = [];
 		
-		this.addSeries = function(id){
+		this.addSeries = function(metaData){
 			// introduce a series to the DataManager
-			seriesIDs.push(id);
+			seriesMetaData.push(metaData);
 		};
 		
 		this.setMaximumDataPoints = function(number){
-			
 		};
 		
-		this.getSeriesData = function(id, startDate, endDate){
-		
+		this.getSeriesData = function(id, startDate, endDate, resolution, callback){
 		};
 	}
 
@@ -467,7 +459,6 @@ var vis = (function(){
  */
 	return{
 		createChart: createChart,
-		createDataManager: createDataManager,
 		p: p
 	}
 })();

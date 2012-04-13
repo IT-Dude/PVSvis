@@ -27,10 +27,8 @@ var application = (function(){
 			// clear chart
 			// chart = vis.createChart(chart);
 			
-			var manager;
-			manager = vis.createDataManager();
-			
-			chart.attachDataManager(manager);
+			var manager = chart.getDataManager();
+			manager.setMaximumDataPoints();			
 		}
 		
 /////////////////
