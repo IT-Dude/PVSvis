@@ -22,22 +22,8 @@ var application = (function(){
 			chart.visualize();
 		});
 		
-		
 		// clear chart
-		setTimeout(function(){
-			chart = vis.createChart(chart);
-		}, 3000);
-		
-		// fill chart again
-		setTimeout(function(){
-			d3.json("chart-data.json", function(json){
-				for(var i = 0; i < json.series.length; i++){
-					chart.addSeries(json.series[i]);
-				}
-				chart.visualize();
-			});
-		}, 6000);
-		
+		// chart = vis.createChart(chart);		
 		
 /////////////////
 // end of example
