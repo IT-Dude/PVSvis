@@ -138,8 +138,9 @@ var vis = (function(){
 				.attr("id", "gradient1")
 				.attr("x1", "0")
 				.attr("x2", "0")
-				.attr("y1", "0%")
+				.attr("y1", "60%")
 				.attr("y2", "20%")
+				.attr("gradientUnits", "userSpaceOnUse")
 				.attr("spreadMethod", "pad");
 			
 			
