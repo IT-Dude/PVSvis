@@ -408,8 +408,8 @@ var vis = (function(){
 					var axisGroup = chartRoot.append("g")
 						.attr("class", "axis yAxis yAxis" + name)
 						.attr("transform", "translate(" + marginAxes.left[i] + ", 0)")
-						.style("fill", color)
 						.style("stroke", color)
+						.style("fill", color)
 						.call(axis);
 					
 					axisGroup.append("text")
