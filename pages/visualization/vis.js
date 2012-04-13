@@ -93,7 +93,6 @@ var vis = (function(){
 		var activeAxes = [false, false, false, false];
 		var numLegendElements = 0;
 		var legendWidth = 0;
-		var dataManager = new DataManager();
 		this.id = idCounter;
 		
 		this.setUp = function(){			
@@ -427,31 +426,6 @@ var vis = (function(){
 	}
 /*
  * end Chart object
- */
-
-/*
- * DataManager object
- */
-
-	// some ideas for a data management object to control the chart's data
-	// and request new data from certain time periods and certain resolution
-	function DataManager(){
-		var seriesMetaData = [];
-		
-		this.addSeries = function(metaData){
-			// introduce a series to the DataManager
-			seriesMetaData.push(metaData);
-		};
-		
-		this.setMaximumDataPoints = function(number){
-		};
-		
-		this.getSeriesData = function(id, startDate, endDate, resolution, callback){
-		};
-	}
-
-/*
- * end DataManager object
  */
 
 /*
