@@ -132,7 +132,31 @@ var vis = (function(){
 					.attr("width", sizeChart.width)
 					.attr("height", sizeChart.height);
 			
+			defs = root.append("svg:defs");
 			
+			var gradient1 = defs.append("svg:linearGradient")
+				.attr("id", "gradient1")
+				.attr("x1", "0")
+				.attr("x2", "0")
+				.attr("y1", "0%")
+				.attr("y2", "20%")
+				.attr("spreadMethod", "pad");
+			
+			
+			gradient1.append("svg:stop")
+				.attr("offset", "0%")
+				.attr("stop-color", "red")
+				.attr("stop-opacity", 1);
+			
+			gradient1.append("svg:stop")
+				.attr("offset", "70%")
+				.attr("stop-color", "yellow")
+				.attr("stop-opacity", 1);
+
+			gradient1.append("svg:stop")
+				.attr("offset", "100%")
+				.attr("stop-color", "green")
+				.attr("stop-opacity", 1);
 		}
 		
 		// TODO test if new series is already in array
@@ -237,6 +261,11 @@ var vis = (function(){
 					.y(function(d, i){return yScales[d.type](d[1]);})
 					.interpolate("basis")
 				)
+				.style("stroke", function(d,i){
+					if(series.label == "Wirkungsgrad"){
+						return "url(#gradient1)";
+					}
+				})
 				.on("mouseover", function(){
 						opacity = 0.08;
 						d3.select(this).classed("graphHighlight", true);
