@@ -14,13 +14,14 @@ var application = (function(){
 		
 		// create initial chart, fill with data
 		d3.json("chart-data.json", function(json){
-			console.log(json);
+			vis.p(json);
 			chart = vis.createChart(config);
 			for(var i = 0; i < json.series.length; i++){
 				chart.addSeries(json.series[i]);
 			}
 			chart.visualize();
 		});
+		
 		
 		// clear chart
 		setTimeout(function(){
@@ -36,6 +37,8 @@ var application = (function(){
 				chart.visualize();
 			});
 		}, 6000);
+		
+		
 /////////////////
 // end of example
 /////////////////

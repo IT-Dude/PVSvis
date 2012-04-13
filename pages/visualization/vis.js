@@ -152,10 +152,10 @@ var vis = (function(){
 			}
 
 			var firstPointInTime = data[0].data[0][0];
-			var lastPointInTime = data[0].data[data.length - 1][0];
+			var lastPointInTime = data[0].data[data[0].data.length - 1][0];
 			var startDate = new Date(firstPointInTime);
 			var endDate = new Date(lastPointInTime);
-			
+				
 			var format = d3.time.format("%H:%M");
 			xScale = d3.time.scale()
 				.domain([startDate, endDate])
@@ -428,8 +428,10 @@ var vis = (function(){
  * DataManager object
  */
 
+	// some ideas for a data management object to control the chart's data
+	// and request new data from certain time periods and certain resolution
 	function DataManager(){
-		
+		this.addSeries(id, startDate, endDate) = function(){};
 	}
 
 /*
