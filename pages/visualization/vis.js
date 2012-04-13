@@ -67,7 +67,7 @@ var vis = (function(){
 			leftLabel: [-30, -30, 5, 5]
 		}
 		orientationAxes = ["left", "left", "right", "right"];
-		graphOffsets = {"Leistung" : 1.1, "Ertrag" : 1.2, "Wirkungsgrad" : 1.3, "Spannung" : 1.4};
+		graphOffsets = {"Leistung" : 1.4, "Ertrag" : 1.2, "Wirkungsgrad" : 1.1, "Spannung" : 1.3};
 	}
 	
 	function p(s){
@@ -138,8 +138,8 @@ var vis = (function(){
 				.attr("id", "gradient1")
 				.attr("x1", "0")
 				.attr("x2", "0")
-				.attr("y1", "60%")
-				.attr("y2", "20%")
+				.attr("y1", "25%")
+				.attr("y2", "10%")
 				.attr("gradientUnits", "userSpaceOnUse")
 				.attr("spreadMethod", "pad");
 			
@@ -150,7 +150,12 @@ var vis = (function(){
 				.attr("stop-opacity", 1);
 			
 			gradient1.append("svg:stop")
-				.attr("offset", "70%")
+				.attr("offset", "90%")
+				.attr("stop-color", "orange")
+				.attr("stop-opacity", 1);
+			
+			gradient1.append("svg:stop")
+				.attr("offset", "95%")
 				.attr("stop-color", "yellow")
 				.attr("stop-opacity", 1);
 
@@ -398,6 +403,7 @@ var vis = (function(){
 						.tickFormat(convertSiUnit);
 
 					var color = d3.select(".graph" + name).style("stroke");
+					p(color);
 					
 					var axisGroup = chartRoot.append("g")
 						.attr("class", "axis yAxis yAxis" + name)
