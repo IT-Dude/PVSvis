@@ -1,5 +1,4 @@
 - API aufbauen
-- Daten extern hinzufügen können
 - Farbabstufung bei Graphen gleicher Art
 - Tooltip am Graphen, soll z.B. Wert anzeigen
 - Lineal

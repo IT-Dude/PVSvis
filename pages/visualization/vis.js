@@ -139,20 +139,20 @@ var vis = (function(){
 		
 		this.visualize = function(){
 			if(chartData.length > 0){
-				self.renderData(chartData);
+				self.renderData();
 			}
 		}
 		
-		this.renderData = function(data){
+		this.renderData = function(){
 			var numValues = 0;
-			for(var i = 0; i < data.length; i++){
-				if(data[i].data.length > numValues){
-					numValues = data[i].data.length;
+			for(var i = 0; i < chartData.length; i++){
+				if(chartData[i].data.length > numValues){
+					numValues = chartData[i].data.length;
 				}
 			}
 
-			var firstPointInTime = data[0].data[0][0];
-			var lastPointInTime = data[0].data[data[0].data.length - 1][0];
+			var firstPointInTime = chartData[0].data[0][0];
+			var lastPointInTime = chartData[0].data[chartData[0].data.length - 1][0];
 			var startDate = new Date(firstPointInTime);
 			var endDate = new Date(lastPointInTime);
 				
@@ -180,8 +180,8 @@ var vis = (function(){
 			legendWidth = 0;
 			activeAxes = [false, false, false, false];
 			
-			for(var i = 0; i < data.length; i++){
-				self.renderSeries(data[i]);
+			for(var i = 0; i < chartData.length; i++){
+				self.renderSeries(chartData[i]);
 			}
 
 			brush = d3.svg.brush()
