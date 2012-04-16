@@ -79,10 +79,10 @@ var vis = (function(){
  */
 	function Chart(){
 		var self = this;
+		var root;
 		var chartRoot;
 		var brushRoot;
 		var legendRoot;
-		var defs;
 		var chartData = [];
 		var xScale;
 		var xScale2;
@@ -98,7 +98,7 @@ var vis = (function(){
 		var colorGenerator = new ColorGenerator();
 		
 		this.setUp = function(){			
-			var root = d3.select(config["root"]).append("svg")
+			root = d3.select(config["root"]).append("svg")
 				.attr("id", "masterRoot" + self.id)
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
@@ -133,7 +133,11 @@ var vis = (function(){
 					.attr("width", sizeChart.width)
 					.attr("height", sizeChart.height);
 			
-			defs = root.append("svg:defs");
+			this.setUpGradients();
+		}
+		
+		this.setUpGradients = function(){
+			var defs = root.append("svg:defs");
 			
 			var gradient1 = defs.append("svg:linearGradient")
 				.attr("id", "gradient1")
@@ -269,9 +273,6 @@ var vis = (function(){
 					.interpolate("basis")
 				)
 				.style("stroke", function(d,i){
-					if(series.label == "Wirkungsgrad"){
-						return "url(#gradient1)";
-					}
 					return colorGenerator.generateColor(series.type);
 				})
 				.on("mouseover", function(){
@@ -469,6 +470,9 @@ var vis = (function(){
  * end Chart object
  */
 
+/*
+ * ColorGenerator object
+ */
 	function ColorGenerator(){
 		var palette = d3.scale.category10(); // TODO define own palette???
 		var gradients; // TODO define own gradients!!!
@@ -478,7 +482,7 @@ var vis = (function(){
 			"pac" : palette(2),
 			"gain" : palette(3),
 			"daily-gain" : palette(4),
-			"efficiency" : palette(5)
+			"efficiency" : "url(#gradient1)"
 		}
 		var lastPaletteColorAdded = 5; // TODO write a function to calculate number from the dictionary above
 		var typeCount = {};
@@ -488,6 +492,15 @@ var vis = (function(){
 				lastPaletteColorAdded++;
 				definitions["type"] = palette(lastPaletteColorAdded);
 			}
+			
+			if(type in typeCount){
+				typeCount[type]++;
+			}
+			else{
+				typeCount[type] = 1;
+			}
+			
+			p(typeCount);
 			return definitions[type];
 		}
 		
@@ -497,6 +510,10 @@ var vis = (function(){
 			}
 		}
 	}
+/*
+ * end ColorGenerator object
+ */
+
 
 /*
  * public objects of the "vis" namespace
