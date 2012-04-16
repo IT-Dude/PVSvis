@@ -1,4 +1,4 @@
-- API aufbauen
+- Legende überarbeiten
 - Farbabstufung bei Graphen gleicher Art
 - Tooltip am Graphen, soll z.B. Wert anzeigen
 - Lineal
