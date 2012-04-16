@@ -257,7 +257,7 @@ var vis = (function(){
 			var yScale = scaleY(maxValue * graphOffsets[series.type], sizeChart.height);
 			var yScale2 = scaleY(maxValue * graphOffsets[series.type], sizeBrush.height);
 			
-			yScales[series.label] = yScale;
+			yScales[series.type] = yScale;
 
 			chartRoot.append("path")
       			.data([series.data])
@@ -267,10 +267,11 @@ var vis = (function(){
 				.attr("d", d3.svg.line()
 					.x(function(d, i){
 						d.type = series.label;
+						d.NEWTYPE = series.type;
 						d.date = timeValueScale.invert(i);
 						return xScale(d.date);
 					})
-					.y(function(d, i){return yScales[d.type](d[1]);})
+					.y(function(d, i){return yScales[d.NEWTYPE](d[1]);})
 					.interpolate("basis")
 				)
 				.style("stroke", function(d,i){
@@ -338,7 +339,7 @@ var vis = (function(){
 					.interpolate("basis")
 				);
 			
-			addAxis(yScale, series.label, series.unit);
+			addAxis(yScale, series.label, series.unit, series.type);
 			addLegendElement(series.label);
 		}
 		
@@ -360,7 +361,7 @@ var vis = (function(){
 			xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
 			chartRoot.selectAll(".graph").attr("d", d3.svg.line()
 				.x(function(d, i){return xScale(d.date);})
-				.y(function(d, i){return yScales[d.type](d[1]);})
+				.y(function(d, i){return yScales[d.NEWTYPE](d[1]);})
 				.interpolate("basis")
 			);
 			chartRoot.selectAll(".xAxis").call(xAxis);
@@ -386,7 +387,8 @@ var vis = (function(){
 			}
 		}
 		
-		function addAxis(scale, name, unit){
+		// TODO remove name???
+		function addAxis(scale, name, unit, type){
 			for(var i = 0; i < activeAxes.length; i++){
 				if(i >= activeAxes.length){
 					break;
@@ -428,7 +430,7 @@ var vis = (function(){
 					}
 					
 					var yGrid = d3.svg.axis()
-						.scale(yScales[name])
+						.scale(yScales[type])
 						.orient("left")
 						.tickSize(size, 0, 0)
 						.ticks(yTicks)
