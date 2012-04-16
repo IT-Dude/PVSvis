@@ -266,12 +266,12 @@ var vis = (function(){
 				.attr("clip-path", "url(#clip)")
 				.attr("d", d3.svg.line()
 					.x(function(d, i){
-						d.type = series.label;
-						d.NEWTYPE = series.type;
+						//d.type = series.label;
+						d.type = series.type;
 						d.date = timeValueScale.invert(i);
 						return xScale(d.date);
 					})
-					.y(function(d, i){return yScales[d.NEWTYPE](d[1]);})
+					.y(function(d, i){return yScales[d.type](d[1]);})
 					.interpolate("basis")
 				)
 				.style("stroke", function(d,i){
@@ -333,6 +333,9 @@ var vis = (function(){
       			.attr("class", "graph" + series.label)
       			.classed("graph", true)
 				.attr("clip-path", "url(#clip)")
+				.style("stroke", function(d,i){
+					return colorGenerator.generateColor(series.type);
+				})
 				.attr("d", d3.svg.line()
 					.x(function(d, i){return xScale2(d.date)})
 					.y(function(d, i){return yScale2(d[1])})
@@ -361,7 +364,7 @@ var vis = (function(){
 			xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
 			chartRoot.selectAll(".graph").attr("d", d3.svg.line()
 				.x(function(d, i){return xScale(d.date);})
-				.y(function(d, i){return yScales[d.NEWTYPE](d[1]);})
+				.y(function(d, i){return yScales[d.type](d[1]);})
 				.interpolate("basis")
 			);
 			chartRoot.selectAll(".xAxis").call(xAxis);
