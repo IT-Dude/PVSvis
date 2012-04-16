@@ -136,6 +136,7 @@ var vis = (function(){
 			this.setUpGradients();
 		}
 		
+		// TODO define gradients somewhere else
 		this.setUpGradients = function(){
 			var defs = root.append("svg:defs");
 			
@@ -475,14 +476,14 @@ var vis = (function(){
  */
 	function ColorGenerator(){
 		var palette = d3.scale.category10(); // TODO define own palette???
-		var gradients; // TODO define own gradients!!!
+		var gradients = ["url(#gradient1)"];
 		var definitions = {
 			"udc" : palette(0),
 			"pdc" : palette(1),
 			"pac" : palette(2),
 			"gain" : palette(3),
 			"daily-gain" : palette(4),
-			"efficiency" : "url(#gradient1)"
+			"efficiency" : gradients[0]
 		}
 		var lastPaletteColorAdded = 5; // TODO write a function to calculate number from the dictionary above
 		var typeCount = {};
