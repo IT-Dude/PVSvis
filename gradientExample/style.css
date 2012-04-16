@@ -1,0 +1,19 @@
+text{
+	stroke: none;
+}
+
+.graph{
+	stroke-width: 3;
+	fill: none;
+}
+
+.xAxis{
+	stroke: rgb(0, 0, 0);
+	stroke-width: 4;
+	shape-rendering: crispEdges;
+}
+
+.yAxis{
+	stroke-width: 4;
+	shape-rendering: crispEdges;
+}
