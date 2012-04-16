@@ -14,6 +14,6 @@ text{
 }
 
 .yAxis{
-	stroke-width: 4;
+	stroke-width: 10;
 	shape-rendering: crispEdges;
 }

@@ -15,7 +15,7 @@ var namespace = (function(){
 		var margin = {
 			top: 40,
 			bottom: 40,
-			left: 40,
+			left: 50,
 			right: 40
 		};
 		
@@ -90,13 +90,19 @@ var namespace = (function(){
 			.attr("transform", "translate(0," + (height - margin.top - margin.bottom) + ")")
 			.call(xAxis);
 		
-		yAxis = d3.svg.axis().scale(yScale).orient("left").tickSize(10, 3, 1).ticks(5);
+		yAxis = d3.svg.axis().scale(yScale).orient("left").tickSize(20, 3, 1).ticks(5);
 		chartRoot.append("g")
 			.attr("class", "yAxis")
 			.attr("transform", "translate(" + "0" + ", 0)")
 			.style("stroke", "url(#gradient)")
 			.style("fill", "url(#gradient)")
 			.call(yAxis);
+		
+		// add information
+		chartRoot.append("text")
+			.attr("x", 10)
+			.attr("y", 152)
+			.text("ticks have wrong color!");
 	}
 	
 	return{
