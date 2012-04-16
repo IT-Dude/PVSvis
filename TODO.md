@@ -1,5 +1,5 @@
-- Legende überarbeiten
 - Farbabstufung bei Graphen gleicher Art
+- Legende überarbeiten
 - Tooltip am Graphen, soll z.B. Wert anzeigen
 - Lineal
 - Toggle zum Ausblenden von Graphen

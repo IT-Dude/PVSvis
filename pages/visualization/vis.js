@@ -95,6 +95,7 @@ var vis = (function(){
 		var numLegendElements = 0;
 		var legendWidth = 0;
 		this.id = idCounter;
+		var colorGenerator = new ColorGenerator();
 		
 		this.setUp = function(){			
 			var root = d3.select(config["root"]).append("svg")
@@ -403,7 +404,6 @@ var vis = (function(){
 						.tickFormat(convertSiUnit);
 
 					var color = d3.select(".graph" + name).style("stroke");
-					p(color);
 					
 					var axisGroup = chartRoot.append("g")
 						.attr("class", "axis yAxis yAxis" + name)
@@ -461,11 +461,36 @@ var vis = (function(){
 			
 			legendWidth += text.node().getBBox().width + marginLegend.leftText + marginLegend.rightText;
 			numLegendElements++;
+			
 		}
 	}
 /*
  * end Chart object
  */
+
+	function ColorGenerator(){
+		var palette = d3.scale.category10(); // TODO define own palette???
+		var gradients; // TODO define own gradients!!!
+		var definitions = {
+			"udc" : palette(0),
+			"pdc" : palette(1),
+			"pac" : palette(2),
+			"gain" : palette(3),
+			"daily-gain" : palette(4),
+			"efficiency" : palette(5)
+		}
+		var typeCount = {};
+		
+		this.generateColor = function(id, type){
+			
+		}
+		
+		this.printColors = function(){
+			for(color in definitions){
+				p(definitions[color]);
+			}
+		}
+	}
 
 /*
  * public objects of the "vis" namespace
