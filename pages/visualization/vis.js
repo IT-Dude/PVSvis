@@ -67,7 +67,7 @@ var vis = (function(){
 			leftLabel: [-30, -30, 5, 5]
 		}
 		orientationAxes = ["left", "left", "right", "right"];
-		graphOffsets = {"Leistung" : 1.4, "Ertrag" : 1.2, "Wirkungsgrad" : 1.1, "Spannung" : 1.3};
+		graphOffsets = {"pdc" : 1.4, "gain" : 1.2, "efficiency" : 1.1, "udc" : 1.3};
 	}
 	
 	function p(s){
@@ -254,8 +254,8 @@ var vis = (function(){
 		this.renderSeries = function(series){
 			var maxValue = d3.max(series.data, function(d){return d[1];});
 
-			var yScale = scaleY(maxValue * graphOffsets[series.label], sizeChart.height);
-			var yScale2 = scaleY(maxValue * graphOffsets[series.label], sizeBrush.height);
+			var yScale = scaleY(maxValue * graphOffsets[series.type], sizeChart.height);
+			var yScale2 = scaleY(maxValue * graphOffsets[series.type], sizeBrush.height);
 			
 			yScales[series.label] = yScale;
 
