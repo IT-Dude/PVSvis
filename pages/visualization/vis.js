@@ -272,6 +272,7 @@ var vis = (function(){
 					if(series.label == "Wirkungsgrad"){
 						return "url(#gradient1)";
 					}
+					return colorGenerator.generateColor(series.type);
 				})
 				.on("mouseover", function(){
 						opacity = 0.08;
@@ -479,10 +480,15 @@ var vis = (function(){
 			"daily-gain" : palette(4),
 			"efficiency" : palette(5)
 		}
+		var lastPaletteColorAdded = 5; // TODO write a function to calculate number from the dictionary above
 		var typeCount = {};
 		
-		this.generateColor = function(id, type){
-			
+		this.generateColor = function(type, id){ // TODO do something with the id
+			if((type in definitions) == false){
+				lastPaletteColorAdded++;
+				definitions["type"] = palette(lastPaletteColorAdded);
+			}
+			return definitions[type];
 		}
 		
 		this.printColors = function(){
