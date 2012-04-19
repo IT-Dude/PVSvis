@@ -480,11 +480,11 @@ var vis = (function(){
  */	
 	function ColorGenerator(){
 		var colorStepping = 0.4;
-		var palette = [] // TODO define own palette !!!
+		var palette = [d3.rgb(0, 255, 200), d3.rgb(235, 5, 63), d3.rgb(127, 255, 36), d3.rgb(255, 255, 0)] // TODO add more colors
 		var paletteColorsTaken = 0;
 		var definitions = {
 			"udc" : d3.rgb(104, 255, 0),
-			"pdc" : d3.rgb(0, 255, 200),
+			"pdc" : d3.rgb(86, 0, 255),
 			"pac" : d3.rgb(255, 242, 0),
 			"gain" : d3.rgb(188, 47, 227),
 			"daily-gain" : d3.rgb(157, 211, 223),
