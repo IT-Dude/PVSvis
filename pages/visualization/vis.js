@@ -96,6 +96,7 @@ var vis = (function(){
 		var legendWidth = 0;
 		this.id = idCounter;
 		var colorGenerator = new ColorGenerator();
+		var legendGenerator;
 		
 		this.setUp = function(){			
 			root = d3.select(config["root"]).append("svg")
@@ -116,6 +117,7 @@ var vis = (function(){
 			
 			legendRoot = root.append("g")
 				.attr("transform", "translate(" + marginChart.left + ", " + marginLegend.top + ")");
+			legendGenerator = new LegendGenerator(legendRoot);
 			
 			chartRoot.append("rect")
 				.attr("class", "chartBackground")
@@ -468,7 +470,6 @@ var vis = (function(){
 			
 			legendWidth += text.node().getBBox().width + marginLegend.leftText + marginLegend.rightText;
 			numLegendElements++;
-			
 		}
 	}
 /*
@@ -480,7 +481,11 @@ var vis = (function(){
  */	
 	function ColorGenerator(){
 		var colorStepping = 0.4;
-		var palette = [d3.rgb(0, 255, 200), d3.rgb(235, 5, 63), d3.rgb(127, 255, 36), d3.rgb(255, 255, 0)] // TODO add more colors
+		var palette = [
+			d3.rgb(0, 255, 200),
+			d3.rgb(235, 5, 63),
+			d3.rgb(127, 255, 36),
+			d3.rgb(255, 255, 0)] // TODO add more colors to support unknown types
 		var paletteColorsTaken = 0;
 		var definitions = {
 			"udc" : d3.rgb(104, 255, 0),
@@ -491,7 +496,7 @@ var vis = (function(){
 			"efficiency" : d3.rgb(255, 78, 0) // TODO use the gradient!
 		}
 		var colorCount = {};
-		
+
 		this.generateColor = function(type, id){ // TODO do something with the id
 			if((type in definitions) == false){
 				definitions[type] = palette[paletteColorsTaken];
@@ -513,12 +518,6 @@ var vis = (function(){
 			return color;
 		}
 		
-		this.printColors = function(){
-			for(color in definitions){
-				p(definitions[color]);
-			}
-		}
-		
 		this.generateColorScale = function(start, end){
 			return d3.scale.linear()
 				.domain([0, numColors - 1])
@@ -529,6 +528,15 @@ var vis = (function(){
  * end ColorGenerator object
  */
 
+/*
+ * LegendGenerator object
+ */
+	function LegendGenerator(r){
+		var root = r;
+	}
+/*
+ * end ColorGenerator object
+ */
 
 /*
  * public objects of the "vis" namespace
