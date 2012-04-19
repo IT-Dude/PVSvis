@@ -479,7 +479,21 @@ var vis = (function(){
 /*
  * ColorGenerator object
  */
+	var colorDefinitios = {
+		"udc": [d3.rgb( 107, 1, 3), d3.rgb(240, 60, 2)],
+		"pdc": [],
+		"pac": [],
+		"gain" : [],
+		"daily-gain" : [],
+		"efficiency" : []
+	}
+
+	var colorScales = {
+		
+	}
+	
 	function ColorGenerator(){
+		var numColors = 10;
 		var palette = d3.scale.category10(); // TODO define own palette???
 		var gradients = ["url(#gradient1)"];
 		var definitions = {
@@ -514,6 +528,12 @@ var vis = (function(){
 			for(color in definitions){
 				p(definitions[color]);
 			}
+		}
+		
+		this.generateColorScale = function(start, end){
+			return d3.scale.linear()
+				.domain([0, numColors - 1])
+    			.range([start, end]);
 		}
 	}
 /*
