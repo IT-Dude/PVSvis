@@ -133,30 +133,7 @@ var vis = (function(){
 					.attr("width", sizeChart.width)
 					.attr("height", sizeChart.height);
 			
-			this.setUpGradients();
-			
-			// 157,211,223
-			// 104,255,0
-			
-			/*
-			var num = 10;
-			var col = d3.rgb(104,255,0);
-			for(var i = 0; i < num; i++){
-				var col2 = col;
-				for(var j = 0; j < i; j++){
-					col2 = col2.darker(0.4);
-					p(col2);
-				}
-				
-				chartRoot.append("rect")
-					.style("fill", col2)
-					.attr("width", 70)
-					.attr("height", 70)
-					.attr("x", 70 * i)
-					.attr("y", 100)
-			}
-			*/
-			
+			this.setUpGradients();			
 		}
 		
 		// TODO define gradients somewhere else
@@ -289,7 +266,6 @@ var vis = (function(){
 				.attr("clip-path", "url(#clip)")
 				.attr("d", d3.svg.line()
 					.x(function(d, i){
-						//d.type = series.label;
 						d.type = series.type;
 						d.date = timeValueScale.invert(i);
 						return xScale(d.date);
@@ -501,11 +477,7 @@ var vis = (function(){
 
 /*
  * ColorGenerator object
- */
-
-
-			// 157,211,223
-	
+ */	
 	function ColorGenerator(){
 		var colorStepping = 0.4;
 		var palette = [] // TODO define own palette !!!
