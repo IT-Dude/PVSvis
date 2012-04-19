@@ -134,6 +134,28 @@ var vis = (function(){
 					.attr("height", sizeChart.height);
 			
 			this.setUpGradients();
+			
+			// 157,211,223
+			// 104,255,0
+			
+			/*
+			var num = 10;
+			var col = d3.rgb(104,255,0);
+			for(var i = 0; i < num; i++){
+				var col2 = col;
+				for(var j = 0; j < i; j++){
+					col2 = d3.rgb(col2.darker(0.4));
+					p(col2);
+				}
+				
+				chartRoot.append("rect")
+					.style("fill", col2)
+					.attr("width", 70)
+					.attr("height", 70)
+					.attr("x", 70 * i)
+					.attr("y", 100)
+			}
+			*/
 		}
 		
 		// TODO define gradients somewhere else
@@ -479,18 +501,6 @@ var vis = (function(){
 /*
  * ColorGenerator object
  */
-	var colorDefinitios = {
-		"udc": [d3.rgb( 107, 1, 3), d3.rgb(240, 60, 2)],
-		"pdc": [],
-		"pac": [],
-		"gain" : [],
-		"daily-gain" : [],
-		"efficiency" : []
-	}
-
-	var colorScales = {
-		
-	}
 	
 	function ColorGenerator(){
 		var numColors = 10;
@@ -502,9 +512,9 @@ var vis = (function(){
 			"pac" : palette(2),
 			"gain" : palette(3),
 			"daily-gain" : palette(4),
-			"efficiency" : gradients[0]
+			"efficiency" : palette(5) // TODO use the gradient!
 		}
-		var lastPaletteColorAdded = 5; // TODO write a function to calculate number from the dictionary above
+		var lastPaletteColorAdded = 6; // TODO write a function to calculate number from the dictionary above
 		var typeCount = {};
 		
 		this.generateColor = function(type, id){ // TODO do something with the id
