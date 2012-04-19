@@ -14,13 +14,13 @@ path{
 }
 
 .rootBackground{
-	fill: rgb(210, 210, 210);
+	fill: rgb(240, 240, 240);
 	stroke: rgb(0, 0, 0);
 	stroke-width: 4px;
 }
 
 .chartBackground{
-	fill: rgb(160, 160, 210);
+	fill: rgb(220, 220, 220);
 	stroke: rgb(0, 0, 0);
 	stroke-width: 2px;
 }

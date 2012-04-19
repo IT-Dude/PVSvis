@@ -144,7 +144,7 @@ var vis = (function(){
 			for(var i = 0; i < num; i++){
 				var col2 = col;
 				for(var j = 0; j < i; j++){
-					col2 = d3.rgb(col2.darker(0.4));
+					col2 = col2.darker(0.4);
 					p(col2);
 				}
 				
@@ -156,6 +156,7 @@ var vis = (function(){
 					.attr("y", 100)
 			}
 			*/
+			
 		}
 		
 		// TODO define gradients somewhere else
@@ -501,37 +502,43 @@ var vis = (function(){
 /*
  * ColorGenerator object
  */
+
+
+			// 157,211,223
 	
 	function ColorGenerator(){
-		var numColors = 10;
-		var palette = d3.scale.category10(); // TODO define own palette???
-		var gradients = ["url(#gradient1)"];
+		var colorStepping = 0.4;
+		var palette = [] // TODO define own palette !!!
+		var paletteColorsTaken = 0;
 		var definitions = {
-			"udc" : palette(0),
-			"pdc" : palette(1),
-			"pac" : palette(2),
-			"gain" : palette(3),
-			"daily-gain" : palette(4),
-			"efficiency" : palette(5) // TODO use the gradient!
+			"udc" : d3.rgb(104, 255, 0),
+			"pdc" : d3.rgb(0, 255, 200),
+			"pac" : d3.rgb(255, 242, 0),
+			"gain" : d3.rgb(188, 47, 227),
+			"daily-gain" : d3.rgb(157, 211, 223),
+			"efficiency" : d3.rgb(255, 78, 0) // TODO use the gradient!
 		}
-		var lastPaletteColorAdded = 6; // TODO write a function to calculate number from the dictionary above
-		var typeCount = {};
+		var colorCount = {};
 		
 		this.generateColor = function(type, id){ // TODO do something with the id
 			if((type in definitions) == false){
-				lastPaletteColorAdded++;
-				definitions["type"] = palette(lastPaletteColorAdded);
+				definitions[type] = palette[paletteColorsTaken];
+				paletteColorsTaken ++;
 			}
 			
-			if(type in typeCount){
-				typeCount[type]++;
+			if(type in colorCount){
+				colorCount[type]++;
 			}
 			else{
-				typeCount[type] = 1;
+				colorCount[type] = 1;
 			}
 			
-			p(typeCount);
-			return definitions[type];
+			var color = definitions[type];	
+			for(var i = 0; i < colorCount[type] - 1; i++){
+				color = color.darker(colorStepping);
+			}
+			
+			return color;
 		}
 		
 		this.printColors = function(){
