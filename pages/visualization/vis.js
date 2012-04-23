@@ -91,8 +91,6 @@ var vis = (function(){
 		var xAxis;
 		var xGrid;
 		var activeAxes = [false, false, false, false];
-		var numLegendElements = 0;
-		var legendWidth = 0;
 		this.id = ID;
 		var colorGenerator = new ColorGenerator();
 		var legendGenerator;
@@ -334,7 +332,9 @@ var vis = (function(){
 				);
 			
 			addAxis(yScale, series.label, series.unit, series.type);
-			addLegendElement(series.label, series.type);
+			//addLegendElement(series.label, series.type);
+			
+			legendGenerator.addElement(series.type, series.label, color);
 		}
 		
 		function scaleX(numValues){
@@ -470,7 +470,7 @@ var vis = (function(){
  * ColorGenerator object
  */	
 	function ColorGenerator(){
-		var colorStepping = 0.4;
+		var colorStepping = 0.5;
 		var palette = [
 			d3.rgb(0, 255, 200),
 			d3.rgb(235, 5, 63),
@@ -523,8 +523,38 @@ var vis = (function(){
  */
 	function LegendGenerator(r){
 		var root = r;
+		var width = 0;
+		var numElements = 0;
+		var typeColors = {};
 		
-		this.addElement = function(){
+		this.addElement = function(type, label, color){
+			if((type in typeColors) == false){
+				typeColors[type] = color;
+				
+				var text = root.append("text")
+					.attr("class", "legendText legendText" + type)
+					.attr("x", width + marginLegend.leftText)
+					.attr("y", marginLegend.topText)
+					.text(label);
+				
+				root.append("rect")
+					.attr("class", "legendSquare legendSquare" + type)
+					.attr("x", width)
+					.attr("y", marginLegend.topSquare)
+					.attr("height", sizeLegend.sizeSquare)
+					.attr("width", sizeLegend.sizeSquare)
+					.style("fill", typeColors[type]);
+				
+				width += text.node().getBBox().width + marginLegend.leftText + marginLegend.rightText;
+				numElements++;
+			}
+		}
+		
+		this.hideElement = function(){
+			
+		}
+		
+		this.showElement = function(){
 			
 		}
 	}
