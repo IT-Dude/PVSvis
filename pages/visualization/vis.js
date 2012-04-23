@@ -65,6 +65,14 @@ var vis = (function(){
 			topLabel: 20,
 			leftLabel: [-30, -30, 5, 5]
 		}
+		marginTooltip = {
+			offsetTop: -5,
+			offsetLeft: 5,
+			top: -3,
+			bottom: 5,
+			left: 3,
+			right: 3
+		}
 		orientationAxes = ["left", "left", "right", "right"];
 		graphOffsets = {"pdc" : 1.4, "gain" : 1.2, "efficiency" : 1.1, "udc" : 1.3};
 	}
@@ -82,6 +90,7 @@ var vis = (function(){
 		var chartRoot;
 		var brushRoot;
 		var legendRoot;
+		var ruler;
 		var chartData = [];
 		var xScale;
 		var xScale2;
@@ -120,7 +129,7 @@ var vis = (function(){
 				.attr("class", "chartBackground")
 				.attr("height", sizeChart.height)
 				.attr("width", sizeChart.width);
-			var ruler = new Ruler(chartRoot, chartBackground);
+			ruler = new Ruler(chartRoot, chartBackground);
 			
 			brushRoot.append("rect")
 				.attr("class", "chartBackground")
@@ -302,7 +311,8 @@ var vis = (function(){
 									return this;
 								}
 							})
-							.style("opacity", opacity);							
+							.style("opacity", opacity);		
+						ruler.showTooltip(yScale);					
 				})
 				.on("mouseout", function(){
 						d3.select(this).style("stroke", color);
@@ -318,6 +328,7 @@ var vis = (function(){
 							.style("opacity", 1.0);
 						d3.selectAll(".legendSquare")
 							.style("opacity", 1.0);
+						ruler.removeTooltip();
 				});
 			
 			brushRoot.append("path")
@@ -538,11 +549,12 @@ var vis = (function(){
 	function Ruler(chartRoot, chartBackground){
 		var root = chartRoot;
 		var rect = chartBackground;
+		var position;
 		
 		rect.on("mousemove", function(){
 				root.selectAll(".ruler").remove();
 				
-				var position = d3.svg.mouse(this);
+				position = d3.svg.mouse(this);
 				
 				root.append("line")
 					.attr("class", "ruler")
@@ -551,6 +563,39 @@ var vis = (function(){
 					.attr("x2", position[0])
 					.attr("y2", sizeChart.height);
 			});
+		
+		this.showTooltip = function(yScale){
+			var value = yScale.invert(position[1]);
+
+			root.selectAll(".tooltipText").remove();
+			var tooltip = root.append("text")
+				.attr("class", "tooltipText")
+				.attr("x", -100000)
+				.attr("y", -100000)
+				.text(Math.floor(value));
+			var dimensions = tooltip.node().getBBox();
+			root.selectAll(".tooltipText").remove();
+			
+			root.append("rect")
+				.attr("class", "tooltipRect")
+				.attr("x", position[0] + marginTooltip.offsetLeft)
+				.attr("y", position[1] + marginTooltip.offsetTop - dimensions.height)
+				.attr("rx", 8)
+				.attr("ry", 8)
+				.attr("height", dimensions.height)
+				.attr("width", dimensions.width);
+			
+			root.append("text")
+				.attr("class", "tooltipText")
+				.attr("x", position[0] + marginTooltip.offsetLeft)
+				.attr("y", position[1] + marginTooltip.offsetTop)
+				.text(Math.floor(value));
+		}
+		
+		this.removeTooltip = function(){
+			root.selectAll(".tooltipText").remove();
+			root.selectAll(".tooltipRect").remove();
+		}
 	}
 
 /*
