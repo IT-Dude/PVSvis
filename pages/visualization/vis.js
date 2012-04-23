@@ -535,7 +535,16 @@ var vis = (function(){
 					.attr("y", marginLegend.topSquare)
 					.attr("height", sizeLegend.sizeSquare)
 					.attr("width", sizeLegend.sizeSquare)
-					.style("fill", typeColors[type]);
+					.style("fill", typeColors[type])
+					.on("click", function(){
+						var graphs = d3.selectAll(".graph" + type);
+						if(graphs.style("visibility") == "visible"){
+							graphs.style("visibility", "hidden");
+						}
+						else{
+							graphs.style("visibility", "visible");
+						}
+					});
 				
 				width += text.node().getBBox().width + marginLegend.leftText + marginLegend.rightText;
 				numElements++;
