@@ -538,6 +538,19 @@ var vis = (function(){
 	function Ruler(chartRoot, chartBackground){
 		var root = chartRoot;
 		var rect = chartBackground;
+		
+		rect.on("mousemove", function(){
+				root.selectAll(".ruler").remove();
+				
+				var position = d3.svg.mouse(this);
+				
+				root.append("line")
+					.attr("class", "ruler")
+					.attr("x1", position[0] - 1)
+					.attr("y1", 0)
+					.attr("x2", position[0] - 1)
+					.attr("y2", sizeChart.height);
+			});
 	}
 
 /*
