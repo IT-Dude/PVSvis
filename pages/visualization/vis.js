@@ -149,8 +149,7 @@ var vis = (function(){
 				.attr("y2", "10%")
 				.attr("gradientUnits", "userSpaceOnUse")
 				.attr("spreadMethod", "pad");
-			
-			
+
 			gradient1.append("svg:stop")
 				.attr("offset", "0%")
 				.attr("stop-color", "red")
@@ -257,9 +256,10 @@ var vis = (function(){
 
 			var yScale = scaleY(maxValue * graphOffsets[series.type], sizeChart.height);
 			var yScale2 = scaleY(maxValue * graphOffsets[series.type], sizeBrush.height);
-			
 			yScales[series.type] = yScale;
-
+			
+			var color = colorGenerator.generateColor(series.type);
+			
 			chartRoot.append("path")
       			.data([series.data])
       			.attr("class", "graph" + series.label)
@@ -274,17 +274,15 @@ var vis = (function(){
 					.y(function(d, i){return yScales[d.type](d[1]);})
 					.interpolate("basis")
 				)
-				.style("stroke", function(d,i){
-					return colorGenerator.generateColor(series.type);
-				})
+				.style("stroke", color)
 				.on("mouseover", function(){
 						opacity = 0.08;
-						d3.select(this).classed("graphHighlight", true);
-						d3.select(".yGrid" + series.label)
+						d3.select(this).style("stroke", d3.rgb(0, 0, 0));
+						d3.select(".yGrid" + series.type)
 							.style("visibility", "visible");
 						d3.selectAll(".yAxis")
 							.filter(function(d, i){
-								if(d3.select(this).classed("yAxis" + series.label) != true){
+								if(d3.select(this).classed("yAxis" + series.type) != true){
 									return this;
 								}
 							})
@@ -312,10 +310,10 @@ var vis = (function(){
 							.style("opacity", opacity);							
 				})
 				.on("mouseout", function(){
-						d3.select(this).classed("graphHighlight", false);
-						d3.select(".yAxis" + series.label)
+						d3.select(this).style("stroke", color);
+						d3.select(".yAxis" + series.type)
 							.classed("axisHighlight", false);
-						d3.select(".yGrid" + series.label)
+						d3.select(".yGrid" + series.type)
 							.style("visibility", "hidden");
 						d3.selectAll(".yAxis")
 							.style("visibility", "visible");
@@ -325,7 +323,6 @@ var vis = (function(){
 							.style("opacity", 1.0);
 						d3.selectAll(".legendSquare")
 							.style("opacity", 1.0);
-						
 				});
 			
 			brushRoot.append("path")
@@ -333,9 +330,7 @@ var vis = (function(){
       			.attr("class", "graph" + series.label)
       			.classed("graph", true)
 				.attr("clip-path", "url(#clip)")
-				.style("stroke", function(d,i){
-					return colorGenerator.generateColor(series.type);
-				})
+				.style("stroke", color)
 				.attr("d", d3.svg.line()
 					.x(function(d, i){return xScale2(d.date)})
 					.y(function(d, i){return yScale2(d[1])})
@@ -414,7 +409,7 @@ var vis = (function(){
 					var color = d3.select(".graph" + name).style("stroke");
 					
 					var axisGroup = chartRoot.append("g")
-						.attr("class", "axis yAxis yAxis" + name)
+						.attr("class", "axis yAxis yAxis" + type)
 						.attr("transform", "translate(" + marginAxes.left[i] + ", 0)")
 						.style("stroke", color)
 						.style("fill", color)
@@ -440,7 +435,7 @@ var vis = (function(){
 						.tickFormat("");
 
 					chartRoot.append("g")
-						.attr("class", "yGrid yGrid" + name)
+						.attr("class", "yGrid yGrid" + type)
 						.attr("transform", "translate(" + marginAxes.left[i] + ", 0)")
 						.style("fill", color)
 						.style("stroke", color)
