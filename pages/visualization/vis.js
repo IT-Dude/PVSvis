@@ -546,9 +546,9 @@ var vis = (function(){
 				
 				root.append("line")
 					.attr("class", "ruler")
-					.attr("x1", position[0] - 1)
+					.attr("x1", position[0])
 					.attr("y1", 0)
-					.attr("x2", position[0] - 1)
+					.attr("x2", position[0])
 					.attr("y2", sizeChart.height);
 			});
 	}
