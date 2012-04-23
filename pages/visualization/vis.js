@@ -331,9 +331,7 @@ var vis = (function(){
 					.interpolate("basis")
 				);
 			
-			addAxis(yScale, series.label, series.unit, series.type);
-			//addLegendElement(series.label, series.type);
-			
+			addAxis(yScale, series.label, series.unit, series.type);			
 			legendGenerator.addElement(series.type, series.label, color);
 		}
 		
@@ -442,25 +440,6 @@ var vis = (function(){
 				}
 			}
 		}
-		
-		function addLegendElement(name, type){
-			var text = legendRoot.append("text")
-				.attr("class", "legendText legendText" + type)
-				.attr("x", legendWidth + marginLegend.leftText)
-				.attr("y", marginLegend.topText)
-				.text(name);
-			
-			legendRoot.append("rect")
-				.attr("class", "legendSquare legendSquare" + type)
-				.attr("x", legendWidth)
-				.attr("y", marginLegend.topSquare)
-				.attr("height", sizeLegend.sizeSquare)
-				.attr("width", sizeLegend.sizeSquare)
-				.style("fill", d3.select(".graph" + type).style("stroke"));
-			
-			legendWidth += text.node().getBBox().width + marginLegend.leftText + marginLegend.rightText;
-			numLegendElements++;
-		}
 	}
 /*
  * end Chart object
@@ -548,14 +527,6 @@ var vis = (function(){
 				width += text.node().getBBox().width + marginLegend.leftText + marginLegend.rightText;
 				numElements++;
 			}
-		}
-		
-		this.hideElement = function(){
-			
-		}
-		
-		this.showElement = function(){
-			
 		}
 	}
 /*
