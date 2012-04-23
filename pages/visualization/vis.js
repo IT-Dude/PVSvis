@@ -1,6 +1,4 @@
 var vis = (function(){
-	var chartIdCounter = 0;
-
 	var config = {
 		"title" : "",
 		"root" : "#chart",
@@ -8,6 +6,7 @@ var vis = (function(){
 		"width" : 900,
 	}
 
+	var chartIdCounter = 0;
 	function createChart(obj){
 		if(obj instanceof Chart){
 			chartIdCounter++;
@@ -20,7 +19,7 @@ var vis = (function(){
 		}
 
 		var chart;
-		chart = new Chart();
+		chart = new Chart(chartIdCounter);
 		chart.setUp();
 		return chart;
 	}
@@ -77,7 +76,7 @@ var vis = (function(){
 /*
  * Chart object
  */
-	function Chart(){
+	function Chart(ID){
 		var self = this;
 		var root;
 		var chartRoot;
@@ -94,7 +93,7 @@ var vis = (function(){
 		var activeAxes = [false, false, false, false];
 		var numLegendElements = 0;
 		var legendWidth = 0;
-		this.id = chartIdCounter;
+		this.id = ID;
 		var colorGenerator = new ColorGenerator();
 		var legendGenerator;
 		
