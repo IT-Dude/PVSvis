@@ -176,10 +176,6 @@ var vis = (function(){
 			chartData.push(series);
 		}
 		
-		this.getDataManager = function(){
-			return dataManager;
-		}
-		
 		this.visualize = function(){
 			if(chartData.length > 0){
 				self.renderData();
