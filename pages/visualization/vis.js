@@ -536,13 +536,17 @@ var vis = (function(){
 					.attr("height", sizeLegend.sizeSquare)
 					.attr("width", sizeLegend.sizeSquare)
 					.style("fill", typeColors[type])
+					.style("stroke", d3.rgb(0, 0, 0))
+					.style("stroke-width", 2)
 					.on("click", function(){
 						var graphs = d3.selectAll(".graph" + type);
 						if(graphs.style("visibility") == "visible"){
 							graphs.style("visibility", "hidden");
+							d3.select(this).style("stroke", "none");
 						}
 						else{
 							graphs.style("visibility", "visible");
+							d3.select(this).style("stroke", d3.rgb(0, 0, 0));
 						}
 					});
 				
