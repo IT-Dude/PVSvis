@@ -68,10 +68,10 @@ var vis = (function(){
 		marginTooltip = {
 			offsetTop: -5,
 			offsetLeft: 5,
-			top: -3,
-			bottom: 5,
-			left: 3,
-			right: 3
+			offsetTextTop: -1,
+			offsetTextLeft: 4,
+			rectTop: 6,
+			rectLeft: 7
 		}
 		orientationAxes = ["left", "left", "right", "right"];
 		graphOffsets = {"pdc" : 1.4, "gain" : 1.2, "efficiency" : 1.1, "udc" : 1.3};
@@ -582,13 +582,13 @@ var vis = (function(){
 				.attr("y", position[1] + marginTooltip.offsetTop - dimensions.height)
 				.attr("rx", 8)
 				.attr("ry", 8)
-				.attr("height", dimensions.height)
-				.attr("width", dimensions.width);
+				.attr("height", dimensions.height + marginTooltip.rectTop)
+				.attr("width", dimensions.width + marginTooltip.rectLeft);
 			
 			root.append("text")
 				.attr("class", "tooltipText")
-				.attr("x", position[0] + marginTooltip.offsetLeft)
-				.attr("y", position[1] + marginTooltip.offsetTop)
+				.attr("x", position[0] + marginTooltip.offsetLeft + marginTooltip.offsetTextLeft)
+				.attr("y", position[1] + marginTooltip.offsetTop + marginTooltip.offsetTextTop)
 				.text(Math.floor(value));
 		}
 		
