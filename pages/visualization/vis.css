@@ -20,17 +20,10 @@ path{
 }
 
 .chartBackground{
-	fill: rgb(220, 220, 220);
+	fill: rgb(230, 230, 230);
 	stroke: rgb(0, 0, 0);
 	stroke-width: 2px;
 }
-
-.brushBackground{
-	fill: rgb(160, 160, 210);
-	stroke: rgb(0, 0, 0);
-	stroke-width: 2px;
-}
-
 
 /*
  * graphs
