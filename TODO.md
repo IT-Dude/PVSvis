@@ -1,2 +1,6 @@
+- Legende überarbeiten
+- Farbabstufung bei Graphen gleicher Art
+- Tooltip am Graphen, soll z.B. Wert anzeigen
+- Lineal
 - Toggle zum Ausblenden von Graphen
 - Farben der Visualisierung anpassen
