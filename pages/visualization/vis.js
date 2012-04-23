@@ -500,8 +500,8 @@ var vis = (function(){
 /*
  * LegendGenerator object
  */
-	function LegendGenerator(r){
-		var root = r;
+	function LegendGenerator(legendRoot){
+		var root = legendRoot;
 		var width = 0;
 		var numElements = 0;
 		var typeColors = {};
@@ -510,6 +510,7 @@ var vis = (function(){
 			if((type in typeColors) == false){
 				typeColors[type] = color;
 				
+				// put text and square into a group?
 				var text = root.append("text")
 					.attr("class", "legendText legendText" + type)
 					.attr("x", width + marginLegend.leftText)
