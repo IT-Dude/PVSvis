@@ -1,5 +1,5 @@
 var vis = (function(){
-	var idCounter = 0;
+	var chartIdCounter = 0;
 
 	var config = {
 		"title" : "",
@@ -10,7 +10,7 @@ var vis = (function(){
 
 	function createChart(obj){
 		if(obj instanceof Chart){
-			idCounter++;
+			chartIdCounter++;
 			d3.selectAll("#masterRoot" + obj.id).remove();
 		}
 		else{
@@ -94,7 +94,7 @@ var vis = (function(){
 		var activeAxes = [false, false, false, false];
 		var numLegendElements = 0;
 		var legendWidth = 0;
-		this.id = idCounter;
+		this.id = chartIdCounter;
 		var colorGenerator = new ColorGenerator();
 		var legendGenerator;
 		
@@ -533,6 +533,10 @@ var vis = (function(){
  */
 	function LegendGenerator(r){
 		var root = r;
+		
+		this.addElement = function(){
+			
+		}
 	}
 /*
  * end ColorGenerator object
