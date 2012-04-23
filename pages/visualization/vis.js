@@ -116,10 +116,11 @@ var vis = (function(){
 				.attr("transform", "translate(" + marginChart.left + ", " + marginLegend.top + ")");
 			legendGenerator = new LegendGenerator(legendRoot);
 			
-			chartRoot.append("rect")
+			var chartBackground = chartRoot.append("rect")
 				.attr("class", "chartBackground")
 				.attr("height", sizeChart.height)
 				.attr("width", sizeChart.width);
+			var ruler = new Ruler(chartRoot, chartBackground);
 			
 			brushRoot.append("rect")
 				.attr("class", "chartBackground")
@@ -533,6 +534,11 @@ var vis = (function(){
 /*
  * end ColorGenerator object
  */
+
+	function Ruler(chartRoot, chartBackground){
+		var root = chartRoot;
+		var rect = chartBackground;
+	}
 
 /*
  * public objects of the "vis" namespace
