@@ -262,7 +262,7 @@ var vis = (function(){
 			
 			chartRoot.append("path")
       			.data([series.data])
-      			.attr("class", "graph" + series.label)
+      			.attr("class", "graph" + series.type)
       			.classed("graph", true)
 				.attr("clip-path", "url(#clip)")
 				.attr("d", d3.svg.line()
@@ -289,21 +289,21 @@ var vis = (function(){
 							.style("visibility", "hidden");
 						d3.selectAll(".graph")
 							.filter(function(d, i){
-								if(d3.select(this).classed("graph" + series.label) != true){
+								if(d3.select(this).classed("graph" + series.type) != true){
 									return this;
 								}
 							})
 							.style("opacity", opacity);
 						d3.selectAll(".legendText")
 							.filter(function(d, i){
-								if(d3.select(this).classed("legendText" + series.label) != true){
+								if(d3.select(this).classed("legendText" + series.type) != true){
 									return this;
 								}
 							})
 							.style("opacity", opacity);
 						d3.selectAll(".legendSquare")
 							.filter(function(d, i){
-								if(d3.select(this).classed("legendSquare" + series.label) != true){
+								if(d3.select(this).classed("legendSquare" + series.type) != true){
 									return this;
 								}
 							})
@@ -327,7 +327,7 @@ var vis = (function(){
 			
 			brushRoot.append("path")
      			.data([series.data])
-      			.attr("class", "graph" + series.label)
+      			.attr("class", "graph" + series.type)
       			.classed("graph", true)
 				.attr("clip-path", "url(#clip)")
 				.style("stroke", color)
@@ -338,7 +338,7 @@ var vis = (function(){
 				);
 			
 			addAxis(yScale, series.label, series.unit, series.type);
-			addLegendElement(series.label);
+			addLegendElement(series.label, series.type);
 		}
 		
 		function scaleX(numValues){
@@ -406,7 +406,7 @@ var vis = (function(){
 						.tickSubdivide(1)
 						.tickFormat(convertSiUnit);
 
-					var color = d3.select(".graph" + name).style("stroke");
+					var color = d3.select(".graph" + type).style("stroke");
 					
 					var axisGroup = chartRoot.append("g")
 						.attr("class", "axis yAxis yAxis" + type)
@@ -447,20 +447,20 @@ var vis = (function(){
 			}
 		}
 		
-		function addLegendElement(name){
+		function addLegendElement(name, type){
 			var text = legendRoot.append("text")
-				.attr("class", "legendText legendText" + name)
+				.attr("class", "legendText legendText" + type)
 				.attr("x", legendWidth + marginLegend.leftText)
 				.attr("y", marginLegend.topText)
 				.text(name);
 			
 			legendRoot.append("rect")
-				.attr("class", "legendSquare legendSquare" + name)
+				.attr("class", "legendSquare legendSquare" + type)
 				.attr("x", legendWidth)
 				.attr("y", marginLegend.topSquare)
 				.attr("height", sizeLegend.sizeSquare)
 				.attr("width", sizeLegend.sizeSquare)
-				.style("fill", d3.select(".graph" + name).style("stroke"));
+				.style("fill", d3.select(".graph" + type).style("stroke"));
 			
 			legendWidth += text.node().getBBox().width + marginLegend.leftText + marginLegend.rightText;
 			numLegendElements++;
