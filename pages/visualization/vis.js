@@ -264,10 +264,11 @@ var vis = (function(){
 				offsetCounter += 0.1;
 			}
 			
-			
-			var yScale = scaleY(maxValue * graphOffsets[series.type], sizeChart.height);
+			if((series.type in yScales) == false){
+				var yScale = scaleY(maxValue * graphOffsets[series.type], sizeChart.height);
+				yScales[series.type] = yScale;
+			}
 			var yScaleBrush = scaleY(maxValue * graphOffsets[series.type], sizeBrush.height);
-			yScales[series.type] = yScale;
 			
 			var color = colorGenerator.generateColor(series.type);
 			
@@ -319,7 +320,7 @@ var vis = (function(){
 								}
 							})
 							.style("opacity", opacity);		
-						ruler.showTooltip(yScale);					
+						ruler.showTooltip(yScales[series.type]);					
 				})
 				.on("mouseout", function(){
 						d3.select(this).style("stroke", color);
