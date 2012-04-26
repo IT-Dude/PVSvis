@@ -94,7 +94,7 @@ var vis = (function(){
 		var graphOffsets = {};
 		var offsetCounter = 1.05;
 		var xScale;
-		var xScale2;
+		var xScaleBrush;
 		var timeValueScale;
 		var yScales = {};
 		var brush;
@@ -209,7 +209,7 @@ var vis = (function(){
 				.domain([startDate, endDate])
 				.range([0, sizeChart.width]);
 			
-			xScale2 = d3.time.scale()
+			xScaleBrush = d3.time.scale()
 				.domain([startDate, endDate])
 				.range([0, sizeChart.width]);
 						
@@ -233,7 +233,7 @@ var vis = (function(){
 			}
 
 			brush = d3.svg.brush()
-				.x(xScale2)
+				.x(xScaleBrush)
 				.on("brush", doBrush);
 			
 			brushRoot.append("g")
@@ -266,7 +266,7 @@ var vis = (function(){
 			
 			
 			var yScale = scaleY(maxValue * graphOffsets[series.type], sizeChart.height);
-			var yScale2 = scaleY(maxValue * graphOffsets[series.type], sizeBrush.height);
+			var yScaleBrush = scaleY(maxValue * graphOffsets[series.type], sizeBrush.height);
 			yScales[series.type] = yScale;
 			
 			var color = colorGenerator.generateColor(series.type);
@@ -345,8 +345,8 @@ var vis = (function(){
 				.attr("clip-path", "url(#clip)")
 				.style("stroke", color)
 				.attr("d", d3.svg.line()
-					.x(function(d, i){return xScale2(d.date)})
-					.y(function(d, i){return yScale2(d[1])})
+					.x(function(d, i){return xScaleBrush(d.date)})
+					.y(function(d, i){return yScaleBrush(d[1])})
 					.interpolate("basis")
 				);
 			
@@ -369,7 +369,7 @@ var vis = (function(){
 		}
 		
 		function doBrush() {
-			xScale.domain(brush.empty() ? xScale2.domain() : brush.extent());
+			xScale.domain(brush.empty() ? xScaleBrush.domain() : brush.extent());
 			chartRoot.selectAll(".graph").attr("d", d3.svg.line()
 				.x(function(d, i){return xScale(d.date);})
 				.y(function(d, i){return yScales[d.type](d[1]);})
