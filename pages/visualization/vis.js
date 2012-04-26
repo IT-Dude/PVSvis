@@ -258,8 +258,9 @@ var vis = (function(){
 		this.renderSeries = function(series){
 			var maxValue = d3.max(series.data, function(d){return d[1];});
 
-			var yScale = scaleY(maxValue * graphOffsets[series.type], sizeChart.height);
-			var yScale2 = scaleY(maxValue * graphOffsets[series.type], sizeBrush.height);
+			// TODO somehow fix this
+			var yScale = scaleY(maxValue /** graphOffsets[series.type]*/, sizeChart.height);
+			var yScale2 = scaleY(maxValue /** graphOffsets[series.type]*/, sizeBrush.height);
 			yScales[series.type] = yScale;
 			
 			var color = colorGenerator.generateColor(series.type);
@@ -466,6 +467,16 @@ var vis = (function(){
 			d3.rgb(0, 255, 200),
 			d3.rgb(235, 5, 63),
 			d3.rgb(127, 255, 36),
+			d3.rgb(255, 255, 0),
+			d3.rgb(255, 255, 0),
+			d3.rgb(255, 255, 0),
+			d3.rgb(255, 255, 0),
+			d3.rgb(255, 255, 0),
+			d3.rgb(255, 255, 0),
+			d3.rgb(255, 255, 0),
+			d3.rgb(255, 255, 0),
+			d3.rgb(255, 255, 0),
+			d3.rgb(255, 255, 0),
 			d3.rgb(255, 255, 0)] // TODO add more colors to support unknown types
 		var paletteColorsTaken = 0;
 		var definitions = {
