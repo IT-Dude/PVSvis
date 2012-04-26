@@ -74,7 +74,6 @@ var vis = (function(){
 			rectLeft: 7
 		}
 		orientationAxes = ["left", "left", "right", "right"];
-		graphOffsets = {"pdc" : 1.4, "gain" : 1.2, "efficiency" : 1.1, "udc" : 1.3};
 	}
 	
 	function p(s){
@@ -92,6 +91,8 @@ var vis = (function(){
 		var legendRoot;
 		var ruler;
 		var chartData = [];
+		var graphOffsets = {};
+		var offsetCounter = 1.05;
 		var xScale;
 		var xScale2;
 		var timeValueScale;
@@ -258,9 +259,14 @@ var vis = (function(){
 		this.renderSeries = function(series){
 			var maxValue = d3.max(series.data, function(d){return d[1];});
 
-			// TODO somehow fix this
-			var yScale = scaleY(maxValue /** graphOffsets[series.type]*/, sizeChart.height);
-			var yScale2 = scaleY(maxValue /** graphOffsets[series.type]*/, sizeBrush.height);
+			if((series.type in graphOffsets) == false){
+				graphOffsets[series.type] = offsetCounter;
+				offsetCounter += 0.1;
+			}
+			
+			
+			var yScale = scaleY(maxValue * graphOffsets[series.type], sizeChart.height);
+			var yScale2 = scaleY(maxValue * graphOffsets[series.type], sizeBrush.height);
 			yScales[series.type] = yScale;
 			
 			var color = colorGenerator.generateColor(series.type);
