@@ -351,7 +351,7 @@ var vis = (function(){
 					.interpolate("basis")
 				);
 			
-			addAxis(yScale, series.label, series.unit, series.type);			
+			addAxis(yScales[series.type], series.label, series.unit, series.type);			
 			legendGenerator.addElement(series.type, series.label, color);
 		}
 		
