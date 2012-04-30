@@ -199,7 +199,10 @@ var vis = (function(){
 					numValues = chartData[i].data.length;
 				}
 			}
-
+			
+			graphOffsets = axisGenerator.getGraphOffsets(chartData);
+			axisGenerator.getYScales(chartData);
+			
 			var firstPointInTime = chartData[0].data[0][0];
 			var lastPointInTime = chartData[0].data[chartData[0].data.length - 1][0];
 			var startDate = new Date(firstPointInTime);
@@ -259,11 +262,6 @@ var vis = (function(){
 		
 		this.renderSeries = function(series){
 			var maxValue = d3.max(series.data, function(d){return d[1];});
-
-			if((series.type in graphOffsets) == false){
-				graphOffsets[series.type] = offsetCounter;
-				offsetCounter += 0.1;
-			}
 			
 			if((series.type in yScales) == false){
 				var yScale = scaleY(maxValue * graphOffsets[series.type], sizeChart.height);
@@ -631,7 +629,40 @@ var vis = (function(){
 	}
 	
 	function AxisGenerator(){
+		this.getYScales = function(chartData){
+			var maxValues = {};
+			var scales = {};
+			
+			for(var i = 0; i < chartData.length; i++){
+				var series = chartData[i];
+				var maxValue = d3.max(series.data, function(d){return d[1];});
+				if((series.type in maxValues) == false){
+					maxValues[series.type] = maxValue;
+				}
+				if(maxValues[series.type] < maxValue){
+					maxValues[series.type] = maxValue;
+				}
+			}
+			
+			p(maxValues)
+			
+			return scales;
+		}
 		
+		this.getGraphOffsets = function(chartData){
+			var offsets = {};
+			var counter = 1.05;
+			
+			for(var i = 0; i < chartData.length; i++){
+				var series = chartData[i];
+				if((series.type in offsets) == false){
+					offsets[series.type] = counter;
+					counter += 0.1;
+				}
+			}
+			
+			return offsets;
+		}
 	}
 
 /*
