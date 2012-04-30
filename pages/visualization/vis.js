@@ -201,7 +201,7 @@ var vis = (function(){
 			}
 			
 			graphOffsets = axisGenerator.getGraphOffsets(chartData);
-			axisGenerator.getYScales(chartData);
+			yScales = axisGenerator.getYScales(chartData, graphOffsets);
 			
 			var firstPointInTime = chartData[0].data[0][0];
 			var lastPointInTime = chartData[0].data[chartData[0].data.length - 1][0];
@@ -262,11 +262,8 @@ var vis = (function(){
 		
 		this.renderSeries = function(series){
 			var maxValue = d3.max(series.data, function(d){return d[1];});
-			
-			if((series.type in yScales) == false){
-				var yScale = scaleY(maxValue * graphOffsets[series.type], sizeChart.height);
-				yScales[series.type] = yScale;
-			}
+
+			// TODO generate correct yScales for the brush
 			var yScaleBrush = scaleY(maxValue * graphOffsets[series.type], sizeBrush.height);
 			
 			var color = colorGenerator.generateColor(series.type);
@@ -473,16 +470,6 @@ var vis = (function(){
 			d3.rgb(0, 255, 200),
 			d3.rgb(235, 5, 63),
 			d3.rgb(127, 255, 36),
-			d3.rgb(255, 255, 0),
-			d3.rgb(255, 255, 0),
-			d3.rgb(255, 255, 0),
-			d3.rgb(255, 255, 0),
-			d3.rgb(255, 255, 0),
-			d3.rgb(255, 255, 0),
-			d3.rgb(255, 255, 0),
-			d3.rgb(255, 255, 0),
-			d3.rgb(255, 255, 0),
-			d3.rgb(255, 255, 0),
 			d3.rgb(255, 255, 0)] // TODO add more colors to support unknown types
 		var paletteColorsTaken = 0;
 		var definitions = {
@@ -629,7 +616,7 @@ var vis = (function(){
 	}
 	
 	function AxisGenerator(){
-		this.getYScales = function(chartData){
+		this.getYScales = function(chartData, offsets){
 			var maxValues = {};
 			var scales = {};
 			
@@ -644,7 +631,11 @@ var vis = (function(){
 				}
 			}
 			
-			p(maxValues)
+			for(type in maxValues){
+				scales[type] = d3.scale.linear()
+					.domain([0, maxValues[type] * offsets[type]])
+					.range([sizeChart.height, 0]);
+			}
 			
 			return scales;
 		}
