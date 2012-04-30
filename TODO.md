@@ -1,4 +1,5 @@
-- Legende überarbeiten
+- y-Achse bei Anzeige mehrerer Graphen gleicher Art mit unterschiedlichen Maximalwerten anpassen
+- Legende Ãœberarbeiten
 - Farbabstufung bei Graphen gleicher Art
 - Tooltip am Graphen, soll z.B. Wert anzeigen
 - Lineal

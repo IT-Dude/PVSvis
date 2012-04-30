@@ -103,6 +103,7 @@ var vis = (function(){
 		var activeAxes = [false, false, false, false];
 		this.id = ID;
 		var colorGenerator = new ColorGenerator();
+		var axisGenerator = new AxisGenerator();
 		var legendGenerator;
 		
 		this.setUp = function(){			
@@ -627,6 +628,10 @@ var vis = (function(){
 			root.selectAll(".tooltipText").remove();
 			root.selectAll(".tooltipRect").remove();
 		}
+	}
+	
+	function AxisGenerator(){
+		
 	}
 
 /*
