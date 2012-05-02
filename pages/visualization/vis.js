@@ -1,5 +1,5 @@
 var vis = (function(){
-	var config = {
+	var defaultConfig = {
 		"title" : "",
 		"root" : "#chart",
 		"height" : 500,
@@ -13,9 +13,9 @@ var vis = (function(){
 			d3.selectAll("#masterRoot" + obj.id).remove();
 		}
 		else{
-			$.extend(true, config, obj);
+			$.extend(true, defaultConfig, obj);
 			setConstants();
-			d3.selectAll("#textHeader").text(config["title"]);
+			d3.selectAll("#textHeader").text(defaultConfig["title"]);
 		}
 
 		var chart;
@@ -26,8 +26,8 @@ var vis = (function(){
 
 	function setConstants(){
 		sizeRoot = {
-			height: config["height"],
-			width: config["width"]
+			height: defaultConfig["height"],
+			width: defaultConfig["width"]
 		}
 		marginChart = {
 			top: 10,
@@ -107,7 +107,7 @@ var vis = (function(){
 		var legendGenerator;
 		
 		this.setUp = function(){			
-			root = d3.select(config["root"]).append("svg")
+			root = d3.select(defaultConfig["root"]).append("svg")
 				.attr("id", "masterRoot" + self.id)
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
@@ -628,7 +628,9 @@ var vis = (function(){
 		}
 		
 		this.addAxes = function(scales){
-			
+			for(type in scales){
+				
+			}
 		}
 	}
 
