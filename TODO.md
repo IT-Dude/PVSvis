@@ -1,7 +1,3 @@
-- y-Achse bei Anzeige mehrerer Graphen gleicher Art mit unterschiedlichen Maximalwerten anpassen
+- Formatierung der x-Achse anpassen
 - Legende Überarbeiten
-- Farbabstufung bei Graphen gleicher Art
-- Tooltip am Graphen, soll z.B. Wert anzeigen
-- Lineal
-- Toggle zum Ausblenden von Graphen
 - Farben der Visualisierung anpassen
