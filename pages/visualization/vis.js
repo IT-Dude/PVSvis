@@ -125,18 +125,12 @@ var vis = (function(){
 		
 		this.visualize = function(){
 			if(chartData.length > 0){
+				self.setUpGeometry();
 				self.renderData();
 			}
 		}
 		
-		this.renderData = function(){
-			var numValues = 0;
-			for(var i = 0; i < chartData.length; i++){
-				if(chartData[i].data.length > numValues){
-					numValues = chartData[i].data.length;
-				}
-			}
-			
+		this.setUpGeometry = function(){
 			graphOffsets = axisGenerator.getGraphOffsets(chartData);
 			yScales = axisGenerator.getYScales(chartData, graphOffsets);
 			axisGenerator.addAxes(yScales);
@@ -167,6 +161,15 @@ var vis = (function(){
 				.append("rect")
 					.attr("width", sizeChart.width)
 					.attr("height", sizeChart.height);
+		}
+		
+		this.renderData = function(){
+			var numValues = 0;
+			for(var i = 0; i < chartData.length; i++){
+				if(chartData[i].data.length > numValues){
+					numValues = chartData[i].data.length;
+				}
+			}
 			
 			var firstPointInTime = chartData[0].data[0][0];
 			var lastPointInTime = chartData[0].data[chartData[0].data.length - 1][0];
