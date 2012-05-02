@@ -116,42 +116,6 @@ var vis = (function(){
 				.attr("class", "rootBackground")
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
-			
-			this.setUpGradients();			
-		}
-		
-		// TODO define gradients somewhere else
-		this.setUpGradients = function(){
-			var defs = root.append("svg:defs");
-			
-			var gradient1 = defs.append("svg:linearGradient")
-				.attr("id", "gradient1")
-				.attr("x1", "0")
-				.attr("x2", "0")
-				.attr("y1", "25%")
-				.attr("y2", "10%")
-				.attr("gradientUnits", "userSpaceOnUse")
-				.attr("spreadMethod", "pad");
-
-			gradient1.append("svg:stop")
-				.attr("offset", "0%")
-				.attr("stop-color", "red")
-				.attr("stop-opacity", 1);
-			
-			gradient1.append("svg:stop")
-				.attr("offset", "90%")
-				.attr("stop-color", "orange")
-				.attr("stop-opacity", 1);
-			
-			gradient1.append("svg:stop")
-				.attr("offset", "95%")
-				.attr("stop-color", "yellow")
-				.attr("stop-opacity", 1);
-
-			gradient1.append("svg:stop")
-				.attr("offset", "100%")
-				.attr("stop-color", "green")
-				.attr("stop-opacity", 1);
 		}
 		
 		// TODO test if new series is already in array
