@@ -117,33 +117,6 @@ var vis = (function(){
 				.attr("height", sizeRoot.height)
 				.attr("width", sizeRoot.width);
 			
-			chartRoot = root.append("g")
-				.attr("transform", "translate(" + marginChart.left + ", " + marginChart.top + ")");
-			
-			brushRoot = root.append("g")
-				.attr("transform", "translate(" + marginChart.left + ", " + marginBrush.top + ")");
-			
-			legendRoot = root.append("g")
-				.attr("transform", "translate(" + marginChart.left + ", " + marginLegend.top + ")");
-			legendGenerator = new LegendGenerator(legendRoot);
-			
-			var chartBackground = chartRoot.append("rect")
-				.attr("class", "chartBackground")
-				.attr("height", sizeChart.height)
-				.attr("width", sizeChart.width);
-			ruler = new Ruler(chartRoot, chartBackground);
-			
-			brushRoot.append("rect")
-				.attr("class", "chartBackground")
-				.attr("height", sizeBrush.height)
-				.attr("width", sizeBrush.width);
-				
-			chartRoot.append("defs").append("clipPath")
-					.attr("id", "clip")
-				.append("rect")
-					.attr("width", sizeChart.width)
-					.attr("height", sizeChart.height);
-			
 			this.setUpGradients();			
 		}
 		
@@ -202,13 +175,41 @@ var vis = (function(){
 			
 			graphOffsets = axisGenerator.getGraphOffsets(chartData);
 			yScales = axisGenerator.getYScales(chartData, graphOffsets);
+			axisGenerator.addAxes(yScales);
+			
+			chartRoot = root.append("g")
+				.attr("transform", "translate(" + marginChart.left + ", " + marginChart.top + ")");
+			
+			brushRoot = root.append("g")
+				.attr("transform", "translate(" + marginChart.left + ", " + marginBrush.top + ")");
+			
+			legendRoot = root.append("g")
+				.attr("transform", "translate(" + marginChart.left + ", " + marginLegend.top + ")");
+			legendGenerator = new LegendGenerator(legendRoot);
+			
+			var chartBackground = chartRoot.append("rect")
+				.attr("class", "chartBackground")
+				.attr("height", sizeChart.height)
+				.attr("width", sizeChart.width);
+			ruler = new Ruler(chartRoot, chartBackground);
+			
+			brushRoot.append("rect")
+				.attr("class", "chartBackground")
+				.attr("height", sizeBrush.height)
+				.attr("width", sizeBrush.width);
+				
+			chartRoot.append("defs").append("clipPath")
+					.attr("id", "clip")
+				.append("rect")
+					.attr("width", sizeChart.width)
+					.attr("height", sizeChart.height);
 			
 			var firstPointInTime = chartData[0].data[0][0];
 			var lastPointInTime = chartData[0].data[chartData[0].data.length - 1][0];
 			var startDate = new Date(firstPointInTime);
 			var endDate = new Date(lastPointInTime);
 				
-			var format = d3.time.format("%H:%M");
+			//var format = d3.time.format("%H:%M");
 			xScale = d3.time.scale()
 				.domain([startDate, endDate])
 				.range([0, sizeChart.width]);
@@ -248,7 +249,7 @@ var vis = (function(){
 				.attr("height", sizeBrush.height + 1);
 			
 			var xTicks = 8;
-			xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(xTicks).tickFormat(format);
+			xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(xTicks)//.tickFormat(format);
 			chartRoot.append("g")
 				.attr("class", "axis xAxis")
 				.attr("transform", "translate(0," + sizeChart.height + ")")
@@ -653,6 +654,10 @@ var vis = (function(){
 			}
 			
 			return offsets;
+		}
+		
+		this.addAxes = function(scales){
+			
 		}
 	}
 
