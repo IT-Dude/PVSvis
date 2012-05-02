@@ -550,6 +550,10 @@ var vis = (function(){
 			});
 		
 		this.showTooltip = function(yScale){
+			if(position == undefined){
+				return;
+			}
+			
 			var value = yScale.invert(position[1]);
 
 			root.selectAll(".tooltipText").remove();
