@@ -140,8 +140,7 @@ var vis = (function(){
 		this.setUpGeometry = function(){			
 			chartRoot = root.append("g");
 			brushRoot = root.append("g");
-			legendRoot = root.append("g")
-				.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginLegend.top + ")");
+			legendRoot = root.append("g");
 			legendGenerator = new LegendGenerator(legendRoot, config);
 			
 			graphOffsets = axisGenerator.getGraphOffsets(chartData);
@@ -152,6 +151,7 @@ var vis = (function(){
 			
 			chartRoot.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginChart.top + ")");
 			brushRoot.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginBrush.top + ")");
+			legendRoot.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginLegend.top + ")");
 			
 			var chartBackground = chartRoot.append("rect")
 				.attr("class", "chartBackground")
@@ -324,8 +324,7 @@ var vis = (function(){
 					.y(function(d, i){return yScaleBrush(d[1])})
 					.interpolate("basis")
 				);
-			
-			//addAxis(yScales[series.type], series.label, series.unit, series.type);			
+				
 			legendGenerator.addElement(series.type, series.label, color);
 		}
 		
@@ -586,7 +585,7 @@ var vis = (function(){
 	
 	function AxisGenerator(configuration){
 		var config = configuration;
-		var axisWidth = 35; // TODO put this in the config
+		var axisWidth = 40; // TODO put this in the config
 		var axes = {};
 		
 		this.getGraphOffsets = function(chartData){
@@ -641,9 +640,18 @@ var vis = (function(){
 				count ++;	
 			}
 			
+			var difference = oldWidth - newWidth;
+			var margin;
+			if((count % 2) == 0){
+				margin = (difference / 2);
+			}
+			else{
+				margin = (difference / count) * ((count + 1) / 2);
+			}
+			
 			// TODO do not use side effects here???
-			config.marginChart.left += (oldWidth - newWidth) / 2;
-			config.marginBrush.left += (oldWidth - newWidth) / 2;
+			config.marginChart.left += margin;
+			config.marginBrush.left += margin;
 			
 			return newWidth;
 		}
