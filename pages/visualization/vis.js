@@ -71,6 +71,11 @@ var vis = (function(){
 			topLabel: 20,
 			leftLabel: [-30, -30, 5, 5]
 		}
+		this.axis ={
+			margin : {
+				labelTop: 20
+			}
+		}
 		this.marginTooltip = {
 			offsetTop: -5,
 			offsetLeft: 5,
@@ -157,6 +162,8 @@ var vis = (function(){
 				.attr("height", config.sizeChart.height)
 				.attr("width", config.sizeChart.width);
 			ruler = new Ruler(chartRoot, chartBackground, config);
+			
+			axisGenerator.addGrid(chartRoot);
 			
 			brushRoot.append("rect")
 				.attr("class", "chartBackground")
@@ -585,6 +592,7 @@ var vis = (function(){
 	function AxisGenerator(configuration){
 		var config = configuration;
 		var axisWidth = 40; // TODO put this in the config
+		var yTicks = 10; // TODO move this to the config
 		var axes = {};
 		
 		this.getGraphOffsets = function(chartData){
@@ -667,7 +675,6 @@ var vis = (function(){
 			
 			for(type in axes){
 				var axisData = axes[type];
-				var yTicks = 10; // TODO move this to the config
 				var orientation;
 				
 				var margin;
@@ -681,6 +688,8 @@ var vis = (function(){
 					margin = marginRight;
 					marginRight += axisWidth;	
 				}
+				axisData.orientation = orientation;
+				axisData.margin = margin;
 
 				var axis = d3.svg.axis()
 					.scale(axisData.scale)
@@ -694,14 +703,43 @@ var vis = (function(){
 				var color = "black";
 				//var color = d3.select(".graph" + axisData.type).style("stroke");				
 				
-				root.append("g")
+				var axisGroup = root.append("g")
 					.attr("class", "axis yAxis yAxis" + type)
 					.attr("transform", "translate(" + margin + ", 0)")
 					.style("stroke", color)
 					.style("fill", color)
 					.call(axis);
 				
+				// TODO better text positioning
+				axisGroup.append("text")
+					.attr("transform", "translate(" + 0 + ", " + (config.sizeChart.height + config.axis.margin.labelTop) + ")")
+					.text(axisData.unit);
+				
 				previousAxisAddedLeft = !previousAxisAddedLeft;
+			}
+		}
+		
+		this.addGrid = function(root){
+			for(type in axes){
+				var axisData = axes[type];
+				
+				var color = "black"; // TODO change color
+				var size = config.sizeChart.width;
+	
+				var yGrid = d3.svg.axis()
+					.scale(axisData.scale)
+					.orient("left")
+					.tickSize(size, 0, 0)
+					.ticks(yTicks)
+					.tickFormat("");
+	
+				root.append("g")
+					.attr("class", "yGrid yGrid" + axisData.type)
+					.attr("transform", "translate(" + size + ", 0)")
+					.style("fill", color)
+					.style("stroke", color)
+					.style("visibility", "hidden")
+					.call(yGrid);
 			}
 		}
 
@@ -710,6 +748,8 @@ var vis = (function(){
 			this.label;
 			this.unit;
 			this.scale;
+			this.orientation;
+			this.margin;
 		}
 		
 		function convertSiUnit(value){
