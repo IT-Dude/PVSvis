@@ -1,13 +1,4 @@
 var vis = (function(){
-	/*
-	var defaultConfig = {
-		"title" : "",
-		"root" : "#chart",
-		"height" : 500,
-		"width" : 900,
-	}
-	*/
-
 	var chartIdCounter = 0;
 	function createChart(obj){
 		var settings = getDefaultSettings();

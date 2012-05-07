@@ -1,9 +1,5 @@
 var application = (function(){
 	function setUp(){
-		
-////////////////////////
-// example for API usage
-////////////////////////
 		var chart;	
 		var config = {
 			"title" : "Awesome chart",
@@ -26,12 +22,7 @@ var application = (function(){
 		function loadingFinished(){
 			// clear chart
 			// chart = vis.createChart(chart);		
-		}
-		
-/////////////////
-// end of example
-/////////////////
-		
+		}		
 	}
 
 	return{
