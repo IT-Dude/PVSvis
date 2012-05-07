@@ -722,9 +722,18 @@ var vis = (function(){
 		this.addGrid = function(root){
 			for(type in axes){
 				var axisData = axes[type];
-				
 				var color = "black"; // TODO change color
-				var size = config.sizeChart.width;
+				
+				var size = 0;
+				var position = 0;
+				if(axisData.orientation == "left"){
+					size = config.sizeChart.width + Math.abs(axisData.margin);
+					position = -Math.abs(axisData.margin);
+				}
+				else{
+					size = Math.abs(axisData.margin);
+					position = config.sizeChart.width - Math.abs(axisData.margin) + Math.abs(axisData.margin) - config.sizeChart.width; // TODO improve this ridiculous calculation
+				}
 	
 				var yGrid = d3.svg.axis()
 					.scale(axisData.scale)
@@ -735,7 +744,7 @@ var vis = (function(){
 	
 				root.append("g")
 					.attr("class", "yGrid yGrid" + axisData.type)
-					.attr("transform", "translate(" + size + ", 0)")
+					.attr("transform", "translate(" + (size + position) + ", 0)")
 					.style("fill", color)
 					.style("stroke", color)
 					.style("visibility", "hidden")
