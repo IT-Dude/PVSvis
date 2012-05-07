@@ -8,12 +8,11 @@ var application = (function(){
 			"width" : 900
 		};
 		
-		// create initial chart, fill with data
 		d3.json("chart-data.json", function(json){
 			vis.p(json);
 			chart = vis.createChart(config);
 			for(var i = 0; i < json.series.length; i++){
-				chart.addSeries(json.series[i]); // addSeries will become deprecated after DataManager implementation
+				chart.addSeries(json.series[i]);
 			}
 			chart.visualize();
 			loadingFinished();
