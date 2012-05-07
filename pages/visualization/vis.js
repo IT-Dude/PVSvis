@@ -1,31 +1,44 @@
 var vis = (function(){
+	/*
 	var defaultConfig = {
 		"title" : "",
 		"root" : "#chart",
 		"height" : 500,
 		"width" : 900,
 	}
+	*/
 
 	var chartIdCounter = 0;
 	function createChart(obj){
+		var settings = getDefaultSettings();
+
 		if(obj instanceof Chart){
 			chartIdCounter++;
 			d3.selectAll("#masterRoot" + obj.id).remove();
+			settings = obj.config.settings;
 		}
 		else{
-			$.extend(true, defaultConfig, obj);
-			setConstants();
-			d3.selectAll("#textHeader").text(defaultConfig["title"]);
+			$.extend(true, settings, obj);
+			d3.selectAll("#textHeader").text(settings["title"]);
 		}
 
-		var chart;
-		var config = new Configuration(defaultConfig);
-		chart = new Chart(chartIdCounter, config);
+		var config = new Configuration(settings);
+		var chart = new Chart(chartIdCounter, config);
 		chart.setUp();
 		return chart;
+	}	
+	
+	function getDefaultSettings(){
+		return {
+			"title" : "",
+			"root" : "#chart",
+			"height" : 500,
+			"width" : 900
+		}
 	}
 	
 	function Configuration(settings){
+		var self = this;
 		this.settings = settings;
 		this.sizeRoot = {
 			height: settings["height"],
@@ -38,32 +51,32 @@ var vis = (function(){
 			right: 110
 		}	
 		this.sizeChart = {
-			height: sizeRoot.height - marginChart.top - marginChart.bottom,
-			width: sizeRoot.width - marginChart.left - marginChart.right
+			height: self.sizeRoot.height - self.marginChart.top - self.marginChart.bottom,
+			width: self.sizeRoot.width - self.marginChart.left - self.marginChart.right
 		}
 		this.marginBrush = {
-			top: sizeChart.height + marginChart.top + 25,
+			top: self.sizeChart.height + self.marginChart.top + 25,
 			bottom: 40,
-			left: marginChart.left, 
-			right: marginChart.right
+			left: self.marginChart.left, 
+			right: self.marginChart.right
 		}
 		this.sizeBrush = {
-			height: sizeRoot.height - marginBrush.top - marginBrush.bottom,
-			width: sizeChart.width
+			height: self.sizeRoot.height - self.marginBrush.top - self.marginBrush.bottom,
+			width: self.sizeChart.width
 		}
 		this.sizeLegend = {
 			sizeSquare: 15,
 			widthElement: 110
 		}
 		this.marginLegend = {
-			top: marginBrush.top + sizeBrush.height + 9,
+			top: self.marginBrush.top + self.sizeBrush.height + 9,
 			topText: 18,
-			leftText: sizeLegend.sizeSquare + 3,
+			leftText: self.sizeLegend.sizeSquare + 3,
 			rightText: 12,
 			topSquare: 5
 		}
 		this.marginAxes = {
-			left: [-5, -50, sizeChart.width + 5, sizeChart.width + 50],
+			left: [-5, -50, self.sizeChart.width + 5, self.sizeChart.width + 50],
 			topLabel: 20,
 			leftLabel: [-30, -30, 5, 5]
 		}
@@ -77,58 +90,6 @@ var vis = (function(){
 		}
 		this.orientationAxes = ["left", "left", "right", "right"];
 	}
-
-	function setConstants(){
-		sizeRoot = {
-			height: defaultConfig["height"],
-			width: defaultConfig["width"]
-		}
-		marginChart = {
-			top: 10,
-			bottom: 100,
-			left: 110,
-			right: 110
-		}	
-		sizeChart = {
-			height: sizeRoot.height - marginChart.top - marginChart.bottom,
-			width: sizeRoot.width - marginChart.left - marginChart.right
-		}
-		marginBrush = {
-			top: sizeChart.height + marginChart.top + 25,
-			bottom: 40,
-			left: marginChart.left, 
-			right: marginChart.right
-		}
-		sizeBrush = {
-			height: sizeRoot.height - marginBrush.top - marginBrush.bottom,
-			width: sizeChart.width
-		}
-		sizeLegend = {
-			sizeSquare: 15,
-			widthElement: 110
-		}
-		marginLegend = {
-			top: marginBrush.top + sizeBrush.height + 9,
-			topText: 18,
-			leftText: sizeLegend.sizeSquare + 3,
-			rightText: 12,
-			topSquare: 5
-		}
-		marginAxes = {
-			left: [-5, -50, sizeChart.width + 5, sizeChart.width + 50],
-			topLabel: 20,
-			leftLabel: [-30, -30, 5, 5]
-		}
-		marginTooltip = {
-			offsetTop: -5,
-			offsetLeft: 5,
-			offsetTextTop: -1,
-			offsetTextLeft: 4,
-			rectTop: 6,
-			rectLeft: 7
-		}
-		orientationAxes = ["left", "left", "right", "right"];
-	}
 	
 	function p(s){
 		console.log(s);
@@ -139,7 +100,7 @@ var vis = (function(){
  */
 	function Chart(ID, configuration){
 		var self = this;
-		this.config = configuration;
+		var config = configuration;
 		var root;
 		var chartRoot;
 		var brushRoot;
@@ -158,19 +119,19 @@ var vis = (function(){
 		var activeAxes = [false, false, false, false];
 		this.id = ID;
 		var colorGenerator = new ColorGenerator();
-		var axisGenerator = new AxisGenerator();
+		var axisGenerator = new AxisGenerator(config);
 		var legendGenerator;
 		
 		this.setUp = function(){			
-			root = d3.select(self.config.settings["root"]).append("svg")
+			root = d3.select(config.settings["root"]).append("svg")
 				.attr("id", "masterRoot" + self.id)
-				.attr("height", self.config.sizeRoot.height)
-				.attr("width", self.config.sizeRoot.width);
+				.attr("height", config.sizeRoot.height)
+				.attr("width", config.sizeRoot.width);
 			
 			root.append("rect")
 				.attr("class", "rootBackground")
-				.attr("height", self.config.sizeRoot.height)
-				.attr("width", self.config.sizeRoot.width);
+				.attr("height", config.sizeRoot.height)
+				.attr("width", config.sizeRoot.width);
 		}
 		
 		// TODO test if new series is already in array
@@ -191,31 +152,31 @@ var vis = (function(){
 			axisGenerator.addAxes(yScales);
 			
 			chartRoot = root.append("g")
-				.attr("transform", "translate(" + marginChart.left + ", " + marginChart.top + ")");
+				.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginChart.top + ")");
 			
 			brushRoot = root.append("g")
-				.attr("transform", "translate(" + marginChart.left + ", " + marginBrush.top + ")");
+				.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginBrush.top + ")");
 			
 			legendRoot = root.append("g")
-				.attr("transform", "translate(" + marginChart.left + ", " + marginLegend.top + ")");
-			legendGenerator = new LegendGenerator(legendRoot);
+				.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginLegend.top + ")");
+			legendGenerator = new LegendGenerator(legendRoot, config);
 			
 			var chartBackground = chartRoot.append("rect")
 				.attr("class", "chartBackground")
-				.attr("height", sizeChart.height)
-				.attr("width", sizeChart.width);
-			ruler = new Ruler(chartRoot, chartBackground);
+				.attr("height", config.sizeChart.height)
+				.attr("width", config.sizeChart.width);
+			ruler = new Ruler(chartRoot, chartBackground, config);
 			
 			brushRoot.append("rect")
 				.attr("class", "chartBackground")
-				.attr("height", sizeBrush.height)
-				.attr("width", sizeBrush.width);
+				.attr("height", config.sizeBrush.height)
+				.attr("width", config.sizeBrush.width);
 				
 			chartRoot.append("defs").append("clipPath")
 					.attr("id", "clip")
 				.append("rect")
-					.attr("width", sizeChart.width)
-					.attr("height", sizeChart.height);
+					.attr("width", config.sizeChart.width)
+					.attr("height", config.sizeChart.height);
 		}
 		
 		this.renderData = function(){
@@ -234,11 +195,11 @@ var vis = (function(){
 			//var format = d3.time.format("%H:%M");
 			xScale = d3.time.scale()
 				.domain([startDate, endDate])
-				.range([0, sizeChart.width]);
+				.range([0, config.sizeChart.width]);
 			
 			xScaleBrush = d3.time.scale()
 				.domain([startDate, endDate])
-				.range([0, sizeChart.width]);
+				.range([0, config.sizeChart.width]);
 						
 			timeValueScale = d3.time.scale()
 				.domain([startDate, endDate])
@@ -268,16 +229,16 @@ var vis = (function(){
 				.call(brush)
 				.selectAll("rect")
 				.attr("y", + 0)
-				.attr("height", sizeBrush.height + 1);
+				.attr("height", config.sizeBrush.height + 1);
 			
 			var xTicks = 8;
 			xAxis = d3.svg.axis().scale(xScale).orient("bottom").tickSize(5, 3, 1).ticks(xTicks)//.tickFormat(format);
 			chartRoot.append("g")
 				.attr("class", "axis xAxis")
-				.attr("transform", "translate(0," + sizeChart.height + ")")
+				.attr("transform", "translate(0," + config.sizeChart.height + ")")
 				.call(xAxis);
 
-			xGrid = d3.svg.axis().scale(xScale).orient("bottom").tickSize(sizeChart.height, 0, 0).ticks(xTicks).tickFormat("");
+			xGrid = d3.svg.axis().scale(xScale).orient("bottom").tickSize(config.sizeChart.height, 0, 0).ticks(xTicks).tickFormat("");
 			chartRoot.append("g")
 				.attr("class", "xGrid")
 				.call(xGrid);
@@ -287,7 +248,7 @@ var vis = (function(){
 			var maxValue = d3.max(series.data, function(d){return d[1];});
 
 			// TODO generate correct yScales for the brush
-			var yScaleBrush = scaleY(maxValue * graphOffsets[series.type], sizeBrush.height);
+			var yScaleBrush = scaleY(maxValue * graphOffsets[series.type], config.sizeBrush.height);
 			
 			var color = colorGenerator.generateColor(series.type);
 			
@@ -433,7 +394,7 @@ var vis = (function(){
 					
 					var axis = d3.svg.axis()
 						.scale(scale)
-						.orient(orientationAxes[i])
+						.orient(config.orientationAxes[i])
 						.tickSize(5, 3, 1)
 						.ticks(yTicks)
 						.tickSubdivide(1)
@@ -443,21 +404,21 @@ var vis = (function(){
 					
 					var axisGroup = chartRoot.append("g")
 						.attr("class", "axis yAxis yAxis" + type)
-						.attr("transform", "translate(" + marginAxes.left[i] + ", 0)")
+						.attr("transform", "translate(" + config.marginAxes.left[i] + ", 0)")
 						.style("stroke", color)
 						.style("fill", color)
 						.call(axis);
 					
 					axisGroup.append("text")
-						.attr("transform", "translate(" + marginAxes.leftLabel[i] + ", " + (sizeChart.height + marginAxes.topLabel) + ")")
+						.attr("transform", "translate(" + config.marginAxes.leftLabel[i] + ", " + (config.sizeChart.height + config.marginAxes.topLabel) + ")")
 						.text(unit);
 					
 					var size = 0;
-					if(orientationAxes[i] == "left"){
-						size = -(sizeChart.width - marginAxes.left[i]);
+					if(config.orientationAxes[i] == "left"){
+						size = -(config.sizeChart.width - config.marginAxes.left[i]);
 					}
-					if(orientationAxes[i] == "right"){
-						size = marginAxes.left[i];
+					if(config.orientationAxes[i] == "right"){
+						size = config.marginAxes.left[i];
 					}
 					
 					var yGrid = d3.svg.axis()
@@ -469,7 +430,7 @@ var vis = (function(){
 
 					chartRoot.append("g")
 						.attr("class", "yGrid yGrid" + type)
-						.attr("transform", "translate(" + marginAxes.left[i] + ", 0)")
+						.attr("transform", "translate(" + config.marginAxes.left[i] + ", 0)")
 						.style("fill", color)
 						.style("stroke", color)
 						.style("visibility", "hidden")
@@ -539,7 +500,8 @@ var vis = (function(){
 /*
  * LegendGenerator object
  */
-	function LegendGenerator(legendRoot){
+	function LegendGenerator(legendRoot, configuration){
+		var config = configuration;
 		var root = legendRoot;
 		var width = 0;
 		var numElements = 0;
@@ -552,16 +514,16 @@ var vis = (function(){
 				// put text and square into a group?
 				var text = root.append("text")
 					.attr("class", "legendText legendText" + type)
-					.attr("x", width + marginLegend.leftText)
-					.attr("y", marginLegend.topText)
+					.attr("x", width + config.marginLegend.leftText)
+					.attr("y", config.marginLegend.topText)
 					.text(label);
 				
 				root.append("rect")
 					.attr("class", "legendSquare legendSquare" + type)
 					.attr("x", width)
-					.attr("y", marginLegend.topSquare)
-					.attr("height", sizeLegend.sizeSquare)
-					.attr("width", sizeLegend.sizeSquare)
+					.attr("y", config.marginLegend.topSquare)
+					.attr("height", config.sizeLegend.sizeSquare)
+					.attr("width", config.sizeLegend.sizeSquare)
 					.style("fill", typeColors[type])
 					.style("stroke", d3.rgb(0, 0, 0))
 					.style("stroke-width", 2)
@@ -577,7 +539,7 @@ var vis = (function(){
 						}
 					});
 				
-				width += text.node().getBBox().width + marginLegend.leftText + marginLegend.rightText;
+				width += text.node().getBBox().width + config.marginLegend.leftText + config.marginLegend.rightText;
 				numElements++;
 			}
 		}
@@ -586,7 +548,8 @@ var vis = (function(){
  * end ColorGenerator object
  */
 
-	function Ruler(chartRoot, chartBackground){
+	function Ruler(chartRoot, chartBackground, configuration){
+		var config = configuration;
 		var root = chartRoot;
 		var rect = chartBackground;
 		var position;
@@ -601,7 +564,7 @@ var vis = (function(){
 					.attr("x1", position[0])
 					.attr("y1", 0)
 					.attr("x2", position[0])
-					.attr("y2", sizeChart.height);
+					.attr("y2", config.sizeChart.height);
 			});
 		
 		this.showTooltip = function(yScale){
@@ -622,17 +585,17 @@ var vis = (function(){
 			
 			root.append("rect")
 				.attr("class", "tooltipRect")
-				.attr("x", position[0] + marginTooltip.offsetLeft)
-				.attr("y", position[1] + marginTooltip.offsetTop - dimensions.height)
+				.attr("x", position[0] + config.marginTooltip.offsetLeft)
+				.attr("y", position[1] + config.marginTooltip.offsetTop - dimensions.height)
 				.attr("rx", 8)
 				.attr("ry", 8)
-				.attr("height", dimensions.height + marginTooltip.rectTop)
-				.attr("width", dimensions.width + marginTooltip.rectLeft);
+				.attr("height", dimensions.height + config.marginTooltip.rectTop)
+				.attr("width", dimensions.width + config.marginTooltip.rectLeft);
 			
 			root.append("text")
 				.attr("class", "tooltipText")
-				.attr("x", position[0] + marginTooltip.offsetLeft + marginTooltip.offsetTextLeft)
-				.attr("y", position[1] + marginTooltip.offsetTop + marginTooltip.offsetTextTop)
+				.attr("x", position[0] + config.marginTooltip.offsetLeft + config.marginTooltip.offsetTextLeft)
+				.attr("y", position[1] + config.marginTooltip.offsetTop + config.marginTooltip.offsetTextTop)
 				.text(Math.floor(value));
 		}
 		
@@ -642,7 +605,8 @@ var vis = (function(){
 		}
 	}
 	
-	function AxisGenerator(){
+	function AxisGenerator(configuration){
+		var config = configuration;
 		this.getYScales = function(chartData, offsets){
 			var maxValues = {};
 			var scales = {};
@@ -661,7 +625,7 @@ var vis = (function(){
 			for(type in maxValues){
 				scales[type] = d3.scale.linear()
 					.domain([0, maxValues[type] * offsets[type]])
-					.range([sizeChart.height, 0]);
+					.range([config.sizeChart.height, 0]);
 			}
 			
 			return scales;
