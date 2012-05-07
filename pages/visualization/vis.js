@@ -15,7 +15,7 @@ var vis = (function(){
 		if(obj instanceof Chart){
 			chartIdCounter++;
 			d3.selectAll("#masterRoot" + obj.id).remove();
-			settings = obj.config.settings;
+			settings = obj.getSettings();
 		}
 		else{
 			$.extend(true, settings, obj);
@@ -439,6 +439,10 @@ var vis = (function(){
 					break;
 				}
 			}
+		}
+		
+		this.getSettings = function(){
+			return config.settings;
 		}
 	}
 /*
