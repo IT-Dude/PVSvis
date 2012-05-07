@@ -38,8 +38,8 @@ var vis = (function(){
 		this.marginChart = {
 			top: 10,
 			bottom: 100,
-			left: 110,
-			right: 110
+			left: 10,
+			right: 10
 		}	
 		this.sizeChart = {
 			height: self.sizeRoot.height - self.marginChart.top - self.marginChart.bottom,
@@ -138,10 +138,8 @@ var vis = (function(){
 		}
 		
 		this.setUpGeometry = function(){			
-			chartRoot = root.append("g")
-				.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginChart.top + ")");
-			brushRoot = root.append("g")
-				.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginBrush.top + ")");
+			chartRoot = root.append("g");
+			brushRoot = root.append("g");
 			legendRoot = root.append("g")
 				.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginLegend.top + ")");
 			legendGenerator = new LegendGenerator(legendRoot, config);
@@ -151,6 +149,9 @@ var vis = (function(){
 			config.sizeBrush.width = config.sizeChart.width;
 			yScales = axisGenerator.getYScales();
 			axisGenerator.addAxes(chartRoot);
+			
+			chartRoot.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginChart.top + ")");
+			brushRoot.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginBrush.top + ")");
 			
 			var chartBackground = chartRoot.append("rect")
 				.attr("class", "chartBackground")
@@ -197,12 +198,14 @@ var vis = (function(){
 				.range([0, numValues]);
 			
 			// TODO optimize this!!!
+			/*
 			d3.selectAll(".graph").remove();
 			d3.selectAll(".axis").remove();
 			d3.selectAll(".yGrid").remove();
 			d3.selectAll(".legendText").remove();
 			d3.selectAll(".legendSquare").remove();
 			d3.selectAll(".brush").remove(); // ???
+			*/
 			numLegendElements = 0;
 			legendWidth = 0;
 			activeAxes = [false, false, false, false];
@@ -583,7 +586,7 @@ var vis = (function(){
 	
 	function AxisGenerator(configuration){
 		var config = configuration;
-		var axisWidth = 20; // TODO put this in the config
+		var axisWidth = 30; // TODO put this in the config
 		var axes = {};
 		
 		this.getGraphOffsets = function(chartData){
@@ -630,11 +633,19 @@ var vis = (function(){
 					.range([config.sizeChart.height, 0]);
 			}
 			
-			var chartWidth = config.sizeChart.width;
+			var oldWidth = config.sizeChart.width;
+			var newWidth = config.sizeChart.width;
+			var count = 0;
 			for(type in axes){
-				chartWidth -= axisWidth;	
+				newWidth -= axisWidth;
+				count ++;	
 			}
-			return chartWidth;
+			
+			// TODO do not use side effects here???
+			config.marginChart.left += (oldWidth - newWidth) / 2;
+			config.marginBrush.left += (oldWidth - newWidth) / 2;
+			
+			return newWidth;
 		}
 		
 		this.getYScales = function(){
@@ -645,24 +656,44 @@ var vis = (function(){
 			return scales;
 		}
 		
-		this.addAxes = function(root){
-			var lastAxisAddedLeftSide = false;
+		this.addAxes = function(root){			
+			var previousAxisAddedLeft = false;
 			
 			for(type in axes){
 				var axisData = axes[type];
 				var yTicks = 10; // TODO move this to the config
-					
+				var orientation;
+				
+				var margin;
+				if(previousAxisAddedLeft == false){
+					orientation = "left";
+					margin = 0;
+				}
+				else{
+					orientation = "right";
+					margin = config.sizeChart.width;	
+				}
+
 				var axis = d3.svg.axis()
 					.scale(axisData.scale)
-					.orient("left")
+					.orient(orientation)
 					.tickSize(5, 3, 1)
 					.ticks(yTicks)
 					.tickSubdivide(1)
 					.tickFormat(convertSiUnit);
-
+				
+				// TODO somehow get the graph's color
+				var color = "black";
+				//var color = d3.select(".graph" + axisData.type).style("stroke");				
+				
 				root.append("g")
-					.attr("id", "BAAAA")
+					.attr("class", "axis yAxis yAxis" + type)
+					.attr("transform", "translate(" + margin + ", 0)")
+					.style("stroke", color)
+					.style("fill", color)
 					.call(axis);
+				
+				previousAxisAddedLeft = !previousAxisAddedLeft;
 			}
 		}
 
