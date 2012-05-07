@@ -147,10 +147,10 @@ var vis = (function(){
 			legendGenerator = new LegendGenerator(legendRoot, config);
 			
 			graphOffsets = axisGenerator.getGraphOffsets(chartData);
-			axisGenerator.generateAxes(chartData, graphOffsets);
-			yScales = axisGenerator.getYScales();
-			config.sizeChart.width = axisGenerator.addAxes(chartRoot);
+			config.sizeChart.width = axisGenerator.generateAxes(chartData, graphOffsets);
 			config.sizeBrush.width = config.sizeChart.width;
+			yScales = axisGenerator.getYScales();
+			axisGenerator.addAxes(chartRoot);
 			
 			var chartBackground = chartRoot.append("rect")
 				.attr("class", "chartBackground")
@@ -322,7 +322,7 @@ var vis = (function(){
 					.interpolate("basis")
 				);
 			
-			addAxis(yScales[series.type], series.label, series.unit, series.type);			
+			//addAxis(yScales[series.type], series.label, series.unit, series.type);			
 			legendGenerator.addElement(series.type, series.label, color);
 		}
 		
@@ -647,6 +647,12 @@ var vis = (function(){
 					.domain([0, maxValues[type] * offsets[type]])
 					.range([config.sizeChart.height, 0]);
 			}
+			
+			var chartWidth = config.sizeChart.width;
+			for(type in axes){
+				chartWidth -= axisWidth;	
+			}
+			return chartWidth;
 		}
 		
 		this.getYScales = function(){
@@ -658,11 +664,7 @@ var vis = (function(){
 		}
 		
 		this.addAxes = function(root){
-			var chartWidth = config.sizeChart.width;
-			for(type in axes){
-				chartWidth -= axisWidth;	
-			}
-			return chartWidth;
+
 		}
 
 		function Axis(){
