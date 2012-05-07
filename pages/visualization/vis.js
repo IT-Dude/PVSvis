@@ -144,8 +144,7 @@ var vis = (function(){
 			legendGenerator = new LegendGenerator(legendRoot, config);
 			
 			graphOffsets = axisGenerator.getGraphOffsets(chartData);
-			config.sizeChart.width = axisGenerator.generateAxes(chartData, graphOffsets);
-			config.sizeBrush.width = config.sizeChart.width;
+			axisGenerator.generateAxes(chartData, graphOffsets);
 			yScales = axisGenerator.getYScales();
 			axisGenerator.addAxes(chartRoot);
 			
@@ -639,21 +638,18 @@ var vis = (function(){
 				newWidth -= axisWidth;
 				count ++;	
 			}
+			config.sizeChart.width = newWidth;
+			config.sizeBrush.width = newWidth;
 			
-			var difference = oldWidth - newWidth;
 			var margin;
 			if((count % 2) == 0){
-				margin = (difference / 2);
+				margin = ((oldWidth - newWidth) / 2);
 			}
 			else{
-				margin = (difference / count) * ((count + 1) / 2);
+				margin = ((oldWidth - newWidth) / count) * ((count + 1) / 2);
 			}
-			
-			// TODO do not use side effects here???
 			config.marginChart.left += margin;
 			config.marginBrush.left += margin;
-			
-			return newWidth;
 		}
 		
 		this.getYScales = function(){
