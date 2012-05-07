@@ -586,7 +586,7 @@ var vis = (function(){
 	
 	function AxisGenerator(configuration){
 		var config = configuration;
-		var axisWidth = 30; // TODO put this in the config
+		var axisWidth = 35; // TODO put this in the config
 		var axes = {};
 		
 		this.getGraphOffsets = function(chartData){
@@ -658,6 +658,8 @@ var vis = (function(){
 		
 		this.addAxes = function(root){			
 			var previousAxisAddedLeft = false;
+			var marginLeft = -5;
+			var marginRight = config.sizeChart.width + 5;
 			
 			for(type in axes){
 				var axisData = axes[type];
@@ -667,11 +669,13 @@ var vis = (function(){
 				var margin;
 				if(previousAxisAddedLeft == false){
 					orientation = "left";
-					margin = 0;
+					margin = marginLeft;
+					marginLeft -= axisWidth;
 				}
 				else{
 					orientation = "right";
-					margin = config.sizeChart.width;	
+					margin = marginRight;
+					marginRight += axisWidth;	
 				}
 
 				var axis = d3.svg.axis()
