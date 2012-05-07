@@ -19,9 +19,63 @@ var vis = (function(){
 		}
 
 		var chart;
-		chart = new Chart(chartIdCounter);
+		var config = new Configuration(defaultConfig);
+		chart = new Chart(chartIdCounter, config);
 		chart.setUp();
 		return chart;
+	}
+	
+	function Configuration(settings){
+		this.settings = settings;
+		this.sizeRoot = {
+			height: settings["height"],
+			width: settings["width"]
+		}
+		this.marginChart = {
+			top: 10,
+			bottom: 100,
+			left: 110,
+			right: 110
+		}	
+		this.sizeChart = {
+			height: sizeRoot.height - marginChart.top - marginChart.bottom,
+			width: sizeRoot.width - marginChart.left - marginChart.right
+		}
+		this.marginBrush = {
+			top: sizeChart.height + marginChart.top + 25,
+			bottom: 40,
+			left: marginChart.left, 
+			right: marginChart.right
+		}
+		this.sizeBrush = {
+			height: sizeRoot.height - marginBrush.top - marginBrush.bottom,
+			width: sizeChart.width
+		}
+		this.sizeLegend = {
+			sizeSquare: 15,
+			widthElement: 110
+		}
+		this.marginLegend = {
+			top: marginBrush.top + sizeBrush.height + 9,
+			topText: 18,
+			leftText: sizeLegend.sizeSquare + 3,
+			rightText: 12,
+			topSquare: 5
+		}
+		this.marginAxes = {
+			left: [-5, -50, sizeChart.width + 5, sizeChart.width + 50],
+			topLabel: 20,
+			leftLabel: [-30, -30, 5, 5]
+		}
+		this.marginTooltip = {
+			offsetTop: -5,
+			offsetLeft: 5,
+			offsetTextTop: -1,
+			offsetTextLeft: 4,
+			rectTop: 6,
+			rectLeft: 7
+		}
+		this.orientationAxes = ["left", "left", "right", "right"];
 	}
 
 	function setConstants(){
@@ -83,8 +137,9 @@ var vis = (function(){
 /*
  * Chart object
  */
-	function Chart(ID){
+	function Chart(ID, configuration){
 		var self = this;
+		this.config = configuration;
 		var root;
 		var chartRoot;
 		var brushRoot;
@@ -107,15 +162,15 @@ var vis = (function(){
 		var legendGenerator;
 		
 		this.setUp = function(){			
-			root = d3.select(defaultConfig["root"]).append("svg")
+			root = d3.select(self.config.settings["root"]).append("svg")
 				.attr("id", "masterRoot" + self.id)
-				.attr("height", sizeRoot.height)
-				.attr("width", sizeRoot.width);
+				.attr("height", self.config.sizeRoot.height)
+				.attr("width", self.config.sizeRoot.width);
 			
 			root.append("rect")
 				.attr("class", "rootBackground")
-				.attr("height", sizeRoot.height)
-				.attr("width", sizeRoot.width);
+				.attr("height", self.config.sizeRoot.height)
+				.attr("width", self.config.sizeRoot.width);
 		}
 		
 		// TODO test if new series is already in array
