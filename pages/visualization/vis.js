@@ -350,25 +350,6 @@ var vis = (function(){
 			chartRoot.selectAll(".xAxis").call(xAxis);
 			chartRoot.selectAll(".xGrid").call(xGrid);
 		}
-
-		function convertSiUnit(value){
-			var steps =	[[1e12, "T"],
-						[1e9, "G"],
-						[1e6, "M"],
-						[1e3, "k"],
-						[1, ""],
-						[1e-3, "m"],
-						[1e-6, "µ"],
-						[1e-9, "n"]];
-
-			for(var i = 0; i < steps.length; i++){
-				if(value >= steps[i][0]){
-					var number = value / steps[i][0];
-					var postfix = steps[i][1];
-					return number + postfix;
-				}
-			}
-		}
 		
 		// TODO remove name???
 		function addAxis(scale, name, unit, type){
@@ -380,7 +361,7 @@ var vis = (function(){
 					continue;
 				}
 				else{
-					activeAxes[i] =true;
+					activeAxes[i] = true;
 					var yTicks = 10;
 					
 					var axis = d3.svg.axis()
@@ -602,7 +583,7 @@ var vis = (function(){
 	
 	function AxisGenerator(configuration){
 		var config = configuration;
-		var axisWidth = 50; // TODO put this in the config
+		var axisWidth = 20; // TODO put this in the config
 		var axes = {};
 		
 		this.getGraphOffsets = function(chartData){
@@ -627,6 +608,7 @@ var vis = (function(){
 				var series = chartData[i];
 				var axis = new Axis();
 
+				axis.type = series.type;
 				axis.label = series.label;
 				axis.unit = series.unit;
 				if((series.type in axes) == false){
@@ -664,14 +646,51 @@ var vis = (function(){
 		}
 		
 		this.addAxes = function(root){
+			var lastAxisAddedLeftSide = false;
+			
+			for(type in axes){
+				var axisData = axes[type];
+				var yTicks = 10; // TODO move this to the config
+					
+				var axis = d3.svg.axis()
+					.scale(axisData.scale)
+					.orient("left")
+					.tickSize(5, 3, 1)
+					.ticks(yTicks)
+					.tickSubdivide(1)
+					.tickFormat(convertSiUnit);
 
+				root.append("g")
+					.attr("id", "BAAAA")
+					.call(axis);
+			}
 		}
 
 		function Axis(){
-			this.scale;
+			this.type;
 			this.label;
 			this.unit;
-		}	
+			this.scale;
+		}
+		
+		function convertSiUnit(value){
+			var steps =	[[1e12, "T"],
+						[1e9, "G"],
+						[1e6, "M"],
+						[1e3, "k"],
+						[1, ""],
+						[1e-3, "m"],
+						[1e-6, "µ"],
+						[1e-9, "n"]];
+
+			for(var i = 0; i < steps.length; i++){
+				if(value >= steps[i][0]){
+					var number = value / steps[i][0];
+					var postfix = steps[i][1];
+					return number + postfix;
+				}
+			}
+		}
 	}
 
 /*
