@@ -147,9 +147,9 @@ var vis = (function(){
 			legendGenerator = new LegendGenerator(legendRoot, config);
 			
 			graphOffsets = axisGenerator.getGraphOffsets(chartData);
-			axisGenerator.generateAxes();
-			yScales = axisGenerator.getYScales(chartData, graphOffsets);
-			config.sizeChart.width = axisGenerator.addAxes(yScales);
+			axisGenerator.generateAxes(chartData, graphOffsets);
+			yScales = axisGenerator.getYScales();
+			config.sizeChart.width = axisGenerator.addAxes(chartRoot);
 			config.sizeBrush.width = config.sizeChart.width;
 			
 			var chartBackground = chartRoot.append("rect")
@@ -322,7 +322,7 @@ var vis = (function(){
 					.interpolate("basis")
 				);
 			
-			//addAxis(yScales[series.type], series.label, series.unit, series.type);			
+			addAxis(yScales[series.type], series.label, series.unit, series.type);			
 			legendGenerator.addElement(series.type, series.label, color);
 		}
 		
@@ -621,17 +621,18 @@ var vis = (function(){
 		}
 		
 		this.generateAxes = function(chartData, offsets){
-			for(var i = 0; i < chartData.length; i++){
-				var series = chartData[i];
-			}
-		}
-		
-		this.getYScales = function(chartData, offsets){
 			var maxValues = {};
-			var scales = {};
 			
 			for(var i = 0; i < chartData.length; i++){
 				var series = chartData[i];
+				var axis = new Axis();
+
+				axis.label = series.label;
+				axis.unit = series.unit;
+				if((series.type in axes) == false){
+					axes[series.type] = axis;
+				}
+				
 				var maxValue = d3.max(series.data, function(d){return d[1];});
 				if((series.type in maxValues) == false){
 					maxValues[series.type] = maxValue;
@@ -642,24 +643,29 @@ var vis = (function(){
 			}
 			
 			for(type in maxValues){
-				scales[type] = d3.scale.linear()
+				axes[type].scale = d3.scale.linear()
 					.domain([0, maxValues[type] * offsets[type]])
 					.range([config.sizeChart.height, 0]);
 			}
-			
+		}
+		
+		this.getYScales = function(){
+			var scales = {};
+			for(type in axes){
+				scales[type] = axes[type].scale;
+			}
 			return scales;
 		}
 		
-		this.addAxes = function(scales, root){
+		this.addAxes = function(root){
 			var chartWidth = config.sizeChart.width;
-			for(type in scales){
+			for(type in axes){
 				chartWidth -= axisWidth;	
 			}
 			return chartWidth;
 		}
 
 		function Axis(){
-			this.type;
 			this.scale;
 			this.label;
 			this.unit;
