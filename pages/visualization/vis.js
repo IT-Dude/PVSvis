@@ -147,6 +147,7 @@ var vis = (function(){
 			legendGenerator = new LegendGenerator(legendRoot, config);
 			
 			graphOffsets = axisGenerator.getGraphOffsets(chartData);
+			axisGenerator.generateAxes();
 			yScales = axisGenerator.getYScales(chartData, graphOffsets);
 			config.sizeChart.width = axisGenerator.addAxes(yScales);
 			config.sizeBrush.width = config.sizeChart.width;
@@ -321,7 +322,7 @@ var vis = (function(){
 					.interpolate("basis")
 				);
 			
-			addAxis(yScales[series.type], series.label, series.unit, series.type);			
+			//addAxis(yScales[series.type], series.label, series.unit, series.type);			
 			legendGenerator.addElement(series.type, series.label, color);
 		}
 		
@@ -602,6 +603,28 @@ var vis = (function(){
 	function AxisGenerator(configuration){
 		var config = configuration;
 		var axisWidth = 50; // TODO put this in the config
+		var axes = {};
+		
+		this.getGraphOffsets = function(chartData){
+			var offsets = {};
+			var counter = 1.05;
+			
+			for(var i = 0; i < chartData.length; i++){
+				var series = chartData[i];
+				if((series.type in offsets) == false){
+					offsets[series.type] = counter;
+					counter += 0.1;
+				}
+			}
+			
+			return offsets;
+		}
+		
+		this.generateAxes = function(chartData, offsets){
+			for(var i = 0; i < chartData.length; i++){
+				var series = chartData[i];
+			}
+		}
 		
 		this.getYScales = function(chartData, offsets){
 			var maxValues = {};
@@ -627,21 +650,6 @@ var vis = (function(){
 			return scales;
 		}
 		
-		this.getGraphOffsets = function(chartData){
-			var offsets = {};
-			var counter = 1.05;
-			
-			for(var i = 0; i < chartData.length; i++){
-				var series = chartData[i];
-				if((series.type in offsets) == false){
-					offsets[series.type] = counter;
-					counter += 0.1;
-				}
-			}
-			
-			return offsets;
-		}
-		
 		this.addAxes = function(scales, root){
 			var chartWidth = config.sizeChart.width;
 			for(type in scales){
@@ -649,6 +657,13 @@ var vis = (function(){
 			}
 			return chartWidth;
 		}
+
+		function Axis(){
+			this.type;
+			this.scale;
+			this.label;
+			this.unit;
+		}	
 	}
 
 /*
