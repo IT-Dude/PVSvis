@@ -137,20 +137,19 @@ var vis = (function(){
 			}
 		}
 		
-		this.setUpGeometry = function(){
-			graphOffsets = axisGenerator.getGraphOffsets(chartData);
-			yScales = axisGenerator.getYScales(chartData, graphOffsets);
-			axisGenerator.addAxes(yScales);
-			
+		this.setUpGeometry = function(){			
 			chartRoot = root.append("g")
 				.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginChart.top + ")");
-			
 			brushRoot = root.append("g")
 				.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginBrush.top + ")");
-			
 			legendRoot = root.append("g")
 				.attr("transform", "translate(" + config.marginChart.left + ", " + config.marginLegend.top + ")");
 			legendGenerator = new LegendGenerator(legendRoot, config);
+			
+			graphOffsets = axisGenerator.getGraphOffsets(chartData);
+			yScales = axisGenerator.getYScales(chartData, graphOffsets);
+			config.sizeChart.width = axisGenerator.addAxes(yScales);
+			config.sizeBrush.width = config.sizeChart.width;
 			
 			var chartBackground = chartRoot.append("rect")
 				.attr("class", "chartBackground")
@@ -602,6 +601,8 @@ var vis = (function(){
 	
 	function AxisGenerator(configuration){
 		var config = configuration;
+		var axisWidth = 50; // TODO put this in the config
+		
 		this.getYScales = function(chartData, offsets){
 			var maxValues = {};
 			var scales = {};
@@ -641,10 +642,12 @@ var vis = (function(){
 			return offsets;
 		}
 		
-		this.addAxes = function(scales){
+		this.addAxes = function(scales, root){
+			var chartWidth = config.sizeChart.width;
 			for(type in scales){
-				
+				chartWidth -= axisWidth;	
 			}
+			return chartWidth;
 		}
 	}
 
