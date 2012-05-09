@@ -129,9 +129,14 @@ var vis = (function(){
 				.attr("height", config.sizeRoot.height)
 				.attr("width", config.sizeRoot.width);
 		}
-		
-		// TODO test if new series is already in array
+
 		this.addSeries = function(series){
+			for(var i = 0; i < chartData.length; i++){
+				if(series.name == chartData[i].name){
+					return;
+				}
+			}
+			
 			chartData.push(series);
 		}
 		
