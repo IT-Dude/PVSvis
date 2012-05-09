@@ -311,6 +311,14 @@ var vis = (function(){
 						ruler.removeTooltip();
 				});
 			
+			d3.select(".yAxis" + series.type)
+				.style("fill", color)
+				.style("stroke", color);
+			
+			d3.select(".yGrid" + series.type)
+				.style("fill", color)
+				.style("stroke", color);
+			
 			brushRoot.append("path")
      			.data([series.data])
       			.attr("class", "graph" + series.type)
