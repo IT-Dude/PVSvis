@@ -337,7 +337,7 @@ var vis = (function(){
 		function scaleX(numValues){
 			var scale = d3.scale.linear()
 				.domain([0, numValues])
-				.range([0, sizeChart.width]);
+				.range([0, sizeChart.width]); // TODO use config here?
 			return scale;
 		}
 		
