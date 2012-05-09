@@ -379,7 +379,7 @@ var vis = (function(){
 		}
 		var colorCount = {};
 
-		this.generateColor = function(type, id){ // TODO do something with the id
+		this.generateColor = function(type){
 			if((type in definitions) == false){
 				definitions[type] = palette[paletteColorsTaken];
 				paletteColorsTaken ++;
