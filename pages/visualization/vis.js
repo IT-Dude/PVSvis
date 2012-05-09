@@ -74,7 +74,9 @@ var vis = (function(){
 		this.axis ={
 			margin : {
 				labelTop: 20
-			}
+			},
+			ticks: 10,
+			width: 40
 		}
 		this.marginTooltip = {
 			offsetTop: -5,
@@ -520,8 +522,6 @@ var vis = (function(){
 	
 	function AxisGenerator(configuration){
 		var config = configuration;
-		var axisWidth = 40; // TODO put this in the config
-		var yTicks = 10; // TODO move this to the config
 		var axes = {};
 		
 		this.getGraphOffsets = function(chartData){
@@ -572,7 +572,7 @@ var vis = (function(){
 			var newWidth = config.sizeChart.width;
 			var count = 0;
 			for(type in axes){
-				newWidth -= axisWidth;
+				newWidth -= config.axis.width;
 				count ++;	
 			}
 			config.sizeChart.width = newWidth;
@@ -610,12 +610,12 @@ var vis = (function(){
 				if(previousAxisAddedLeft == false){
 					orientation = "left";
 					margin = marginLeft;
-					marginLeft -= axisWidth;
+					marginLeft -= config.axis.width;
 				}
 				else{
 					orientation = "right";
 					margin = marginRight;
-					marginRight += axisWidth;	
+					marginRight += config.axis.width;	
 				}
 				axisData.orientation = orientation;
 				axisData.margin = margin;
@@ -624,7 +624,7 @@ var vis = (function(){
 					.scale(axisData.scale)
 					.orient(orientation)
 					.tickSize(5, 3, 1)
-					.ticks(yTicks)
+					.ticks(config.axis.ticks)
 					.tickSubdivide(1)
 					.tickFormat(convertSiUnit);
 				
@@ -668,7 +668,7 @@ var vis = (function(){
 					.scale(axisData.scale)
 					.orient("left")
 					.tickSize(size, 0, 0)
-					.ticks(yTicks)
+					.ticks(config.axis.ticks)
 					.tickFormat("");
 	
 				root.append("g")
