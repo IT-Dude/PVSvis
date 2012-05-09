@@ -202,16 +202,7 @@ var vis = (function(){
 			timeValueScale = d3.time.scale()
 				.domain([startDate, endDate])
 				.range([0, numValues]);
-			
-			// TODO optimize this!!!
-			/*
-			d3.selectAll(".graph").remove();
-			d3.selectAll(".axis").remove();
-			d3.selectAll(".yGrid").remove();
-			d3.selectAll(".legendText").remove();
-			d3.selectAll(".legendSquare").remove();
-			d3.selectAll(".brush").remove(); // ???
-			*/
+
 			numLegendElements = 0;
 			legendWidth = 0;
 			activeAxes = [false, false, false, false];
@@ -247,8 +238,9 @@ var vis = (function(){
 		this.renderSeries = function(series){
 			var maxValue = d3.max(series.data, function(d){return d[1];});
 
-			// TODO generate correct yScales for the brush
-			var yScaleBrush = scaleY(maxValue * graphOffsets[series.type], config.sizeBrush.height);
+			var yScaleBrush = d3.scale.linear()
+				.domain([0, maxValue * graphOffsets[series.type]])
+				.range([config.sizeBrush.height, 0]);			
 			
 			var color = colorGenerator.generateColor(series.type);
 			
@@ -334,20 +326,6 @@ var vis = (function(){
 			legendGenerator.addElement(series.type, series.label, color);
 		}
 		
-		function scaleX(numValues){
-			var scale = d3.scale.linear()
-				.domain([0, numValues])
-				.range([0, sizeChart.width]); // TODO use config here?
-			return scale;
-		}
-		
-		function scaleY(maxValue, height){
-			var scale = d3.scale.linear()
-				.domain([0, maxValue])
-				.range([height, 0]);
-			return scale;
-		}
-		
 		function doBrush() {
 			xScale.domain(brush.empty() ? xScaleBrush.domain() : brush.extent());
 			chartRoot.selectAll(".graph").attr("d", d3.svg.line()
@@ -357,68 +335,6 @@ var vis = (function(){
 			);
 			chartRoot.selectAll(".xAxis").call(xAxis);
 			chartRoot.selectAll(".xGrid").call(xGrid);
-		}
-		
-		// TODO remove name???
-		function addAxis(scale, name, unit, type){
-			for(var i = 0; i < activeAxes.length; i++){
-				if(i >= activeAxes.length){
-					break;
-				}
-				if(activeAxes[i] == true){
-					continue;
-				}
-				else{
-					activeAxes[i] = true;
-					var yTicks = 10;
-					
-					var axis = d3.svg.axis()
-						.scale(scale)
-						.orient(config.orientationAxes[i])
-						.tickSize(5, 3, 1)
-						.ticks(yTicks)
-						.tickSubdivide(1)
-						.tickFormat(convertSiUnit);
-
-					var color = d3.select(".graph" + type).style("stroke");
-					
-					var axisGroup = chartRoot.append("g")
-						.attr("class", "axis yAxis yAxis" + type)
-						.attr("transform", "translate(" + config.marginAxes.left[i] + ", 0)")
-						.style("stroke", color)
-						.style("fill", color)
-						.call(axis);
-					
-					axisGroup.append("text")
-						.attr("transform", "translate(" + config.marginAxes.leftLabel[i] + ", " + (config.sizeChart.height + config.marginAxes.topLabel) + ")")
-						.text(unit);
-					
-					var size = 0;
-					if(config.orientationAxes[i] == "left"){
-						size = -(config.sizeChart.width - config.marginAxes.left[i]);
-					}
-					if(config.orientationAxes[i] == "right"){
-						size = config.marginAxes.left[i];
-					}
-					
-					var yGrid = d3.svg.axis()
-						.scale(yScales[type])
-						.orient("left")
-						.tickSize(size, 0, 0)
-						.ticks(yTicks)
-						.tickFormat("");
-
-					chartRoot.append("g")
-						.attr("class", "yGrid yGrid" + type)
-						.attr("transform", "translate(" + config.marginAxes.left[i] + ", 0)")
-						.style("fill", color)
-						.style("stroke", color)
-						.style("visibility", "hidden")
-						.call(yGrid);
-					
-					break;
-				}
-			}
 		}
 		
 		this.getSettings = function(){
