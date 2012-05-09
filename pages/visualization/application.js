@@ -8,7 +8,7 @@ var application = (function(){
 			"width" : 900
 		};
 		
-		d3.json("chart-data.json", function(json){
+		d3.json("chart-data_4.json", function(json){
 			vis.p(json);
 			chart = vis.createChart(config);
 			for(var i = 0; i < json.series.length; i++){
